@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <!-- End layout styles -->
   <!-- <link rel="shortcut icon" href="assets/images/favicon.png" /> -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
  
     #preloader {
@@ -54,6 +55,7 @@
         display: none;
     }
 </style>
+
 </head>
 
 <body>
@@ -208,120 +210,77 @@
             <div class="col-md-12 stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h3 class="card-title">Fuel Oil Record Book</h3>
-                  <p class="card-description">Sewage Disposal Operations</p>
-                  <form id="fuelForm">
-
-                    <div class="mb-3">
-                      <label for="date" class="form-label">Date</label>
-                      <input type="date" id="date" class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                      <label for="time" class="form-label">Time</label>
-                      <input type="time" id="time" class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                      <label for="shipPosition" class="form-label">Ship’s Position</label>
-                      <input type="text" id="shipPosition" class="form-control" placeholder="Enter latitude/longitude"
-                        required>
-                    </div>
-
-                    <div class="mb-3">
-                      <label for="fuelConsignment" class="form-label">Fuel Oil Consignment</label>
-                      <input type="text" id="fuelConsignment" class="form-control"
-                        placeholder="Enter consignment details" required>
-                    </div>
-
-                    <div class="mb-3">
-                      <label for="numTanks" class="form-label">Number of Tanks</label>
-                      <input type="number" id="numTanks" class="form-control" min="1" required>
-                    </div>
-
-                    <div id="tankDetails"></div>
-
-                    <button type="submit" class="btn btn-primary w-100">Submit</button>
-
-                  </form>
-
-                  <script>
-                    document.getElementById('numTanks').addEventListener('input', function () {
-                      let numTanks = parseInt(this.value);
-                      let tankDetailsDiv = document.getElementById('tankDetails');
-                      tankDetailsDiv.innerHTML = '';
-
-                      for (let i = 1; i <= numTanks; i++) {
-                        let tankHTML = `
-                                          <div class="mb-3 border p-3">
-                                              <h5>Tank ${i}</h5>
-                                              <label class="form-label">Tank Name</label>
-                                              <input type="text" class="form-control" name="tankName${i}" required>
+                  <h3 class="card-title">Bunker Delivery Note</h3>
+                  
+                
+                  <div class="row mt-5">
+                    <form id="bunkerDeliveryForm" class="col-md-12">
+  
+                        <!-- Bunkering Details -->
+                        <div class="row mb-3">
+                          <div class="col-md-6">
+                            <label class="form-label">Port of Bunkering</label>
+                            <input type="text" class="form-control" id="port" placeholder="Enter the port of bunkering" required>
+                          </div>
+                          <div class="col-md-6">
+                            <label class="form-label">Date of Commencement of Delivery</label>
+                            <input type="date" class="form-control" id="deliveryDate" required>
+                          </div>
+                        </div>
                       
-                                              <label class="form-label">Tank Location</label>
-                                              <input type="text" class="form-control" name="tankLocation${i}" required>
+                        <!-- Supplier Details -->
+                        <div class="mb-3">
+                          <label class="form-label">Name of the Fuel Oil Supplier</label>
+                          <input type="text" class="form-control" placeholder="Enter the name of the supplier" id="supplierName" required>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Address of the Fuel Oil Supplier</label>
+                          <input type="text" class="form-control" placeholder="Enter the address of the supplier" id="supplierAddress" required>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Telephone Number of the Fuel Oil Supplier</label>
+                          <input type="tel" class="form-control" placeholder="Enter the telephone number of the supplier" id="supplierTelephone" required>
+                        </div>
                       
-                                              <label class="form-label">Quantity</label>
-                                              <input type="text" class="form-control" name="tankQuantity${i}" required>
-                                      `;
-
-                        if (i === 1) {
-                          tankHTML += `
-                                              <label class="form-label">Start Time</label>
-                                              <input type="time" class="form-control" name="startTime${i}" required>
+                        <!-- Fuel Oil Details -->
+                        <div class="row mb-3">
+                          <div class="col-md-6">
+                            <label class="form-label">Product Name</label>
+                            <input type="text" placeholder="Enter the product name" class="form-control" id="productName" required>
+                          </div>
+                          <div class="col-md-6">
+                            <label class="form-label">Quantity Delivered (Metric Tons)</label>
+                            <input type="number" placeholder="Enter the quantity delivered" class="form-control" id="quantity" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <div class="col-md-6">
+                            <label class="form-label">Density at 15°C (kg/m³)</label>
+                            <input type="number" placeholder="Enter the density" class="form-control" id="density" required>
+                          </div>
+                          <div class="col-md-6">
+                            <label class="form-label">Sulfur Content (% m/m)</label>
+                            <input type="number" placeholder="Enter the sulfur content" class="form-control" id="sulfurContent" required>
+                          </div>
+                        </div>
                       
-                                              <label class="form-label">End Time</label>
-                                              <input type="time" class="form-control" name="endTime${i}" required>
-                                          `;
-                        } else {
-                          tankHTML += `
-                                              <div class="form-check">
-                                                  <input class="form-check-input copy-time" type="checkbox" id="copyTime${i}" data-tank="${i}">
-                                                  <label class="form-check-label">Same Time as Previous Tank</label>
-                                              </div>
+                        <!-- Supplier Declaration (File Upload) -->
+                        <div class="mb-3">
+                          <label class="form-label">Supplier Declaration (Upload Signed Document)</label>
+                          <input type="file" class="form-control" id="supplierDeclaration" accept=".pdf,.doc,.docx" required>
+                          <small class="form-text text-muted">Upload a signed declaration document (PDF or Word).</small>
+                        </div>
                       
-                                              <label class="form-label">Start Time</label>
-                                              <input type="time" class="form-control tank-start-time" name="startTime${i}" required>
+                       
+                        <div class="mb-3 d-flex justify-content-end">
+                            <button type="reset" class="btn btn-danger m-1">Reset</button>
+                            <button type="submit" class="btn btn-primary m-1">Submit</button>
+                        </div>
                       
-                                              <label class="form-label">End Time</label>
-                                              <input type="time" class="form-control tank-end-time" name="endTime${i}" required>
-                                          `;
-                        }
-
-                        tankHTML += '</div>';
-                        tankDetailsDiv.innerHTML += tankHTML;
-                      }
-                    });
-
-                    document.addEventListener('change', function (event) {
-                      if (event.target.classList.contains('copy-time')) {
-                        let tankIndex = event.target.dataset.tank;
-                        let prevTankIndex = tankIndex - 1;
-                        let startTimeField = document.querySelector(`[name='startTime${tankIndex}']`);
-                        let endTimeField = document.querySelector(`[name='endTime${tankIndex}']`);
-                        let prevStartTime = document.querySelector(`[name='startTime${prevTankIndex}']`).value;
-                        let prevEndTime = document.querySelector(`[name='endTime${prevTankIndex}']`).value;
-
-                        if (event.target.checked) {
-                          startTimeField.value = prevStartTime;
-                          endTimeField.value = prevEndTime;
-                          startTimeField.disabled = true;
-                          endTimeField.disabled = true;
-                        } else {
-                          startTimeField.disabled = false;
-                          endTimeField.disabled = false;
-                        }
-                      }
-                    });
-                  </script>
-
-
-                  <script>
-                    document.getElementById('issueStatusSewage').addEventListener('change', function () {
-                      var issueDetails = document.getElementById('issueDetailsSewage');
-                      issueDetails.style.display = (this.value === 'yes') ? 'block' : 'none';
-                    });
-                  </script>
+                    </form>
+                    
+                  </div>
+                    </div>
                 </div>
               </div>
 

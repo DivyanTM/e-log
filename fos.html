@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <!-- End layout styles -->
   <!-- <link rel="shortcut icon" href="assets/images/favicon.png" /> -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
  
     #preloader {
@@ -208,120 +209,60 @@
             <div class="col-md-12 stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h3 class="card-title">Fuel Oil Record Book</h3>
-                  <p class="card-description">Sewage Disposal Operations</p>
-                  <form id="fuelForm">
-
-                    <div class="mb-3">
-                      <label for="date" class="form-label">Date</label>
-                      <input type="date" id="date" class="form-control" required>
+                  <h3 class="card-title">Fuel Oil Record</h3>
+                  <p class="card-description">Tracking and Control Record for MARPOL Fuel Oil Sample</p>
+                
+                    <div class="row">
+                        <form action="" class="col-md-12 mt-3">
+                            <div class="row mb-3">
+                                <div class="col-md-6 form-group">
+                                    <label for="reference" class="form-label">Bunker Delivery Note Ref.NO.</label>
+                                    <input type="text" class="form-control" id="reference" placeholder="Enter Bunker Delivery Note Reference Number">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label for="origin">Origin of Sample</label>
+                                    <input type="text" class="form-control" id="origin" placeholder="Enter origin of Sample">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6 form-group">
+                                    <label for="supplier" class="form-label">Supplier Ship</label>
+                                    <input type="text" class="form-control" id="supplier" placeholder="Enter Supplier Ship">
+                                </div>
+                                <div class="col-md-6 form-group ">
+                                    <label for="" class="form-label">Letter of Protest Issued</label>
+                                    <select name="letterIsuued" class="form-select form-control" id="letterIsuued">
+                                        <option value="yes">Yes</option>
+                                        <option value="no" selected>No</option>
+                                    </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-3" id="copyToRow" style="display: none;">
+                                    <div class="col-md-12">
+                                        <label for="copyTo">Letter of Protest Copy to</label>
+                                        <select name="copyTo" class="form-select form-control" id="">
+                                            <option value="1" selected>Supplier</option>
+                                            <option value="2">PSC</option>
+                                            <option value="3">Flag</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <label for="date" class="form-label">Date Sample Destroyed (less than 12 months)</label>
+                                        <input type="date" class="form-control" id="date" placeholder="Enter date">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 d-flex justify-content-end">
+                                        <button type="reset" class="btn btn-danger m-1">Reset</button>
+                                        <button type="submit" class="btn btn-primary m-1">Submit</button>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </form>
                     </div>
-
-                    <div class="mb-3">
-                      <label for="time" class="form-label">Time</label>
-                      <input type="time" id="time" class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                      <label for="shipPosition" class="form-label">Ship’s Position</label>
-                      <input type="text" id="shipPosition" class="form-control" placeholder="Enter latitude/longitude"
-                        required>
-                    </div>
-
-                    <div class="mb-3">
-                      <label for="fuelConsignment" class="form-label">Fuel Oil Consignment</label>
-                      <input type="text" id="fuelConsignment" class="form-control"
-                        placeholder="Enter consignment details" required>
-                    </div>
-
-                    <div class="mb-3">
-                      <label for="numTanks" class="form-label">Number of Tanks</label>
-                      <input type="number" id="numTanks" class="form-control" min="1" required>
-                    </div>
-
-                    <div id="tankDetails"></div>
-
-                    <button type="submit" class="btn btn-primary w-100">Submit</button>
-
-                  </form>
-
-                  <script>
-                    document.getElementById('numTanks').addEventListener('input', function () {
-                      let numTanks = parseInt(this.value);
-                      let tankDetailsDiv = document.getElementById('tankDetails');
-                      tankDetailsDiv.innerHTML = '';
-
-                      for (let i = 1; i <= numTanks; i++) {
-                        let tankHTML = `
-                                          <div class="mb-3 border p-3">
-                                              <h5>Tank ${i}</h5>
-                                              <label class="form-label">Tank Name</label>
-                                              <input type="text" class="form-control" name="tankName${i}" required>
-                      
-                                              <label class="form-label">Tank Location</label>
-                                              <input type="text" class="form-control" name="tankLocation${i}" required>
-                      
-                                              <label class="form-label">Quantity</label>
-                                              <input type="text" class="form-control" name="tankQuantity${i}" required>
-                                      `;
-
-                        if (i === 1) {
-                          tankHTML += `
-                                              <label class="form-label">Start Time</label>
-                                              <input type="time" class="form-control" name="startTime${i}" required>
-                      
-                                              <label class="form-label">End Time</label>
-                                              <input type="time" class="form-control" name="endTime${i}" required>
-                                          `;
-                        } else {
-                          tankHTML += `
-                                              <div class="form-check">
-                                                  <input class="form-check-input copy-time" type="checkbox" id="copyTime${i}" data-tank="${i}">
-                                                  <label class="form-check-label">Same Time as Previous Tank</label>
-                                              </div>
-                      
-                                              <label class="form-label">Start Time</label>
-                                              <input type="time" class="form-control tank-start-time" name="startTime${i}" required>
-                      
-                                              <label class="form-label">End Time</label>
-                                              <input type="time" class="form-control tank-end-time" name="endTime${i}" required>
-                                          `;
-                        }
-
-                        tankHTML += '</div>';
-                        tankDetailsDiv.innerHTML += tankHTML;
-                      }
-                    });
-
-                    document.addEventListener('change', function (event) {
-                      if (event.target.classList.contains('copy-time')) {
-                        let tankIndex = event.target.dataset.tank;
-                        let prevTankIndex = tankIndex - 1;
-                        let startTimeField = document.querySelector(`[name='startTime${tankIndex}']`);
-                        let endTimeField = document.querySelector(`[name='endTime${tankIndex}']`);
-                        let prevStartTime = document.querySelector(`[name='startTime${prevTankIndex}']`).value;
-                        let prevEndTime = document.querySelector(`[name='endTime${prevTankIndex}']`).value;
-
-                        if (event.target.checked) {
-                          startTimeField.value = prevStartTime;
-                          endTimeField.value = prevEndTime;
-                          startTimeField.disabled = true;
-                          endTimeField.disabled = true;
-                        } else {
-                          startTimeField.disabled = false;
-                          endTimeField.disabled = false;
-                        }
-                      }
-                    });
-                  </script>
-
-
-                  <script>
-                    document.getElementById('issueStatusSewage').addEventListener('change', function () {
-                      var issueDetails = document.getElementById('issueDetailsSewage');
-                      issueDetails.style.display = (this.value === 'yes') ? 'block' : 'none';
-                    });
-                  </script>
                 </div>
               </div>
 
@@ -360,7 +301,16 @@
   <!-- Custom js for this page -->
   <script src="assets/js/dashboard.js"></script>
   <!-- End custom js for this page -->
-  <script>
+   <script>
+   $('#letterIsuued').on('change', function() {
+     if (this.value == 'yes') {
+       $('#copyToRow').slideDown();
+     } else {
+       $('#copyToRow').slideUp();
+     }
+   });
+   </script>
+   <script>
     window.addEventListener('load', function () {
         setTimeout(function () {
             const preloader = document.getElementById('preloader');

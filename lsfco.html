@@ -209,137 +209,147 @@
             <div class="col-md-12 stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h3 class="card-title">Ozone-Depleting Substances Record Book</h3>
-                  <p class="card-description">Ozone-Depleting Substances Operations</p>
-                
+                  <h3 class="card-title">Low Sulphur Fuel Change Over Record Book</h3>
+                  <p class="card-description">LSF Change over records for Sulphur Emission Control Area</p>
 
                   <div class="row">
-                    <div class="col-md-12">
-                      <label class="form-label" for="odsrb-table">Select Table</label>
-                      <select name="odsrb-table" id="odsrb-table" class="form-select form-control">
-                        <option value="" selected disabled>Select Table</option>
-                        <option value="odsrb-table-1">Equipments containing ODS</option>
-                        <option value="odsrb-table-2">Record of Ozone-Depleting Substances</option>
-                      </select>
-                    </div>
-                    <form action="" class="col-md-12 mt-5" id="odsrb-table-1" style="display: none;">
-                      <div class="row">
-                        <div class="col-md-6">
-                          <label for="table1-en" class="form-label">Equipment Name</label>
-                          <input type="text" class="form-control" id="table1-en" placeholder="Enter equipment name">
-                        </div>
-                        <div class="col-md-6">
-                          <label for="table1-refrigerant" class="form-label">Refrigerant</label>
-                          <input type="text" class="form-control" id="table1-refrigerant" placeholder="Enter Refrigerant Name">
-                        </div>
-                        </div>
-                        <div class="row mt-3">
-                        <div class="col-md-6">
-                          <label for="table1-location">Location on Board</label>
-                          <input type="text" class="form-control" id="table1-location" placeholder="Enter location">
-                        </div>
-                        <div class="col-md-6">
-                          <label for="table1-capacity">Capacity (kg)</label>
-                          <input type="text" class="form-control" id="table1-capacity" placeholder="Enter Capacity in kg">
-                        </div>
-                        </div>
-                        <div class="row mt-3">
-                          <div class="col-md-12">
-                            <label for="table1-remarks">Remarks</label>
-                            <textarea class="form-control" id="table1-remarks" rows="3" placeholder="Enter remarks"></textarea>
-                          </div>
-                        </div>
-                        <div class="row mt-3">
-                          <div class="col-md-12 d-flex justify-content-end ">
-                            <button type="reset" class="btn btn-danger m-1">Reset</button>
-                          <button type="submit" class="btn btn-primary m-1">Submit</button>
-                          </div>
-                        </div>
-                    </form>
-                    <form class="col-md-12 mt-5" id="odsrb-table-2" style="display: none;">
-                      <div class="row">
-                        <div class="col-md-4">
-                          <label class="form-label">Date</label>
-                          <input type="date" class="form-control">
-                        </div>
-                        <div class="col-md-4">
-                          <label class="form-label">Location on Board</label>
-                          <input type="text" class="form-control" placeholder="Enter location">
-                        </div>
-                        <div class="col-md-4">
-                          <label class="form-label" for="table2-odsname">ODS Name</label>
-                          <input type="text" id="table2-odsname" class="form-control" placeholder="Enter ODS name">
-                        </div>
-                      </div>
-  
-                      <div class="row mt-3">
-                        <div class="col-md-4">
-                          <label class="form-label">Capacity (kg)</label>
-                          <input type="number" class="form-control" placeholder="Enter capacity">
-                        </div>
-                        <div class="col-md-4">
-                          <label class="form-label">Equipment Name</label>
-                          <input type="text" class="form-control" placeholder="Enter equipment name">
-                        </div>
-                        <div class="col-md-4">
-                          <label class="form-label">Manufacturer</label>
-                          <input type="text" class="form-control" placeholder="Enter manufacturer">
-                        </div>
-                      </div>
-  
-                      <div class="row mt-3">
-                        <div class="col-md-6">
-                          <label class="form-label">Year of Installation</label>
-                          <input type="number" class="form-control" placeholder="Enter year">
-                        </div>
-                        <div class="col-md-6">
-                          <label class="form-label">Process Type</label>
-                          <select class="form-select form-control">
-                            <option selected>Choose...</option>
-                            <option>Refrigerant Addition</option>
-                            <option>Refrigerant Discharged</option>
-                            <option>Leak Test</option>
-                          </select>
-                        </div>
-                      </div>
-  
-                      <div class="mt-3">
-                        <label class="form-label">Process Amount (kg)</label>
-                        <input type="number" class="form-control" placeholder="Enter amount">
-                      </div>
-  
-               
-                   
-                      <div class="row mt-3">
-                        <div class="col-md-12">
-                          <label for="tabl2-occasion" class="form-label">Select Occasion</label>
-                          <select name="tabl2-occasion" id="tabl2-occasion" class="form-select form-control">
-                            <option value="" selected disabled>Select Occasion</option>
-                            <option value="">Recharge (full)</option>
-                            <option value="">Recharge (partial)</option>
-                            <option value="">Repair or Maintenance</option>
-                            <option value="">Dishcarge to atm (Delibrate)</option>
-                            <option value="">Dishcarge to atm (non-delibrate)</option>
-                            <option value="">Discharge to reception facility</option>
-                            <option value="">Supply to ship</option>
-                          </select>
-                        </div>
-                      </div>
-  
-                      <div class="rcol-md-12 mt-3 d-flex justify-content-end">
-                        <button type="reset" class="btn btn-danger m-1">Reset</button>
-                        <button type="submit" class="btn btn-primary m-1">Submit</button>
-                      </div>
-  
-                    </form>
-                    </div>
 
-                  <script>
-                    document.getElementById('issueStatusOzone').addEventListener('change', function () {
-                      var issueDetails = document.getElementById('issueDetailsOzone');
-                      issueDetails.style.display = (this.value === 'yes') ? 'block' : 'none';
-                    });
-                  </script>
+
+                    <form id="fuelChangeoverForm" class="col-md-12">
+                        <!-- Begin Changeover to LSFO -->
+                        <div class="mb-4">
+                          <label class="form-label mb-2">Begin Changeover to LSFO</label>
+                          <div class="row">
+                            <div class="col-md-4">
+                                <label class="form-label" class="form-label" for="beginLSFODateTime">Date and Time</label>
+                              <input type="datetime-local" class="form-control" id="beginLSFODateTime" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="beginLSFOLatitude" class="form-label">Latitude</label>
+                              <input type="text" class="form-control" id="beginLSFOLatitude" placeholder="Enter Latitude" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="beginLSFOLongitude" class="form-label">Longitude</label>
+                              <input type="text" class="form-control" id="beginLSFOLongitude" placeholder="Enter Longitude" required>
+                            </div>
+                          </div>
+                        </div>
+                  
+                        <!-- Complete Changeover to LSFO -->
+                        <div class="mb-4">
+                          <label class="form-label mb-2">Complete Changeover to LSFO</label>
+                          <div class="row">
+                            <div class="col-md-4">
+                                <label for="completeLSFODateTime" class="form-label">Date and Time</label>
+                              <input type="datetime-local" class="form-control" id="completeLSFODateTime" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="completeLSFOLatitude" class="form-label">Latitude</label>
+                              <input type="text" class="form-control" id="completeLSFOLatitude" placeholder="Enter Latitude" required>
+                            </div>  
+                            <div class="col-md-4">
+                                <label for="completeLSFOLongitude" class="form-label">Longitude</label>
+                              <input type="text" class="form-control" id="completeLSFOPositionLongitude" placeholder="Enter Longitude" required>
+                            </div>
+                          </div>
+                        </div>
+                  
+                        <!-- Grade/Volume of LSFO in Each Tank on Completion -->
+                        <div class="mb-4">
+                          <label class="form-label">Grade/Volume of LSFO in Each Tank on Completion</label>
+                          <textarea class="form-control" id="lsfoVolumeCompletion" rows="3" placeholder="Enter details (e.g., LSFO: 0.10%, 500 m³ in Tank 1, 300 m³ in Tank 2)" required></textarea>
+                        </div>
+                  
+                        <!-- Regulated Area Entry -->
+                        <div class="mb-4">
+                          <label class="form-label">Regulated Area Entry</label>
+                          <div class="row">
+                            <div class="col-md-4">
+                                <label for="regulatedAreaEntryDateTime" class="form-label">Date and Time</label>
+                              <input type="datetime-local" class="form-control" id="regulatedAreaEntryDateTime" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="regulatedAreaEntryLatitude" class="form-label">Latitude</label>
+                              <input type="text" class="form-control" id="regulatedAreaEntryLatitude" placeholder="Enter Latitude" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="regulatedAreaEntryLongitude" class="form-label">Longitude</label>
+                              <input type="text" class="form-control" id="regulatedAreaEntryLongitude" placeholder="Enter Longitude" required>
+                            </div>
+                          </div>
+                        </div>
+                  
+                        <!-- Regulated Area Exit -->
+                        <div class="mb-4">
+                          <label class="form-label">Regulated Area Exit</label>
+                          <div class="row">
+                            <div class="col-md-4">
+                                <label for="regulatedAreaExitDateTime" class="form-label">Date and Time</label>
+                              <input type="datetime-local" class="form-control" id="regulatedAreaExitDateTime" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="regulatedAreaExitLatitude" class="form-label">Latitude</label>
+                              <input type="text" class="form-control" id="regulatedAreaExitLatitude" placeholder="Enter Latitude" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="regulatedAreaExitLongitude" class="form-label">Longitude</label>
+                              <input type="text" class="form-control" id="regulatedAreaExitLongitude" placeholder="Enter Longitude" required>
+                            </div>
+                          </div>
+                        </div>
+                  
+                        <!-- Begin Changeover to HSFO -->
+                        <div class="mb-4">
+                          <label class="form-label">Begin Changeover to HSFO</label>
+                          <div class="row">
+                            <div class="col-md-4">
+                                <label for="beginHSFODateTime" class="form-label">Date and Time</label>
+                              <input type="datetime-local" class="form-control" id="beginHSFODateTime" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="beginHSFOLatitude">Latitude</label>
+                              <input type="text" class="form-control" id="beginHSFOLatitude" placeholder="Enter Latitude" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="beginHSFOLongitude">Longitude</label>
+                              <input type="text" class="form-control" id="beginHSFOLongitude" placeholder="Enter Longitude" required>
+                            </div>
+                          </div>
+                        </div>
+                  
+                        <!-- Complete Changeover to HSFO -->
+                        <div class="mb-3">
+                          <label class="form-label">Complete Changeover to HSFO</label>
+                          <div class="row">
+                            <div class="col-md-4">
+                                <label for="completeHSFODateTime" class="form-label">Date and Time</label>
+                              <input type="datetime-local" class="form-control" id="completeHSFODateTime" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="completeHSFOLatitude" class="form-label">Latitude</label>
+                              <input type="text" class="form-control" id="completeHSFOLatitude" placeholder="Enter Latitude" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="completeHSFOLongitude" class="form-label">Longitude</label>
+                              <input type="text" class="form-control" id="completeHSFOLongitude" placeholder="Enter Longitude" required>
+                            </div>
+                          </div>
+                        </div>
+                  
+                        <!-- Grade/Volume of LSFO in Each Tank on Start of Changeover -->
+                        <div class="mb-3">
+                          <label class="form-label">Grade/Volume of LSFO in Each Tank on Start of Changeover</label>
+                          <textarea class="form-control" id="lsfoVolumeStart" rows="3" placeholder="Enter details (e.g., LSFO: 0.10%, 400 m³ in Tank 1, 200 m³ in Tank 2)" required></textarea>
+                        </div>
+                  
+                        <div class="d-flex justify-content-end ">
+                            <button type="reset" class="btn btn-danger m-1">Reset</button>
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn btn-primary m-1">Submit</button>
+                        </div>
+                      </form>
+                  </div>
+
                 </div>
               </div>
 
