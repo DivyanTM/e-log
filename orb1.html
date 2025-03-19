@@ -854,6 +854,11 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         window.addEventListener('load', function () {
+            if(!sessionStorage.getItem('token')) {
+
+window.location.href = 'login.html';
+}
+
             setTimeout(function () {
                 const preloader = document.getElementById('preloader');
             preloader.classList.add('hide'); 
@@ -1182,6 +1187,8 @@ function removeOilResidueCollectionEntry(button, containerId) {
 
 // Initialize dynamic fields for the first entry on page load
 document.addEventListener('DOMContentLoaded', function () {
+
+   
     const firstEntry = document.querySelector('.transfer-disposal-entry');
     if (firstEntry) {
         initializeTransferDisposalEntry(firstEntry);

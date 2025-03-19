@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,29 +23,28 @@
     <!-- End layout styles -->
     <!-- <link rel="shortcut icon" href="assets/images/favicon.png" /> -->
     <style>
- 
         #preloader {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.1); 
-            backdrop-filter: blur(10px); 
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 9999; 
+            z-index: 9999;
         }
 
-  
+
         #preloader-content {
             text-align: center;
         }
 
-       
+
         #preloader-content img {
-            width: 150px; 
+            width: 150px;
             height: auto;
         }
 
@@ -53,8 +53,9 @@
             display: none;
         }
     </style>
-  </head>
-  <body>
+</head>
+
+<body>
     <div id="preloader">
         <div id="preloader-content">
             <img src="assets/gifs/ship1.gif" alt="Loading...">
@@ -62,267 +63,923 @@
         </div>
     </div>
     <div class="container-scroller">
-      <!-- partial:partials/_sidebar.html -->
-      <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-          <a class="sidebar-brand text-decoration-none text-white d-flex align-items-center gap-2" href="index.html">
-            <span class="mdi mdi-database fs-6 text-success" style="font-size: 2rem !important;"></span>
-            <span class="fs-6">ELOG</span>
-          </a>
-        </div>
-        
-        <ul class="nav">
-          <li class="nav-item menu-items">
-            <a class="nav-link" href="index.html">
-              <span class="menu-icon">
-                <i class="mdi mdi-speedometer text-gray"></i>
-              </span>
-              <span class="menu-title">Dashboard</span>
-            </a>
-          </li>
-          <li class="nav-item menu-items">
-            <a class="nav-link active-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <span class="menu-icon">
-                <i class="mdi mdi-book-multiple text-gray"></i>
-              </span>
-              <span class="menu-title ">Record Books</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic">
-                <ul class="nav flex-column sub-menu">
-                    <!-- ORB1 and ORB2 -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="orb1.html" style="font-size: 16px;">
-                            <i class="mdi mdi-oil text-gray" style="font-size: 20px; margin-right: 8px;"></i>
-                            ORB-I
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="orb2.html" style="font-size: 16px;">
-                            <i class="mdi mdi-fuel text-gray" style="font-size: 20px; margin-right: 8px;"></i>
-                            ORB-II
-                        </a>
-                    </li>
-                
-                    <!-- GRB -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="grb.html" style="font-size: 16px;">
-                            <i class="mdi mdi-trash-can text-gray" style="font-size: 20px; margin-right: 8px;"></i>
-                            Garbage RB
-                        </a>
-                    </li>
-                
-                    <!-- CRB -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="crb.html" style="font-size: 16px;">
-                            <i class="mdi mdi-clipboard-text text-gray" style="font-size: 20px; margin-right: 8px;"></i>
-                            Cargo RB
-                        </a>
-                    </li>
-                
-                    <!-- APR B (NOX Tier Changeover) -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="aprb.html" style="font-size: 16px;">
-                            <i class="mdi mdi-swap-horizontal text-gray" style="font-size: 20px; margin-right: 8px;"></i>
-                            NOX Change
-                        </a>
-                    </li>
-                
-                    <!-- BDR (Bunker Delivery) -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="bdr.html" style="font-size: 16px;">
-                            <i class="mdi mdi-gas-station text-gray" style="font-size: 20px; margin-right: 8px;"></i>
-                            Bunker Deliv
-                        </a>
-                    </li>
-                
-                    <!-- BWRB (Ballast Water Record Book) -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="bwrb.html" style="font-size: 16px;">
-                            <i class="mdi mdi-ferry text-gray" style="font-size: 20px; margin-right: 8px;"></i>
-                            Ballast WB
-                        </a>
-                    </li>
-                
-                    <!-- FOR (Fuel Oil Received Record Book) -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="for.html" style="font-size: 16px;">
-                            <i class="mdi mdi-call-received text-gray" style="font-size: 20px; margin-right: 8px;"></i>
-                            Fuel Received
-                        </a>
-                    </li>
-                
-                    <!-- FOS (Fuel Oil Sample Control and Tracking) -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="fos.html" style="font-size: 16px;">
-                            <i class="mdi mdi-flask text-gray" style="font-size: 20px; margin-right: 8px;"></i>
-                            Fuel Sample
-                        </a>
-                    </li>
-                
-                    <!-- LSFCO (Low Sulphur Fuel Change Over) -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="lsfco.html" style="font-size: 16px;">
-                            <i class="mdi mdi-leaf text-gray" style="font-size: 20px; margin-right: 8px;"></i>
-                            LSFO Change
-                        </a>
-                    </li>
-                
-                    <!-- ODSRB (Ozone Depleting Substance Record Book) -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="odsrb.html" style="font-size: 16px;">
-                            <i class="mdi mdi-earth text-gray" style="font-size: 20px; margin-right: 8px;"></i>
-                            ODS RB
-                        </a>
-                    </li>
-                </ul>
-            
-            
-            
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+                <a class="sidebar-brand text-decoration-none text-white d-flex align-items-center gap-2"
+                    href="index.html">
+                    <span class="mdi mdi-database fs-6 text-success" style="font-size: 2rem !important;"></span>
+                    <span class="fs-6">ELOG</span>
+                </a>
             </div>
-          </li>
-          
-        </ul>
-      </nav>
-      <!-- partial -->
-      <div class="container-fluid page-body-wrapper">
-        <!-- partial:partials/_navbar.html -->
-        <nav class="navbar p-0 fixed-top d-flex flex-row">
-          <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-            <span class="mdi mdi-database fs-6 text-success" style="font-size: 2rem !important;"></span>
-          </div>
-          <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
-            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-              <span class="mdi mdi-menu"></span>
-            </button>
-            
-          </div>
+
+            <ul class="nav">
+                <li class="nav-item menu-items">
+                    <a class="nav-link" href="index.html">
+                        <span class="menu-icon">
+                            <i class="mdi mdi-speedometer text-gray"></i>
+                        </span>
+                        <span class="menu-title">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item menu-items">
+                    <a class="nav-link active-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                        aria-controls="ui-basic">
+                        <span class="menu-icon">
+                            <i class="mdi mdi-book-multiple text-gray"></i>
+                        </span>
+                        <span class="menu-title ">Record Books</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="ui-basic">
+                        <ul class="nav flex-column sub-menu">
+                            <!-- ORB1 and ORB2 -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="orb1.html" style="font-size: 16px;">
+                                    <i class="mdi mdi-oil text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                                    ORB-I
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="orb2.html" style="font-size: 16px;">
+                                    <i class="mdi mdi-fuel text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                                    ORB-II
+                                </a>
+                            </li>
+
+                            <!-- GRB -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="grb.html" style="font-size: 16px;">
+                                    <i class="mdi mdi-trash-can text-gray"
+                                        style="font-size: 20px; margin-right: 8px;"></i>
+                                    Garbage RB
+                                </a>
+                            </li>
+
+                            <!-- CRB -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="crb.html" style="font-size: 16px;">
+                                    <i class="mdi mdi-clipboard-text text-gray"
+                                        style="font-size: 20px; margin-right: 8px;"></i>
+                                    Cargo RB
+                                </a>
+                            </li>
+
+                            <!-- APR B (NOX Tier Changeover) -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="aprb.html" style="font-size: 16px;">
+                                    <i class="mdi mdi-swap-horizontal text-gray"
+                                        style="font-size: 20px; margin-right: 8px;"></i>
+                                    NOX Change
+                                </a>
+                            </li>
+
+                            <!-- BDR (Bunker Delivery) -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="bdr.html" style="font-size: 16px;">
+                                    <i class="mdi mdi-gas-station text-gray"
+                                        style="font-size: 20px; margin-right: 8px;"></i>
+                                    Bunker Deliv
+                                </a>
+                            </li>
+
+                            <!-- BWRB (Ballast Water Record Book) -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="bwrb.html" style="font-size: 16px;">
+                                    <i class="mdi mdi-ferry text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                                    Ballast WB
+                                </a>
+                            </li>
+
+                            <!-- FOR (Fuel Oil Received Record Book) -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="for.html" style="font-size: 16px;">
+                                    <i class="mdi mdi-call-received text-gray"
+                                        style="font-size: 20px; margin-right: 8px;"></i>
+                                    Fuel Received
+                                </a>
+                            </li>
+
+                            <!-- FOS (Fuel Oil Sample Control and Tracking) -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="fos.html" style="font-size: 16px;">
+                                    <i class="mdi mdi-flask text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                                    Fuel Sample
+                                </a>
+                            </li>
+
+                            <!-- LSFCO (Low Sulphur Fuel Change Over) -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="lsfco.html" style="font-size: 16px;">
+                                    <i class="mdi mdi-leaf text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                                    LSFO Change
+                                </a>
+                            </li>
+
+                            <!-- ODSRB (Ozone Depleting Substance Record Book) -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="odsrb.html" style="font-size: 16px;">
+                                    <i class="mdi mdi-earth text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                                    ODS RB
+                                </a>
+                            </li>
+                        </ul>
+
+
+
+                    </div>
+                </li>
+
+            </ul>
         </nav>
         <!-- partial -->
-        <div class="main-panel">
-          <div class="content-wrapper">
-            <div class="row">
-                <div class="col-md-12 stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h3 class="card-title">Cargo Record Book</h3>
-                            <p class="card-description">Cargo Operations</p>
-                            <form>
-                                <!-- Operation Type -->
-                                <div class="mb-3">
-                                    <label class="form-label">Operation Type</label>
-                                    <select class="form-control">
-                                        <option selected>Select Operation</option>
-                                        <option>Loading</option>
-                                        <option>Unloading</option>
-                                        <option>Transfer</option>
-                                        <option>Other</option>
-                                    </select>
-                                </div>
-                        
-                                <!-- Cargo Type and Tank Identity -->
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <label class="form-label">Cargo Type</label>
-                                        <input type="text" class="form-control" placeholder="Enter Cargo Type">
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_navbar.html -->
+            <nav class="navbar p-0 fixed-top d-flex flex-row">
+                <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
+                    <span class="mdi mdi-database fs-6 text-success" style="font-size: 2rem !important;"></span>
+                </div>
+                <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
+                    <button class="navbar-toggler navbar-toggler align-self-center" type="button"
+                        data-toggle="minimize">
+                        <span class="mdi mdi-menu"></span>
+                    </button>
+
+                </div>
+            </nav>
+            <!-- partial -->
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    <div class="row">
+                        <div class="col-md-12 stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="card-title">Cargo Record Book</h3>
+                                    <p class="card-description">Cargo Record Operations</p>
+
+                                    <!-- Form -->
+                                    <div class="container-fluid p-3">
+                                        <div class="row mb-3">
+                                            <div class="col-12">
+                                                <label for="crb-operation-select" class="form-label">Operation
+                                                    Type</label>
+                                                <select name="operation-type" id="crb-operation-select"
+                                                    class="form-control form-select">
+                                                    <option value="" selected>Select Operation</option>
+                                                    <option value="A">Loading of cargo</option>
+                                                    <option value="B">Internal Transfer of Cargo</option>
+                                                    <option value="C">Unloading of cargo</option>
+                                                    <option value="D">Cargo Prewash</option>
+                                                    <option value="E">Cleaning of cargo tanks (Except Prewash)</option>
+                                                    <option value="F">Discharge into the sea of tank washing</option>
+                                                    <option value="G">Ballasting of cargo tanks
+                                                    </option>
+                                                    <option value="H">Discharge of ballast water from cargo tanks
+                                                    </option>
+                                                    <option value="I">Accidental or other exceptional discharge</option>
+                                                    <option value="J">Control by authorised surveyors</option>
+                                                    <option value="K">Additional operational procedures and remarks
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <form id="crb-loading-form" class="mt-5" style="display: none;">
+                                            <!-- <h4 class="col-12">Loading of Cargo</h4> -->
+
+                                            <!-- Place of Loading -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Place of Loading</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter loading location">
+                                                </div>
+                                            </div>
+
+                                            <!-- Cargo Tank Details -->
+                                            <div class="row mb-3" id="cargo-tanks">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Cargo Tank Details</label>
+                                                    <button type="button" class="btn btn-primary btn-sm"
+                                                        onclick="addCargoTank()">Add Tank</button>
+                                                </div>
+                                                <!-- Dynamic Tank Entry -->
+                                                <div class="col-md-12 p-0 d-flex align-items-center mb-2 tank-entry">
+                                                    <div class="col-md-4">
+                                                        <label class="form-label">Tank Identity</label>
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Enter tank identity">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label class="form-label">Name of Substance</label>
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Enter substance name">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label class="form-label">Category</label>
+                                                        <select class="form-select form-control">
+                                                            <option value="" selected>Select Category</option>
+                                                            <option value="X">Category X</option>
+                                                            <option value="Y">Category Y</option>
+                                                            <option value="Z">Category Z</option>
+                                                            <option value="OS">Other Substances</option>
+                                                        </select>
+                                                    </div>
+                                                    <div
+                                                        class="col-md-1 mt-4 d-flex align-items-center justify-content-center">
+                                                        <button type="button" class="btn btn-danger btn-sm remove-btn"
+                                                            onclick="removeTank(this, 'cargo-tanks')">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <form id="crb-transfer-form" class="mt-5" style="display: none;">
+                                            <!-- <h4 class="col-12">Internal Transfer of Cargo</h4> -->
+
+                                            <!-- Cargo Name and Category -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Name of Cargo</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter cargo name">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Category of Cargo</label>
+                                                    <select class="form-select form-control">
+                                                        <option value="" selected>Select Category</option>
+                                                        <option value="X">Category X</option>
+                                                        <option value="Y">Category Y</option>
+                                                        <option value="Z">Category Z</option>
+                                                        <option value="OS">Other Substances</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <!-- Tank Transfer Details -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Tank Identity (From)</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter source tank identity">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Tank Identity (To)</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter destination tank identity">
+                                                </div>
+                                            </div>
+
+                                            <!-- Tank Emptied Status -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Was the tank emptied?</label>
+                                                    <select class="form-select form-control" id="emptied-select"
+                                                        onchange="toggleRemainingQuantity()">
+                                                        <option value="" selected>Select</option>
+                                                        <option value="yes">Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <!-- Quantity Remaining (Conditional) -->
+                                            <div class="row mb-3" id="remaining-quantity" style="display: none;">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Quantity Remaining in Tank (m³)</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter quantity">
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <script>
+                                            function toggleRemainingQuantity() {
+                                                var select = document.getElementById("emptied-select");
+                                                var quantityDiv = document.getElementById("remaining-quantity");
+                                                quantityDiv.style.display = select.value === "no" ? "block" : "none";
+                                            }
+                                        </script>
+
+                                        <form id="crb-unloading-form" class="mt-5" style="display: none;">
+                                            <!-- <h4 class="col-12">Unloading of Cargo</h4> -->
+
+                                            <!-- Place of Unloading -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Place of Unloading</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter unloading location">
+                                                </div>
+                                            </div>
+
+                                            <!-- Tank Identity -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Tank(s) Unloaded</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter tank identities">
+                                                </div>
+                                            </div>
+
+                                            <!-- Tank Emptied Status -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Was the tank emptied?</label>
+                                                    <select class="form-select form-control" id="unload-emptied-select"
+                                                        onchange="toggleUnloadDetails()">
+                                                        <option value="" selected>Select</option>
+                                                        <option value="yes">Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <!-- Confirmation of Procedures (If Yes) -->
+                                            <div class="row mb-3" id="unload-confirmation" style="display: none;">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Confirm that emptying and stripping was
+                                                        performed per ship's Procedures and Arrangements Manual</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="List, trim, stripping temperature details">
+                                                </div>
+                                            </div>
+
+                                            <!-- Quantity Remaining (If No) -->
+                                            <div class="row mb-3" id="unload-remaining-quantity" style="display: none;">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Quantity Remaining in Tank(s) (m³)</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter remaining quantity">
+                                                </div>
+                                            </div>
+
+                                            <!-- Prewash Requirement -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Does the ship’s Procedures and
+                                                        Arrangements Manual require a prewash?</label>
+                                                    <select class="form-select form-control">
+                                                        <option value="" selected>Select</option>
+                                                        <option value="yes">Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <!-- Pumping/Stripping System Failure -->
+                                            <div class="row mb-3">
+                                                <h5 class="col-12">Failure of Pumping and/or Stripping System</h5>
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Time & Nature of Failure</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter failure details">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Reason for Failure</label>
+                                                    <input type="text" class="form-control" placeholder="Enter reason">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Time System Became Operational</label>
+                                                    <input type="text" class="form-control" placeholder="Enter time">
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <script>
+                                            function toggleUnloadDetails() {
+                                                var select = document.getElementById("unload-emptied-select");
+                                                document.getElementById("unload-confirmation").style.display = select.value === "yes" ? "block" : "none";
+                                                document.getElementById("unload-remaining-quantity").style.display = select.value === "no" ? "block" : "none";
+                                            }
+                                        </script>
+
+                                        <form id="crb-prewash-form" class="mt-5" style="display: none;">
+                                            <!-- <h4 class="col-12">Mandatory Prewash</h4> -->
+
+                                            <!-- Tank Identification, Substance, and Category -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Identify Tank(s), Substance(s), and
+                                                        Category(ies)</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter tank(s), substance(s), category(ies)">
+                                                </div>
+                                            </div>
+
+                                            <!-- Washing Method -->
+                                            <div class="row mb-3">
+                                                <h5 class="col-12">Washing Method</h5>
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Number of Cleaning Machines per
+                                                        Tank</label>
+                                                    <input type="number" class="form-control"
+                                                        placeholder="Enter number">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Duration of Wash/Washing Cycles
+                                                        (minutes)</label>
+                                                    <input type="number" class="form-control"
+                                                        placeholder="Enter duration">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Wash Type</label>
+                                                    <select class="form-select form-control">
+                                                        <option value="" selected>Select</option>
+                                                        <option value="hot">Hot Wash</option>
+                                                        <option value="cold">Cold Wash</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <!-- Prewash Slops Transfer -->
+                                            <div class="row mb-3">
+                                                <h5 class="col-12">Prewash Slops Transferred To</h5>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Reception Facility in Unloading Port
+                                                        (Identify Port)</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter port name">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Other Reception Facility (Identify
+                                                        Port)</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter port name">
+                                                </div>
+                                            </div>
+
+                                            <!-- Receipt or Certificate Information -->
+                                            <div class="row mb-3">
+                                                <h5 class="col-12">Receipt or Certificate from Reception Facility</h5>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Quantity of Tank Washings Transferred
+                                                        (m³)</label>
+                                                    <input type="number" class="form-control"
+                                                        placeholder="Enter quantity">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Time and Date of Transfer</label>
+                                                    <input type="datetime-local" class="form-control">
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <form id="crb-tank-cleaning-form" class="mt-5" style="display: none;">
+                                            <!-- <h4 class="col-12">Cleaning of Cargo Tanks (Except Mandatory Prewash)</h4> -->
+
+                                            <!-- Time, Tank Identification, Substance, and Category -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Time of Cleaning</label>
+                                                    <input type="datetime-local" class="form-control">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Identify Tank(s), Substance(s), and
+                                                        Category(ies)</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter tank(s), substance(s), category(ies)">
+                                                </div>
+                                            </div>
+
+                                            <!-- Washing Procedure -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Washing Procedure Used</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Describe washing procedure">
+                                                </div>
+                                            </div>
+
+                                            <!-- Cleaning Agent -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Cleaning Agent(s) Used</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter cleaning agent(s)">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Quantity of Cleaning Agent(s)
+                                                        (liters)</label>
+                                                    <input type="number" class="form-control"
+                                                        placeholder="Enter quantity">
+                                                </div>
+                                            </div>
+
+                                            <!-- Ventilation Procedure -->
+                                            <div class="row mb-3">
+                                                <h5 class="col-12">Ventilation Procedure</h5>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Number of Fans Used</label>
+                                                    <input type="number" class="form-control"
+                                                        placeholder="Enter number">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Duration of Ventilation (minutes)</label>
+                                                    <input type="number" class="form-control"
+                                                        placeholder="Enter duration">
+                                                </div>
+                                            </div>
+
+                                            <!-- Tank Washings Transferred -->
+                                            <div class="row mb-3">
+                                                <h5 class="col-12">Tank Washings Transferred To</h5>
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Into the Sea</label>
+                                                    <select class="form-select form-control">
+                                                        <option value="" selected>Select</option>
+                                                        <option value="yes">Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Reception Facility (Identify Port)</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter port name">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Slops Collecting Tank (Identify
+                                                        Tank)</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter tank name">
+                                                </div>
+                                            </div>
+
+                                            <!-- Receipt or Certificate Information -->
+                                            <div class="row mb-3">
+                                                <h5 class="col-12">Receipt or Certificate from Reception Facility</h5>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Quantity of Tank Washings Transferred
+                                                        (m³)</label>
+                                                    <input type="number" class="form-control"
+                                                        placeholder="Enter quantity">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Time and Date of Transfer</label>
+                                                    <input type="datetime-local" class="form-control">
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <form id="crb-tank-discharge-form" class="mt-5" style="display: none;">
+                                            <!-- <h4 class="col-12">Discharge into the Sea of Tank Washings</h4> -->
+
+                                            <!-- Identify Tank(s) -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Identify Tank(s)</label>
+                                                    <input type="text" class="form-control" placeholder="Enter tank(s)">
+                                                </div>
+                                            </div>
+
+                                            <!-- Tank Washings Discharged During Cleaning -->
+                                            <div class="row mb-3">
+                                                <h5 class="col-12">Tank Washings Discharged During Cleaning</h5>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Were tank washings discharged?</label>
+                                                    <select class="form-select form-control">
+                                                        <option value="" selected>Select</option>
+                                                        <option value="yes">Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Rate of Discharge (m³/hr)</label>
+                                                    <input type="number" class="form-control" placeholder="Enter rate">
+                                                </div>
+                                            </div>
+
+                                            <!-- Tank Washings Discharged from Slops Collecting Tank -->
+                                            <div class="row mb-3">
+                                                <h5 class="col-12">Tank Washings Discharged from Slops Collecting Tank
+                                                </h5>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Were washings discharged?</label>
+                                                    <select class="form-select form-control">
+                                                        <option value="" selected>Select</option>
+                                                        <option value="yes">Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Quantity Discharged (m³)</label>
+                                                    <input type="number" class="form-control"
+                                                        placeholder="Enter quantity">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Rate of Discharge (m³/hr)</label>
+                                                    <input type="number" class="form-control" placeholder="Enter rate">
+                                                </div>
+                                            </div>
+
+                                            <!-- Pumping Time -->
+                                            <div class="row mb-3">
+                                                <h5 class="col-12">Pumping Time</h5>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Time Pumping Commenced</label>
+                                                    <input type="datetime-local" class="form-control">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Time Pumping Stopped</label>
+                                                    <input type="datetime-local" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <!-- Ship Speed During Discharge -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Ship’s Speed During Discharge
+                                                        (knots)</label>
+                                                    <input type="number" class="form-control" placeholder="Enter speed">
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <form id="crb-ballasting-form" class="mt-5" style="display: none;">
+                                            <!-- <h4 class="col-12">Ballasting of Cargo Tanks</h4> -->
+
+                                            <!-- Identity of Tank(s) Ballasted -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Identity of Tank(s) Ballasted</label>
+                                                    <input type="text" class="form-control" placeholder="Enter tank(s)">
+                                                </div>
+                                            </div>
+
+                                            <!-- Time at Start of Ballasting -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Time at Start of Ballasting</label>
+                                                    <input type="datetime-local" class="form-control">
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <form id="crb-ballast-discharge-form" class="mt-5" style="display: none;">
+                                            <!-- <h4 class="col-12">Discharge of Ballast Water from Cargo Tanks</h4> -->
+
+                                            <!-- Identity of Tank(s) -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Identity of Tank(s)</label>
+                                                    <input type="text" class="form-control" placeholder="Enter tank(s)">
+                                                </div>
+                                            </div>
+
+                                            <!-- Discharge of Ballast -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Discharge Method</label>
+                                                    <select class="form-control">
+                                                        <option value="sea">Into the sea</option>
+                                                        <option value="facility">To reception facilities</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Reception Facility (If applicable)</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter port name">
+                                                </div>
+                                            </div>
+
+                                            <!-- Time Ballast Discharge Commenced and Stopped -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Time Discharge Commenced</label>
+                                                    <input type="datetime-local" class="form-control">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Time Discharge Stopped</label>
+                                                    <input type="datetime-local" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <!-- Ship’s Speed During Discharge -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Ship’s Speed During Discharge
+                                                        (knots)</label>
+                                                    <input type="number" class="form-control" placeholder="Enter speed">
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <form id="crb-accidental-discharge-form" class="mt-5" style="display: none;">
+                                            <!-- <h4 class="col-12">Accidental or Other Exceptional Discharge</h4> -->
+
+                                            <!-- Time of Occurrence -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Time of Occurrence</label>
+                                                    <input type="datetime-local" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <!-- Approximate Quantity, Substance(s), and Category(ies) -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Approximate Quantity (m³)</label>
+                                                    <input type="number" class="form-control"
+                                                        placeholder="Enter quantity">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Substance(s)</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter substance(s)">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Category(ies)</label>
+                                                    <select class="form-control">
+                                                        <option value="X">Category X</option>
+                                                        <option value="Y">Category Y</option>
+                                                        <option value="Z">Category Z</option>
+                                                        <option value="OS">Other Substances (OS)</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <!-- Circumstances of Discharge or Escape and General Remarks -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Circumstances of Discharge or
+                                                        Escape</label>
+                                                    <textarea class="form-control" rows="3"
+                                                        placeholder="Describe the circumstances..."></textarea>
+                                                </div>
+                                            </div>
+
+                                            <!-- General Remarks -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">General Remarks</label>
+                                                    <textarea class="form-control" rows="3"
+                                                        placeholder="Additional remarks..."></textarea>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <form id="crb-surveyor-control-form" class="mt-5" style="display: none;">
+                                            <!-- <h4 class="col-12">Control by Authorized Surveyors</h4> -->
+
+                                            <!-- Identify Port -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Identify Port</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter port name">
+                                                </div>
+                                            </div>
+
+                                            <!-- Identify Tank(s), Substance(s), Category(ies) Discharged Ashore -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Tank(s) Discharged</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter tank ID(s)">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Substance(s)</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter substance(s)">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-label">Category(ies)</label>
+                                                    <select class="form-control">
+                                                        <option value="X">Category X</option>
+                                                        <option value="Y">Category Y</option>
+                                                        <option value="Z">Category Z</option>
+                                                        <option value="OS">Other Substances (OS)</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <!-- Emptying Confirmation -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Have tank(s), pump(s), and piping
+                                                        system(s) been emptied?</label>
+                                                    <select class="form-control">
+                                                        <option value="yes">Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <!-- Prewash Confirmation -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Has a prewash been carried out?</label>
+                                                    <select class="form-control">
+                                                        <option value="yes">Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <!-- Tank Washings Discharged -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Have tank washings from prewash been
+                                                        discharged ashore, and is the tank empty?</label>
+                                                    <select class="form-control">
+                                                        <option value="yes">Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <!-- Exemption from Prewash -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Has an exemption been granted from
+                                                        mandatory prewash?</label>
+                                                    <select class="form-control">
+                                                        <option value="yes">Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <!-- Reasons for Exemption -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Reasons for Exemption</label>
+                                                    <textarea class="form-control" rows="3"
+                                                        placeholder="Enter reasons..."></textarea>
+                                                </div>
+                                            </div>
+
+                                            <!-- Surveyor's Name & Signature -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Name of Authorized Surveyor</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter surveyor's name">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Signature of Surveyor</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter signature">
+                                                </div>
+                                            </div>
+
+                                            <!-- Surveyor's Organization -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Organization, Company, or Government
+                                                        Agency</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter organization name">
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <form action="" id="crb-additional-form" style="display: none;">
+                                            <!-- Code I: Additional Operational Procedures and General Remarks -->
+                                            <div class="row mb-3">
+                                                <!-- Date and Time -->
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Date</label>
+                                                    <input type="date" class="form-control">
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Time</label>
+                                                    <input type="time" class="form-control">
+                                                </div>
+
+                                                <!-- Remarks -->
+                                                <div class="col-md-12 mb-3">
+                                                    <label class="form-label">Remarks</label>
+                                                    <textarea class="form-control"
+                                                        placeholder="Enter additional operational procedures or general remarks"
+                                                        rows="4"></textarea>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <!-- Buttons -->
+                                        <div class="d-flex justify-content-end  mt-5" id="form-buttons"
+                                            style="display: none !important;">
+                                            <button type="submit" class="btn btn-primary m-1">Submit</button>
+                                            <button class="btn btn-danger m-1">Cancel</button>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label">Tank Identity</label>
-                                        <input type="text" class="form-control" placeholder="Enter Tank Identity">
-                                    </div>
                                 </div>
-                        
-                                <!-- Quantity and Disposal Method -->
-                                <div class="row g-3 mt-2">
-                                    <div class="col-md-6">
-                                        <label class="form-label">Quantity (m³)</label>
-                                        <input type="number" class="form-control" placeholder="Enter Quantity">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label">Disposal Method</label>
-                                        <select class="form-control">
-                                            <option selected>Select Method</option>
-                                            <option>Discharge to Shore</option>
-                                            <option>Discharge to Sea (Permitted)</option>
-                                            <option>Other</option>
-                                        </select>
-                                    </div>
-                                </div>
-                        
-                                <!-- Latitude and Longitude -->
-                                <div class="row g-3 mt-2">
-                                    <div class="col-md-6">
-                                        <label class="form-label">Latitude</label>
-                                        <input type="text" class="form-control" placeholder="Enter Latitude">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label">Longitude</label>
-                                        <input type="text" class="form-control" placeholder="Enter Longitude">
-                                    </div>
-                                </div>
-                        
-                                <!-- Operation Status -->
-                                <div class="mt-3">
-                                    <label class="form-label">Operation Status</label>
-                                    <select class="form-control">
-                                        <option selected>Select Status</option>
-                                        <option>Completed</option>
-                                        <option>Ongoing</option>
-                                        <option>Aborted</option>
-                                    </select>
-                                </div>
-                        
-                                <!-- Issues Reported -->
-                                <div class="mt-3">
-                                    <label class="form-label">Any Issues Reported?</label>
-                                    <select class="form-control" id="issueStatusCargo">
-                                        <option selected>Select</option>
-                                        <option value="yes">Yes</option>
-                                        <option value="no">No</option>
-                                    </select>
-                                </div>
-                        
-                                <!-- Issue Details -->
-                                <div class="mt-3" id="issueDetailsCargo" style="display: none;">
-                                    <label class="form-label">Reason for Issue</label>
-                                    <input type="text" class="form-control" placeholder="Describe the issue">
-                                </div>
-                        
-                                <!-- Additional Notes -->
-                                <div class="mt-3">
-                                    <label class="form-label">Additional Notes</label>
-                                    <textarea class="form-control" rows="3" placeholder="Enter any additional details"></textarea>
-                                </div>
-                        
-                                <!-- Submit and Reset Buttons -->
-                                <div class="text-end mt-3">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                    <button type="reset" class="btn btn-secondary">Reset</button>
-                                </div>
-                            </form>
-                        
-                            <script>
-                                document.getElementById('issueStatusCargo').addEventListener('change', function() {
-                                    var issueDetails = document.getElementById('issueDetailsCargo');
-                                    issueDetails.style.display = (this.value === 'yes') ? 'block' : 'none';
-                                });
-                            </script>
+                            </div>
+
                         </div>
                     </div>
-                    
                 </div>
+                <!-- content-wrapper ends -->
+                <!-- partial:partials/_footer.html -->
+                <footer class="footer">
+
+                </footer>
+                <!-- partial -->
             </div>
-          </div>
-          <!-- content-wrapper ends -->
-          <!-- partial:partials/_footer.html -->
-          <footer class="footer">
-          
-          </footer>
-          <!-- partial -->
+            <!-- main-panel ends -->
         </div>
-        <!-- main-panel ends -->
-      </div>
-      <!-- page-body-wrapper ends -->
+        <!-- page-body-wrapper ends -->
     </div>
     <!-- container-scroller -->
     <!-- plugins:js -->
@@ -347,11 +1004,205 @@
     <!-- End custom js for this page -->
     <script>
         window.addEventListener('load', function () {
+            if(!sessionStorage.getItem('token')){
+                window.location.href = 'login.html';
+            }
             setTimeout(function () {
                 const preloader = document.getElementById('preloader');
-            preloader.classList.add('hide'); 
-            },500);
+                preloader.classList.add('hide');
+            }, 500);
         });
     </script>
-  </body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                const preloader = document.getElementById('preloader');
+                preloader.classList.add('hide');
+            }, 500);
+        });
+    </script>
+    <script>
+        $('#crb-operation-select').on('change', function () {
+            var selectedValue = $(this).val();
+            var selectedText = $(this).find('option:selected').text();
+            if (selectedValue === 'A') {
+                $('#crb-loading-form').show();
+                $('#crb-transfer-form').hide();
+                $('#crb-unloading-form').hide();
+                $('#crb-prewash-form').hide();
+                $('#crb-tank-cleaning-form').hide();
+                $('#crb-tank-discharge-form').hide();
+                $('#crb-ballasting-form').hide();
+                $('#crb-ballast-discharge-form').hide();
+                $('#crb-accidental-discharge-form').hide();
+                $('#crb-surveyor-control-form').hide();
+                $('#crb-additional-form').hide();
+                $('#form-buttons').show();
+            } else
+                if (selectedValue === 'C') {
+                    $('#crb-loading-form').hide();
+                    $('#crb-transfer-form').hide();
+                    $('#crb-unloading-form').show();
+                    $('#crb-prewash-form').hide();
+                    $('#crb-tank-cleaning-form').hide();
+                    $('#crb-tank-discharge-form').hide();
+                    $('#crb-ballasting-form').hide();
+                    $('#crb-ballast-discharge-form').hide();
+                    $('#crb-accidental-discharge-form').hide();
+                    $('#crb-surveyor-control-form').hide();
+                    $('#crb-additional-form').hide();
+                    $('#form-buttons').show();
+                } else
+                    if (selectedValue === 'B') {
+                        $('#crb-loading-form').hide();
+                        $('#crb-transfer-form').show();
+                        $('#crb-unloading-form').hide();
+                        $('#crb-prewash-form').hide();
+                        $('#crb-tank-cleaning-form').hide();
+                        $('#crb-tank-discharge-form').hide();
+                        $('#crb-ballasting-form').hide();
+                        $('#crb-ballast-discharge-form').hide();
+                        $('#crb-accidental-discharge-form').hide();
+                        $('#crb-surveyor-control-form').hide();
+                        $('#crb-additional-form').hide();
+                        $('#form-buttons').show();
+                    } else
+                        if (selectedValue === 'D') {
+                            $('#crb-loading-form').hide();
+                            $('#crb-transfer-form').hide();
+                            $('#crb-unloading-form').hide();
+                            $('#crb-prewash-form').show();
+                            $('#crb-tank-cleaning-form').hide();
+                            $('#crb-tank-discharge-form').hide();
+                            $('#crb-ballasting-form').hide();
+                            $('#crb-ballast-discharge-form').hide();
+                            $('#crb-accidental-discharge-form').hide();
+                            $('#crb-surveyor-control-form').hide();
+                            $('#crb-additional-form').hide();
+                            $('#form-buttons').show();
+                        } else if (selectedValue === 'E') {
+                            $('#crb-loading-form').hide();
+                            $('#crb-transfer-form').hide();
+                            $('#crb-unloading-form').hide();
+                            $('#crb-prewash-form').hide();
+                            $('#crb-tank-cleaning-form').show();
+                            $('#crb-tank-discharge-form').hide();
+                            $('#crb-ballasting-form').hide();
+                            $('#crb-ballast-discharge-form').hide();
+                            $('#crb-accidental-discharge-form').hide();
+                            $('#crb-surveyor-control-form').hide();
+                            $('#crb-additional-form').hide();
+                            $('#form-buttons').show();
+                        }
+                        else if (selectedValue === 'F') {
+                            $('#crb-loading-form').hide();
+                            $('#crb-transfer-form').hide();
+                            $('#crb-unloading-form').hide();
+                            $('#crb-prewash-form').hide();
+                            $('#crb-tank-cleaning-form').hide();
+                            $('#crb-tank-discharge-form').show();
+                            $('#crb-ballasting-form').hide();
+                            $('#crb-ballast-discharge-form').hide();
+                            $('#crb-accidental-discharge-form').hide();
+                            $('#crb-surveyor-control-form').hide();
+                            $('#crb-additional-form').hide();
+                            $('#form-buttons').show();
+                        }
+                        else if (selectedValue === 'G') {
+                            $('#crb-loading-form').hide();
+                            $('#crb-transfer-form').hide();
+                            $('#crb-unloading-form').hide();
+                            $('#crb-prewash-form').hide();
+                            $('#crb-tank-cleaning-form').hide();
+                            $('#crb-tank-discharge-form').hide();
+                            $('#crb-ballasting-form').show();
+                            $('#crb-ballast-discharge-form').hide();
+                            $('#crb-accidental-discharge-form').hide();
+                            $('#crb-surveyor-control-form').hide();
+                            $('#crb-additional-form').hide();
+                            $('#form-buttons').show();
+                        } else if (selectedValue === 'H') {
+                            $('#crb-loading-form').hide();
+                            $('#crb-transfer-form').hide();
+                            $('#crb-unloading-form').hide();
+                            $('#crb-prewash-form').hide();
+                            $('#crb-tank-cleaning-form').hide();
+                            $('#crb-tank-discharge-form').hide();
+                            $('#crb-ballasting-form').hide();
+                            $('#crb-ballast-discharge-form').show();
+                            $('#crb-accidental-discharge-form').hide();
+                            $('#crb-surveyor-control-form').hide();
+                            $('#crb-additional-form').hide();
+                            $('#form-buttons').show();
+                        } else if (selectedValue === 'I') {
+                            $('#crb-loading-form').hide();
+                            $('#crb-transfer-form').hide();
+                            $('#crb-unloading-form').hide();
+                            $('#crb-prewash-form').hide();
+                            $('#crb-tank-cleaning-form').hide();
+                            $('#crb-tank-discharge-form').hide();
+                            $('#crb-ballasting-form').hide();
+                            $('#crb-ballast-discharge-form').hide();
+                            $('#crb-accidental-discharge-form').show();
+                            $('#crb-surveyor-control-form').hide();
+                            $('#crb-additional-form').hide();
+                            $('#form-buttons').show();
+                        }
+                        else if (selectedValue === 'J') {
+                            $('#crb-loading-form').hide();
+                            $('#crb-transfer-form').hide();
+                            $('#crb-unloading-form').hide();
+                            $('#crb-prewash-form').hide();
+                            $('#crb-tank-cleaning-form').hide();
+                            $('#crb-tank-discharge-form').hide();
+                            $('#crb-ballasting-form').hide();
+                            $('#crb-ballast-discharge-form').hide();
+                            $('#crb-accidental-discharge-form').hide();
+                            $('#crb-surveyor-control-form').show();
+                            $('#crb-additional-form').hide();
+                            $('#form-buttons').show();
+                        }
+                        else if (selectedValue === 'K') {
+                            $('#crb-loading-form').hide();
+                            $('#crb-transfer-form').hide();
+                            $('#crb-unloading-form').hide();
+                            $('#crb-prewash-form').hide();
+                            $('#crb-tank-cleaning-form').hide();
+                            $('#crb-tank-discharge-form').hide();
+                            $('#crb-ballasting-form').hide();
+                            $('#crb-ballast-discharge-form').hide();
+                            $('#crb-accidental-discharge-form').hide();
+                            $('#crb-surveyor-control-form').hide();
+                            $('#crb-additional-form').show();
+                            $('#form-buttons').show();
+                        }
+                        else {
+                            $('#crb-loading-form').hide();
+                            $('#crb-transfer-form').hide();
+                            $('#crb-unloading-form').hide();
+                            $('#crb-prewash-form').hide();
+                            $('#crb-tank-cleaning-form').hide();
+                            $('#crb-tank-discharge-form').hide();
+                            $('#crb-ballasting-form').hide();
+                            $('#crb-ballast-discharge-form').hide();
+                            $('#crb-accidental-discharge-form').hide();
+                            $('#crb-surveyor-control-form').hide();
+                            $('#crb-additional-form').hide();
+                            $('#form-buttons').hide();
+                        }
+            // alert('seleted value: ' + selectedText);
+        });
+
+        //     $('#cleaned-select').change(function () {
+        //         if ($(this).val() === 'no') {
+        //             $('#crb-type-of-oil').slideDown();
+        //         } else {
+        //             $('#crb-type-of-oil').slideUp();
+        //         }
+        //     });
+        // </script>
+
+</body>
+
 </html>

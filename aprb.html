@@ -302,22 +302,7 @@
 
                                     </form>
 
-                                    <script>
-                                        // Show input field when "Others" is selected
-                                        document.querySelectorAll('.others-toggle').forEach(select => {
-                                            select.addEventListener('change', function () {
-                                                let target = document.getElementById(this.dataset.target);
-                                                target.classList.toggle('d-none', this.value !== 'Others');
-                                            });
-                                        });
-                                    </script>
-
-                                    <script>
-                                        document.getElementById('issueStatusAPRB').addEventListener('change', function () {
-                                            var issueDetails = document.getElementById('issueDetailsAPRB');
-                                            issueDetails.style.display = (this.value === 'yes') ? 'block' : 'none';
-                                        });
-                                    </script>
+                                   
                                 </div>
                             </div>
 
@@ -358,11 +343,31 @@
     <!-- End custom js for this page -->
     <script>
         window.addEventListener('load', function () {
+            if(!sessionStorage.getItem('token')) {
+
+                window.location.href = 'login.html';
+            }
             setTimeout(function () {
                 const preloader = document.getElementById('preloader');
             preloader.classList.add('hide'); 
             },500);
         });
+    </script>
+     <script>
+                                       
+        document.querySelectorAll('.others-toggle').forEach(select => {
+            select.addEventListener('change', function () {
+                let target = document.getElementById(this.dataset.target);
+                target.classList.toggle('d-none', this.value !== 'Others');
+            });
+        });
+    </script>
+
+    <script>
+        // document.getElementById('issueStatusAPRB').addEventListener('change', function () {
+        //     var issueDetails = document.getElementById('issueDetailsAPRB');
+        //     issueDetails.style.display = (this.value === 'yes') ? 'block' : 'none';
+        // });
     </script>
 </body>
 

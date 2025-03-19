@@ -215,41 +215,41 @@
                     <form action="" class="col-md-12 mt-4">
                         <div class="row mb-3">
                             <div class="col-md-6 form-group">
-                                <label for="bunkerDeliveryNote" class="form-label">Bunker Delivery Note Number</label>
+                                <label for="bunkerDeliveryNote" class="form-label">Bunker Delivery Note Number<span class="text-danger m-1">*</span></label>
                                 <input type="text" id="bunkerDeliveryNote" placeholder="Enter bunker delivery note number" class="form-control">
                             </div>
                             <div class="col-md-6 form-group">
-                                <label for="port" class="fomr-label">Port of Fuel Delivery</label>
+                                <label for="port" class="fomr-label">Port of Fuel Delivery<span class="text-danger m-1">*</span></label>
                                 <input type="text" id="port" placeholder="Enter port of delivery" class="form-control">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-12 form-group">
-                                <label for="date" class="form-label">Date of Fuel Delivery</label>
+                                <label for="date" class="form-label">Date of Fuel Delivery<span class="text-danger m-1">*</span></label>
                                 <input type="date" id="date" class="form-control" placeholder="Enter date of delivery">
                             </div>
                             
                         </div>
                         <div class="row mb-3">
-                            <label for="" class="col-md-12 form-label mb-3">Fuel Specification</label>
+                            <label for="" class="col-md-12 form-label mb-3">Fuel Specification<span class="text-danger m-1">*</span></label>
                             <div class="col-md-6 form-group">
-                                <label for="grade" class="form-label">Grade</label>
+                                <label for="grade" class="form-label">Grade<span class="text-danger m-1">*</span></label>
                                 <input type="text" id="grade" placeholder="Enter grade" class="form-control">
                             </div>
                             <div class="col-md-6 form-group">
-                                <label for="sulphur" class="form-label">Sulphur ( % m/m )</label>
-                                <input type="text" id="sulphur" placeholder="Enter sulphur" class="form-control">
+                                <label for="sulphur" class="form-label">Sulphur ( % m/m )<span class="text-danger m-1">*</span></label>
+                                <input type="number" min="0" max="100" step="any" id="sulphur" placeholder="Enter sulphur percentage" class="form-control">
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="" class="col-md-12 form-label mb-3">LocationWhen Bunkered</label>
+                            <label for="" class="col-md-12 form-label mb-3">Location When Bunkered</label>
                             <div class="col-md-6 form-group">
-                                <label for="tank" class="form-label">Tank Number</label>
+                                <label for="tank" class="form-label">Tank Number<span class="text-danger m-1">*</span></label>
                                 <input type="text" id="tank" placeholder="Enter tank number" class="form-control">
                             </div>
                             <div class="col-md-6 form-group">
-                                <label for="quantity" class="form-label">Quantity</label>
-                                <input type="number" id="quantity" placeholder="Enter quantity" class="form-control">
+                                <label for="quantity" class="form-label">Quantity<span class="text-danger m-1">*</span></label>
+                                <input type="number" min="0" step="any" id="quantity" placeholder="Enter quantity" class="form-control">
                             </div>
                         </div>
                         <div class="row">
@@ -295,15 +295,21 @@
   <script src="assets/js/todolist.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page -->
-  <script src="assets/js/dashboard.js"></script>
+  <script src="assets/js/for.js"></script>
   <!-- End custom js for this page -->
   <script>
     window.addEventListener('load', function () {
+      if(!sessionStorage.getItem('token')) {
+
+            window.location.href = 'login.html';
+      }
         setTimeout(function () {
             const preloader = document.getElementById('preloader');
         preloader.classList.add('hide'); 
         },500);
     });
+    
+
 </script>
 </body>
 

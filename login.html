@@ -88,15 +88,15 @@
                         <form>
                             <div class="input-group mx-auto mb-3">
                                 <span class="input-group-text"><i class="mdi mdi-account" style="font-size: 18px !important;"></i></span>
-                                <input type="text" class="form-control" placeholder="Enter username">
+                                <input type="text" class="form-control" id="username" placeholder="Enter username">
                             </div>
                             <div class="input-group mx-auto mb-3">
                                 <span class="input-group-text"><i class="mdi mdi-lock" style="font-size: 18px !important;"></i></span>
-                                <input type="password" class="form-control" placeholder="Enter password">
+                                <input type="password" class="form-control" id="password" placeholder="Enter password">
                             </div>
                         </form>
                         <div class="row">
-                            <button class="btn mx-auto px-5 py-2" style="background-color: #1A5ACC;">Login</button>
+                            <button class="btn mx-auto px-5 py-2" id="login" style="background-color: #1A5ACC;">Login</button>
                         </div>
                         <div class="row">
                             <img src="assets/images/integri.png" alt="integri" class="mx-auto mt-3" style="width: 160px !important;">
@@ -131,6 +131,10 @@
     <!-- Custom js for this page -->
     <script src="assets/js/dashboard.js"></script>
     <!-- End custom js for this page -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="/assets/js/axiosInstance.js"></script>
+    <script src="assets/js/apiRequest.js"></script>
+    <script src="assets/js/login.js"></script>
   </body>
 </html>
 

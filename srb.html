@@ -362,6 +362,12 @@
   <!-- End custom js for this page -->
   <script>
     window.addEventListener('load', function () {
+
+      if(!sessionStorage.getItem('token')) {
+
+window.location.href = 'login.html';
+}
+
         setTimeout(function () {
             const preloader = document.getElementById('preloader');
         preloader.classList.add('hide'); 

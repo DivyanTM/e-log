@@ -211,52 +211,66 @@
                 <div class="card-body">
                   <h3 class="card-title">Fuel Oil Record</h3>
                   <p class="card-description">Tracking and Control Record for MARPOL Fuel Oil Sample</p>
-                
                     <div class="row">
-                        <form action="" class="col-md-12 mt-3">
+                      <div class="d-flex col-md-12 justify-content-end">
+                        <button class="btn btn-info"><a href="records.html" class="text-white text-decoration-none">View Records</a></button>
+                      </div>
+                    </div>
+                    <div class="row">
+                        <form id="fosForm" class="col-md-12 mt-3">
+                          <div class="row mb-3">
+                            <div class="col-md-6 form-group">
+                                <label for="date" class="form-label">Date<span class="text-danger">*</span></label>
+                                <input type="date" class="form-control" id="date" name="date" placeholder="Enter Date">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="sampleSeal" class="form-label">MARPOL Sample Seal Number<span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" name="sampleSealNumber" id="sampleSeal" placeholder="Enter Sample Seal No">
+                            </div>
+                          </div>
                             <div class="row mb-3">
                                 <div class="col-md-6 form-group">
-                                    <label for="reference" class="form-label">Bunker Delivery Note Ref.NO.</label>
-                                    <input type="text" class="form-control" id="reference" placeholder="Enter Bunker Delivery Note Reference Number">
+                                    <label for="reference" class="form-label">Bunker Delivery Note Ref.NO.<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="bunkerDeliveryNoteReferenceNumber" id="reference" placeholder="Enter Bunker Delivery Note Reference Number">
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="origin">Origin of Sample</label>
-                                    <input type="text" class="form-control" id="origin" placeholder="Enter origin of Sample">
+                                    <label for="origin">Origin of Sample<span class="text-danger">*</span></label>
+                                    <select name="originOfSample" class="form-select form-control" id="origin">
+                                      <option value="Supplier" selected>Supplier</option>
+                                      <option value="Ship">Ship</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-md-6 form-group">
-                                    <label for="supplier" class="form-label">Supplier Ship</label>
-                                    <input type="text" class="form-control" id="supplier" placeholder="Enter Supplier Ship">
-                                </div>
-                                <div class="col-md-6 form-group ">
-                                    <label for="" class="form-label">Letter of Protest Issued</label>
-                                    <select name="letterIsuued" class="form-select form-control" id="letterIsuued">
-                                        <option value="yes">Yes</option>
-                                        <option value="no" selected>No</option>
+                                <div class="col-md-12 form-group ">
+                                    <label for="" class="form-label">Letter of Protest Issued<span class="text-danger">*</span></label>
+                                    <select name="letterOfProtestIssued" class="form-select form-control" id="letterIsued">
+                                        <option value="1">Yes</option>
+                                        <option value="0" selected>No</option>
                                     </select>
                                     </div>
                                 </div>
                                 <div class="row mb-3" id="copyToRow" style="display: none;">
                                     <div class="col-md-12">
                                         <label for="copyTo">Letter of Protest Copy to</label>
-                                        <select name="copyTo" class="form-select form-control" id="">
-                                            <option value="1" selected>Supplier</option>
-                                            <option value="2">PSC</option>
-                                            <option value="3">Flag</option>
+                                        <select name="letterOfProtestCopyTo" class="form-select form-control" id="">
+                                          <option value="N/A" selected>select option</option>
+                                            <option value="Supplier">Supplier</option>
+                                            <option value="PSC">PSC</option>
+                                            <option value="Flag">Flag</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-md-12">
-                                        <label for="date" class="form-label">Date Sample Destroyed (less than 12 months)</label>
-                                        <input type="date" class="form-control" id="date" placeholder="Enter date">
+                                        <label for="date" class="form-label">Date Sample Destroyed (less than 12 months)<span class="text-danger">*</span></label>
+                                        <input type="date" name="dateSampleDestroyed" class="form-control" id="date" placeholder="Enter date">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 d-flex justify-content-end">
                                         <button type="reset" class="btn btn-danger m-1">Reset</button>
-                                        <button type="submit" class="btn btn-primary m-1">Submit</button>
+                                        <button type="submit" id="submitBtn" class="btn btn-primary m-1">Submit</button>
                                     </div>
                                     
                                 </div>
@@ -297,13 +311,16 @@
   <script src="assets/js/misc.js"></script>
   <script src="assets/js/settings.js"></script>
   <script src="assets/js/todolist.js"></script>
+  <script src="assets/js/apiRequest.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="assets/js/axiosInstance.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page -->
-  <script src="assets/js/dashboard.js"></script>
+  <script src="assets/js/fos.js"></script>
   <!-- End custom js for this page -->
    <script>
-   $('#letterIsuued').on('change', function() {
-     if (this.value == 'yes') {
+   $('#letterIsued').on('change', function() {
+     if (this.value === '1') {
        $('#copyToRow').slideDown();
      } else {
        $('#copyToRow').slideUp();
@@ -312,6 +329,12 @@
    </script>
    <script>
     window.addEventListener('load', function () {
+
+      if(!sessionStorage.getItem('token')) {
+
+window.location.href = 'login.html';
+}
+
         setTimeout(function () {
             const preloader = document.getElementById('preloader');
         preloader.classList.add('hide'); 
