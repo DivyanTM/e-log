@@ -23,6 +23,13 @@
   <!-- End layout styles -->
   <!-- <link rel="shortcut icon" href="assets/images/favicon.png" /> -->
   <style>
+    #website-name {
+      transition: opacity 0.3s;
+    }
+    #website-name.d-none {
+      opacity: 0;
+    }
+    
     #preloader {
       position: fixed;
       top: 0;
@@ -68,7 +75,7 @@
       <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
         <a class="sidebar-brand text-decoration-none text-white d-flex align-items-center gap-2" href="index.html">
           <span class="mdi mdi-database fs-6 text-success" style="font-size: 2rem !important;"></span>
-          <span class="fs-6">ELOG</span>
+          <span class="fs-6" id="website-name">ELOG</span>
         </a>
       </div>
 
@@ -1006,6 +1013,12 @@ border-radius: 10px; ">
         preloader.classList.add('hide');
       }, 500);
     });
+  </script>
+  <script>
+    document.querySelector('[data-toggle="minimize"]').addEventListener('click', function() {
+      document.getElementById('website-name').classList.toggle('d-none');
+    });
+    
   </script>
   <script src="assets/vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->
