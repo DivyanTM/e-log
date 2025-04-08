@@ -19,12 +19,6 @@
     <!-- endinject -->
     <!-- Layout styles -->
      <style>
-      #website-name {
-        transition: opacity 0.3s;
-      }
-      #website-name.d-none {
-        opacity: 0;
-      }
       #preloader {
         position: fixed;
         top: 0;
@@ -50,7 +44,12 @@
         height: auto;
     }
 
-
+    #website-name {
+      transition: opacity 0.3s;
+    }
+    #website-name.d-none {
+      opacity: 0;
+    }
     #preloader.hide {
         display: none;
     }
@@ -175,14 +174,25 @@
                 <div class="col-md-12 stretch-card">
                     <div class="card">
                         <div class="card-header">
-                          <h2 class="card-title mb-0">Fuel Oil Record</h2>
-                          <p class="text-secondary">Tracking and Control Record for MARPOL Fuel Oil Sample</p>
+                          <h2 class="card-title mb-3">Ozone-Depleting Substance (ODSRB) </h2>
+                          <p class="text-secondary">Tracking and Control Record for Ozone-Depleting Substance</p>
+                          <div class="row">
+                            <div class="col-md-12 mt-3">
+                              <label class="form-label" for="odsrb-table">Select Table</label>
+                              <select name="odsrb-table" id="odsrb-table" class="form-select form-control">
+                                <option value="" selected disabled>Select Table</option>
+                                <option value="Equipments containing ODS">Equipments containing ODS</option>
+                                <option value="Record of Ozone-Depleting Substances">Record of Ozone-Depleting Substances</option>
+                              </select>
+                            </div>
+                          </div>
+                        
                         </div>
                         <div class="card-body">
-                          <div id="orb1Grid" class="ag-theme-quartz-dark" style="width: 100%;height: 900px;"></div>
+                        <div id="operationGrid" class="ag-theme-quartz-dark" style="width: 100%;height: 900px;"></div>
 
 
-                        </div>
+                      </div>
                       </div>
                     
                 </div>
@@ -205,6 +215,7 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="assets/js/apiRequest.js"></script>
     <script type="module" src="/assets/js/axiosInstance.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
@@ -225,84 +236,135 @@
 
 
   <!-- api -->
-  <script src="assets/js/apiRequest.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  
   <script src="assets/js/axiosInstance.js"></script>
 
     <script src="assets/js/dashboard.js"></script>
     <!-- End custom js for this page -->
 
     <script>
-      document.addEventListener("DOMContentLoaded", async function () {
-    const response=await axiosInstance.get('/fos/all');
-    console.log(response);
-    alert("response");
-    let data=response.data.records;
-      
-   if(data){
-    data.map(element => {
-      element.letterOfProtestIssued = element.letterOfProtestIssued ? "Yes" : "No";
-      element.approvalStatus=element.approvalStatus ? "Approved" : "Pending";
-      element.date=new Date(element.date).toLocaleDateString('eng-GB');
-      element.dateSampleDestroyed=new Date(element.dateSampleDestroyed).toLocaleDateString('eng-GB');
-      element.verifiedBy=element.verifiedBy ? element.verifiedBy : "N/A";
-    });
-
-   }
-  const gridOptions = {
-    columnDefs: [
-     
-      { headerName: "Record No", field: "recordID" },
-      { headerName: "Date", field: "date" },
-      { headerName: "Bunker Delivery Note Reference Number", field: "bunkerDeliveryNoteReferenceNumber" },
-      { headerName: "origin Of Sample", field: "originOfSample" },
-      { headerName: "Sample Seal Number", field: "sampleSealNumber" },
-      { headerName: "Letter Of Protest Issued?", field: "letterOfProtestIssued" },
-      { headerName: "Letter Of Protest Copy To", field: "letterOfProtestCopyTo" },
-      { headerName: "Date Sample Destroyed", field: "dateSampleDestroyed" },
-      { headerName: "Approval Status", field: "approvalStatus",cellRenderer: createActionsCellRenderer  },
-      { headerName: "Approved By", field: "verifiedBy" },
-      { headerName: "Created By", field: "fullname"},
-    ],
-
+      document.addEventListener("DOMContentLoaded", function () {
+        const selectElement = document.getElementById("odsrb-table");
+        const gridDiv = document.getElementById("operationGrid");
+        let gridApi;
     
-
-    rowData: [
-      ...data
-  ],
-    pagination: true,
-    paginationPageSize: 20,
-    domLayout: "normal",
-    theme: "legacy",
-    defaultColDef: {
-      sortable: true,
-      filter: true,
-      resizable: true,
-    },
-    // domLayout: 'autoHeight',
-  };
-
-  function createActionsCellRenderer(params) {
-    const div = document.createElement('div');
-    const btn = document.createElement('button');
-    btn.innerText = params.data.approvalStatus;
-    div.classList.add('d-flex', 'justify-content-center','mt-1');
-    if(params.data.approvalStatus === "Approved"){
-      btn.classList.add('btn', 'btn-success','w-100');
-    }else{
-      btn.classList.add('btn', 'btn-warning','w-100');
-    }
-    div.appendChild(btn);
-    return div;
-  }
-
-  const gridDiv = document.querySelector("#orb1Grid");
-  gridDiv.classList.add("ag-theme-quartz-dark");
-  agGrid.createGrid(gridDiv, gridOptions);  
-
-});
-    </script>
+        selectElement.addEventListener("change", async function () {
+            const selectedValue = selectElement.value.trim();
+            console.log("Selected Value:", JSON.stringify(selectedValue));
+    
+            const record = selectedValue === "Equipments containing ODS" ? "read-records1" : "read-records2";
+            const operation = selectElement.value;
+    
+            if (!operation) {
+                gridDiv.style.display = "none";
+                return;
+            }
+    
+            try {
+                gridDiv.style.display = "block"; 
+                gridDiv.innerHTML = "<p>Loading data...</p>"; 
+                console.log(`/ods/${record}/${operation}`);
+    
+                const response = await axiosInstance.get(`/ods/${record}/${operation}`);
+                const data = response.data.records || [];
+                console.log("API Response:", response, data);
+    
+                if (!data.length) {
+                    gridDiv.innerHTML = "<p class='text-warning'>No records found.</p>";
+                    return;
+                }
+    
+                // **Dynamic Column Definitions**
+                const columnDefs = [
+                    {
+                        headerName: "SNO",
+                        valueGetter: (params) => params.node ? params.node.rowIndex + 1 : null, 
+                        width: 80,
+                        sortable: false,
+                    },
+                    ...Object.keys(data[0]).map((key) => ({
+                        headerName: formatHeaderName(key),
+                        field: key,
+                        sortable: true,
+                        filter: true,
+                        resizable: true,
+                        cellRenderer: key === "approvalStatus" ? createActionsCellRenderer : null 
+                    }))
+                ];
+    
+                // **Dynamic rowData processing**
+                const formattedData = data.map(item => ({
+                    ...item,
+                    letterOfProtestIssued: item.letterOfProtestIssued ? "Yes" : "No",
+                    approvalStatus: item.approvalStatus ? "Approved" : "Pending",
+                    date: item.date ? new Date(item.date).toLocaleDateString("en-GB") : "N/A",
+                    dateSampleDestroyed: item.dateSampleDestroyed ? new Date(item.dateSampleDestroyed).toLocaleDateString("en-GB") : "N/A",
+                    verifiedBy: item.verifiedBy || "N/A",
+                    operationDate:formatDate(item.operationDate),
+                    createdAt:item.createdAt ? new Date(item.createdAt).toLocaleDateString("en-GB") : "N/A",
+                }));
+    
+                const gridOptions = {
+                    columnDefs,
+                    rowData: formattedData,
+                    pagination: true,
+                    paginationPageSize: 20,
+                    domLayout: "normal",
+                    theme: "legacy",
+                    defaultColDef: {
+                        sortable: true,
+                        filter: true,
+                        resizable: true,
+                    },
+                };
+    
+                gridDiv.innerHTML = "";
+                if (gridApi) {
+                    gridApi.destroy();
+                }
+                gridApi = agGrid.createGrid(gridDiv, gridOptions);
+    
+                // **Set dynamic rowData after grid initialization**
+                gridApi.setGridOption("rowData", formattedData);
+            } catch (error) {
+                console.error("Error fetching records:", error);
+                gridDiv.innerHTML = "<p class='text-danger'>Failed to load data.</p>";
+            }
+        });
+    
+        function formatHeaderName(key) {
+            return key.replace(/([A-Z])/g, " $1").replace(/^./, str => str.toUpperCase()).trim();
+        }
+        function formatDate(dateString) {
+          const date = new Date(dateString);
+          return date.toLocaleDateString('en-US', { 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric' 
+          });
+      }
+        function createActionsCellRenderer(params) {
+            const div = document.createElement("div");
+            const btn = document.createElement("button");
+            btn.innerText = params.data.approvalStatus;
+            div.classList.add("d-flex", "justify-content-center", "mt-1");
+    
+            if (params.data.approvalStatus === "Approved") {
+                btn.classList.add("btn", "btn-success", "w-100");
+            } else {
+                btn.classList.add("btn", "btn-warning", "w-100");
+            }
+    
+            div.appendChild(btn);
+            return div;
+        }
+    });
+           </script>
     <script>
+      document.querySelector('[data-toggle="minimize"]').addEventListener('click', function() {
+        document.getElementById('website-name').classList.toggle('d-none');
+      });
+
       window.addEventListener('load', function () {
 
         if(!sessionStorage.getItem('token')) {
@@ -315,9 +377,7 @@
           preloader.classList.add('hide'); 
           },500);
       });
-      document.querySelector('[data-toggle="minimize"]').addEventListener('click', function() {
-        document.getElementById('website-name').classList.toggle('d-none');
-      });
     </script>
+   
   </body>
 </html>

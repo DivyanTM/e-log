@@ -43,7 +43,13 @@
             text-align: center;
         }
 
-       
+        #website-name {
+            transition: opacity 0.3s;
+          }
+          #website-name.d-none {
+            opacity: 0;
+          }
+          
         #preloader-content img {
             width: 150px; 
             height: auto;
@@ -70,7 +76,7 @@
                 <a class="sidebar-brand text-decoration-none text-white d-flex align-items-center gap-2"
                     href="index.html">
                     <span class="mdi mdi-database fs-6 text-success" style="font-size: 2rem !important;"></span>
-                    <span class="fs-6">ELOG</span>
+                    <span class="fs-6" id="website-name">ELOG</span>
                 </a>
             </div>
 
@@ -210,150 +216,892 @@
                         <div class="col-md-12 stretch-card">
                             <div class="card">
                                 <div class="card-body">
-                                    <script>
-                                        function toggleSection(checkbox, sectionId) {
-                                            document.getElementById(sectionId).style.display = checkbox.checked ? "block" : "none";
-                                        }
-                                    </script>
                                     <h3 class="card-title">Oil Record Book – Part II</h3>
                                     <p class="card-description">Cargo/Ballast Operations</p>
-                                    <form>
-                                        <div class="mb-3">
-                                            <label class="form-label">Place of Loading</label>
-                                            <input type="text" class="form-control" placeholder="Enter loading place">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Type of Oil Loaded</label>
-                                            <input type="text" class="form-control" placeholder="Enter oil type">
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label class="form-label">Date of Loading</label>
-                                                <input type="date" class="form-control">
+                                    <div class="row">
+                                      <div class="d-flex col-md-12 justify-content-end">
+                                        <button class="btn btn-info"><a href="orb2Records.html" class="text-white text-decoration-none">View Records</a></button>
+                                      </div>
+                                    </div>
+                                    <!-- Form -->
+                                    <div class="container-fluid p-3">
+                                        <div class="row mb-3">
+                                            <div class="col-12">
+                                                <label for="orb2-operation-select" class="form-label">Operation Type</label>
+                                                <select onchange="handleOperationChange()" name="operation-type" id="orb2-operation-select" class="form-control form-select">
+                                                    <option value="" selected>Select Operation</option>
+                                                    <option value="A">Loading of oil cargo</option>
+                                                    <option value="B">Internal transfer of oil cargo during voyage</option>
+                                                    <option value="C">Unloading of oil cargo</option>
+                                                    <option value="D">Crude Oil Washing (COW Tankers only)</option>
+                                                    <option value="E">Ballasting of cargo tanks</option>
+                                                    <option value="F">Ballasting of dedicated clean ballasting tanks ( CBT Tankers only )</option>
+                                                    <option value="G">Cleaning of cargo tanks</option>
+                                                    <option value="H">Discharge of dirty ballast</option>
+                                                    <option value="I">Discharge of water from slop tanks into the sea</option>
+                                                    <option value="J">Collection,Transfer and disposal of residues not otherwise dealt with</option>
+                                                    <option value="K">Discharge of clean ballast contained in cargo tanks</option> 
+                                                    <option value="L">Discharge of ballast from dedicated clean ballast tanks (CBT Tankers only)</option>
+                                                    <option value="M">Condition of oil discharge monitoring and control system</option>
+                                                    <option value="N">Accidental or other exceptional discharges of oil</option>
+                                                    <option value="O">Additional operational procedures and general remarks</option>
+                                                    <option value="P">Loading of ballast water</option>
+                                                    <option value="Q">Re-allocation of ballast water within the ship</option>
+                                                    <option value="R">Ballast water discharge to reception facility</option>
+                                                </select>
                                             </div>
-                                            <div class="col-md-6">
-                                                <label class="form-label">Time of Loading</label>
-                                                <input type="time" class="form-control">
+                                        </div>
+                                        <!-- Loading of oil cargo -->
+                                        <form id="orb1-a-form" class="mt-5" style="display: none;">
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <p class="h4">Loading of Oil Cargo</p>
+                                                </div>
+                                        
+                                                <!-- Fields for Loading of Oil Cargo -->
+                                                <div class="row mb-2 col-md-12">
+                                                    <div class="col-md-6">
+                                                        <label for="placeOfLoading" class="form-label">Place of Loading<span class="text-danger">*</span></label>
+                                                        <input type="text" name="placeOfLoading" id="placeOfLoading" class="form-control" required>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="typeOfOilLoaded" class="form-label">Type of Oil Loaded<span class="text-danger">*</span></label>
+                                                        <input type="text" name="typeOfOilLoaded" id="typeOfOilLoaded" class="form-control" required>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Total Quantity (m³ at 15°C)</label>
-                                            <input type="number" class="form-control" placeholder="Enter quantity">
-                                        </div>
+                                        
+                                            <!-- Tank Identity Section for Loading of Oil Cargo -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Identity of Tanks<span class="text-danger">*</span></label>
+                                                    <button type="button" id="addTankLoading" class="btn btn-primary btn-sm">Add Tank</button>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3" id="tankEntriesLOOC">
+                                                <div class="row mb-2 tank-entry">
+                                                    <div class="col-md-5">
+                                                        <input type="text" name="tankIdentity[]" class="form-control" placeholder="Tank Identity" required>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <input type="number" step="0.01" min="0" name="quantityLoadedM3[]" class="form-control" placeholder="Quantity Loaded (m³)" step="0.01" required>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <button type="button" class="btn btn-danger btn-sm remove-tank" disabled>Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div> <!-- Tank entries for Oil Cargo -->
+                                        
+                                            <!-- Total Quantity Section -->
+                                            <div class="row mb-3">
+                                                <div class="col-md-12 mb-3">
+                                                    <h4 class="h4">Total Quantity of Oil Loaded</h4>
+                                                </div>
+                                                <div class="row col-md-12">
+                                                    <div class="col-md-6">
+                                                        <label for="quantityAdded" class="form-label">Quantity added in m<sup>3</sup> at 15°C<span class="text-danger">*</span></label>
+                                                        <input type="number" step="0.01" min="0" placeholder="Quantity Added" name="quantityAddedM3" id="quantityAdded" class="form-control" step="0.01" required>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="totalContentOfTanks" class="form-label">Total content of tanks in m<sup>3</sup><span class="text-danger">*</span></label>
+                                                        <input type="number" step="0.01" min="0" placeholder="Total Content of Tanks" name="totalContentOfTanksM3" id="totalContentOfTanks" class="form-control" step="0.01" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                        </form>
+                                         <!-- Internal Transfer of Oil Cargo During Voyage -->
+                                            <form id="orb1-b-form" class="mt-5" style="display:none">
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <h4 class="h4">Internal Transfer of Oil Cargo During Voyage</h4>
+        </div>
+    </div>
 
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input"
-                                                onclick="toggleSection(this, 'itc')">
-                                            <label class="form-check-label">Internal Transfer of Oil Cargo</label>
-                                        </div>
-                                        <div id="itc" style="display: none;">
-                                            <h4>Internal Transfer of Oil Cargo</h4>
+    <!-- Tank Identity Section for Internal Transfer -->
+<div class="row">
+    <div class="col-md-12">
+        <label class="form-label">Identity of Tanks<span class="text-danger">*</span></label>
+        <button type="button" id="addTankTransfer" class="btn btn-primary btn-sm">Add Tank</button>
+    </div>
+</div>
+<div id="tankIdentityContainer" class="mt-3"></div> <!-- Tank entries for Internal Transfer -->
+
+
+    <!-- Other Input Fields -->
+    <div class="row  mb-3">
+        <div class="col-md-6">
+            <label for="fromTank" class="form-label">From<span class="text-danger">*</span></label>
+            <input placeholder="From" type="text" name="fromTank" id="fromTank" class="form-control">
+        </div>
+        <div class="col-md-6">
+            <label for="toTank" class="form-label">To<span class="text-danger">*</span></label>
+            <input placeholder="To" type="text" name="toTank" id="toTank" class="form-control">
+        </div>
+    </div>
+
+    <div class="row  mb-3">
+        <div class="col-md-6">
+            <label for="quantityTransferred" class="form-label">Quantity Transferred (m<sup>3</sup>)<span class="text-danger">*</span></label>
+            <input placeholder="Enter quantity"type="number" min="0" step="0.01" name="quantityTransferred" id="quantityTransferred" class="form-control">
+        </div>
+        <div class="col-md-6">
+            <label for="totalQuantityTanks" class="form-label">Total Quantity of Tanks (m<sup>3</sup>)<span class="text-danger">*</span></label>
+            <input placeholder="Enter Total quantity" type="number" min="0" step="0.01" name="totalQuantityTanks" id="totalQuantityTanks" class="form-control">
+        </div>
+    </div>
+
+    <div class="row  mb-3">
+        <div class="col-md-4">
+            <label for="tankEmptied" class="form-label">Were the tanks emptied?<span class="text-danger">*</span></label>
+            <select aria-placeholder="Say Yes or No" name="tankEmptied" id="tankEmptied" class="form-select form-control">
+                
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label for="quantityRetained" class="form-label">Quantity Retained (m<sup>3</sup>)<span class="text-danger">*</span></label>
+            <input placeholder="Enter quantity" type="number" min="0" step="0.01" name="quantityRetained" id="quantityRetained" class="form-control">
+        </div>
+    </div>
+                                            </form>
+
+                                        <!-- Unloadin of oil cargo -->
+                                        <form id="orb1-c-form" class="mt-5" style="display:none">
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <h4 class="h4">Unloading of Oil Cargo</h4>
+                                                </div>
+                                            </div>
+                                        
                                             <div class="row">
-                                                <div class="col-md-6">
-                                                    <label class="form-label">From Tank</label>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Enter source tank">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label class="form-label">To Tank</label>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Enter destination tank">
+                                                <div class="col-md-12">
+                                                    <label class="form-label">Identity of Tanks<span class="text-danger">*</span></label>
+                                                    <button  type="button" id="addTankUnload" class="btn btn-sm btn-primary">Add Tank</button>
                                                 </div>
                                             </div>
-                                            <div class="row mt-3">
+                                        
+                                            <!-- Dynamic Tank Fields Go Here -->
+                                            <div id="tankEntriesUnload" class="mt-3"></div>
+                                        
+                                            <div class="row  mb-3">
                                                 <div class="col-md-6">
-                                                    <label class="form-label">Quantity Transferred (m³)</label>
-                                                    <input type="number" class="form-control"
-                                                        placeholder="Enter quantity">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label class="form-label">Total Quantity in Tank (m³)</label>
-                                                    <input type="number" class="form-control"
-                                                        placeholder="Enter total quantity">
+                                                    <label for="PlaceOfUnloading" class="form-label">Place of Unloading<span class="text-danger">*</span></label>
+                                                    <input placeholder="Enter Place" type="text" name="PlaceOfUnloading" id="PlaceOfUnloading" class="form-control">
                                                 </div>
                                             </div>
-                                        </div>
+                                        
+                                            <div class="row  mb-3">
+                                                <div class="col-md-4">
+                                                    <label for="tankEmptiedUnload" class="form-label">Were the tanks emptied?<span class="text-danger">*</span></label>
+                                                    <select aria-placeholder="Say Yes or No" name="tankEmptiedUnload" id="tankEmptiedUnload" class="form-select form-control">
+                                
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="quantityRetainedUnload" class="form-label">Quantity retained (m<sup>3</sup>)<span class="text-danger">*</span></label>
+                                                    <input placeholder="Enter quantity" type="number" step="0.01" min="0" name="quantityRetainedUnload" id="quantityRetainedUnload" class="form-control">
+                                                </div>
+                                            </div>
+                                        </form>
+                                        
 
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input"
-                                                onclick="toggleSection(this, 'uol')">
-                                            <label class="form-check-label">Unloading of Oil Cargo</label>
-                                        </div>
-                                        <div id="uol" style="display: none;">
-                                            <h4>Unloading of Oil Cargo</h4>
-                                            <div class="mb-3">
-                                                <label class="form-label">Place of Unloading</label>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Enter unloading place">
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label class="form-label">Date of Unloading</label>
-                                                    <input type="date" class="form-control">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label class="form-label">Time of Unloading</label>
-                                                    <input type="time" class="form-control">
-                                                </div>
+                                        <!-- Crude oil washing (COW tankers only) -->
+                                    <form class="mt-5" id="orb1-d-form" style="display:none">
+                                        <div class="row mb-3">
+                                            <div class="col-md-12">
+                                                <h4>Crude Oil Washing (COW tankers only)</h4>
                                             </div>
                                         </div>
-
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input"
-                                                onclick="toggleSection(this, 'bct')">
-                                            <label class="form-check-label">Ballasting of Cargo Tanks</label>
-                                        </div>
-                                        <div id="bct" style="display: none;">
-                                            <h4>Ballasting of Cargo Tanks</h4>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label class="form-label">Position at Start</label>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Enter position">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label class="form-label">Position at End</label>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Enter position">
-                                                </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Ballasted Tanks</label>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Enter tank identities">
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label class="form-label">Start Time</label>
-                                                    <input type="time" class="form-control">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label class="form-label">End Time</label>
-                                                    <input type="time" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Total Ballast Quantity (m³)</label>
-                                                <input type="number" class="form-control" placeholder="Enter quantity">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input"
-                                                onclick="toggleSection(this, 'remarksSection')">
-                                            <label class="form-check-label">General Remarks</label>
-                                        </div>
-                                        <div id="remarksSection" style="display: none;">
-                                            <textarea class="form-control" rows="3"
-                                                placeholder="Additional notes..."></textarea>
-                                        </div>
-                                        <br>
-
-                                        <button type="submit" class="btn btn-primary w-100">Submit</button>
-                                        <script
-                                            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+    
+    <!-- Identity of Tanks and Washing Details -->
+<div class="row mb-3">
+    <div class="col-md-12">
+        <label class="form-label">Tanks to be washed (Add each tank with its washing details)<span class="text-danger">*</span></label>
+        <button type="button" class="btn btn-sm btn-primary" id="addTankCOW">Add Tank</button>
+        <div id="tankEntriesCOW" class="mt-3"></div>
+    </div>
+</div>
                                     </form>
+
+                                        
+                                        <!-- Ballasting of cargo tanks -->
+<form class="mt-5" id="orb1-e-form" style="display:none;">
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <h4 class="h4">Ballasting of cargo tanks</h4>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <h4 class="h5 mb-2">Position of ship At</h4>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Start of ballasting<span class="text-danger">*</span></label>
+            <input type="text" name="start_ballasting_place" class="form-control">
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">End of ballasting<span class="text-danger">*</span></label>
+            <input type="text" name="end_ballasting_place" class="form-control">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <h5 class="h5">Ballasting process</h5>
+        </div>
+
+        <!-- Add Tank Button -->
+        <div class="col-md-12 mt-3">
+            <label class="form-label">Identity of Tanks</label>
+            <button type="button" class="btn btn-sm btn-primary" id="addTankBallast">Add Tank</button>
+        </div>
+
+        <!-- Dynamic Tank Entries will be added here -->
+        <div id="tankEntriesBallast" class="col-md-12 mt-3"></div>
+
+        <!-- Optional: Static Initial Tank Input (Remove if you want it fully dynamic) -->
+    </div>
+</form>
+
+
+                                       <!-- Ballasting of dedicated clean ballast tanks (CBT tankers only) -->
+<form action="" class="mt-5" id="orb1-f-form" style="display:none;">
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <h4 class="h4">Ballasting of dedicated clean ballast tanks (CBT tankers only)</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <label class="form-label">Identity of Tanks</label>
+            <button type="button" class="btn btn-sm btn-primary" id="addTankCBT">Add Tank</button>
+        </div>
+
+        <!-- ✅ Dynamic Tank Container -->
+        <div id="tankEntriesCBT" class="col-md-12 mt-2">
+            <!-- Dynamic Tank Fields will be added here -->
+        </div>
+
+        <div class="row col-md-12 mb-3">
+            <div class="col-md-6">
+                <label for="port" class="from-label">Port<span class="text-danger">*</span></label>
+                <input type="text" placeholder="Port name" name="port" id="port" class="form-control">
+            </div>
+            <div class="col-md-8">
+                <label for="PositionFlush" class="from-label">Position of ship when pump(s) and lines were flushed to slop tank<span class="text-danger">*</span></label>
+                <input type="text" placeholder="Ship's Position" name="PositionFlush" id="PositionFlush" class="form-control">
+            </div>
+        </div>
+
+        <div class="row col-md-12 mb-3">
+            <div class="col-md-6">
+                <label for="oilyWaterQty" class="from-label">Quantity of oily water in m<sup>3</sup><span class="text-danger">*</span></label>
+                <input type="number" placeholder="Enter Quantity" name="oilyWaterQty" id="oilyWaterQty" class="form-control">
+            </div> 
+            <div class="col-md-6">
+                <label for="cleanBallastQty" class="from-label">Quantity of clean ballast taken on board in m<sup>3</sup><span class="text-danger">*</span></label>
+                <input type="number" placeholder="Enter Quantity" name="cleanBallastQty" id="cleanBallastQty" class="form-control">
+            </div> 
+        </div>
+
+        <div class="row col-md-12 mb-3">
+            <div class="col-md-12">
+                <h5 class="h5">Time and Position of ship when valves separating the dedicated clean ballast tanks from cargo and stripping lines were closed</h5>
+            </div>
+            <div class="col-md-6">
+                <label for="valveTime" class="from-label">Time<span class="text-danger">*</span></label>
+                <input type="time" name="valveTime" id="valveTime" class="form-control">
+            </div>
+            <div class="col-md-6">
+                <label for="valvePosition" class="from-label">Position<span class="text-danger">*</span></label>
+                <input type="text" placeholder="Ship's position" name="valvePosition" id="valvePosition" class="form-control">
+            </div>
+        </div>
+    </div>
+</form>
+
+                                        
+
+                                        <!-- Cleaning of cargo tanks -->
+<form action="" style="display:none;" class="mt-5" id="orb1-g-form">
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <h4 class="h4">Cleaning of Cargo Tanks</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <label class="form-label">Identity of Tanks</label>
+            <button type="button" class="btn btn-sm btn-primary" id="addTankCleaning">Add Tank</button>
+        </div>
+
+        <!-- ✅ Dynamic Tank Entries Container -->
+        <div id="tankEntriesCleaning" class="col-md-12 mt-2">
+            <!-- Dynamic Tank Fields will be added here -->
+        </div>
+
+        <div class="row col-md-12 mb-3">
+            <div class="col-md-4">
+                <label for="Port or ship position" class="form-label">Port or Ship Position<span class="text-danger">*</span></label>
+                <input type="text" placeholder="Port Name or Ship Position" name="Port or ship position" id="Port or ship position" class="form-control">
+            </div>
+            <div class="col-md-4">
+                <label for="Duration of cleaning" class="form-label">Duration of Cleaning<span class="text-danger">*</span></label>
+                <input type="time" name="Duration of cleaning" class="form-control">
+            </div>
+            <div class="col-md-4">
+                <label for="Method of cleaning" class="form-label">Method of Cleaning<span class="text-danger">*</span></label>
+                <select name="Method of cleaning" id="Method of cleaning" class="form-select form-control">
+                    <option value="" selected>Method Type</option>
+                    <option value="Hand Cleaning">Hand Cleaning</option>
+                    <option value="Cold Water Washing">Cold Water Washing</option>
+                    <option value="Hot Water Washing">Hot Water Washing</option>
+                    <option value="Chemical Cleaning">Chemical Cleaning</option>
+                    <option value="Steam Cleaning">Steam Cleaning</option>
+                    <option value="Crude Oil Washing (COW)">Crude Oil Washing (COW)</option>
+                    <option value="Ventilation (Gas Freeing)">Ventilation (Gas Freeing)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row col-md-12 mb-3">
+            <div class="col-md-4">
+                <label for="TWT" class="form-label">Tanks Washing Transferred To<span class="text-danger">*</span></label>
+                <select name="TWT" id="TWT" class="form-select form-control">
+                    <option value="" selected>Select</option>
+                    <option value="Reception Facilities">Reception Facilities</option>
+                    <option value="Slop Tank(s) or Cargo Tank(s)">Slop Tank(s) or Cargo Tank(s)</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="Quantity Transferred" class="form-label">Quantity Transferred (m<sup>3</sup>)<span class="text-danger">*</span></label>
+                <input type="number" placeholder="Enter quantity" name="Quantity Transferred" id="Quantity Transferred" class="form-control">
+            </div>
+            <div class="col-md-4">
+                <label for="total quantity" class="form-label">Total Quantity (m<sup>3</sup>)<span class="text-danger">*</span></label>
+                <input type="number" placeholder="Quantity" name="total quantity" id="total quantity" class="form-control">
+            </div>
+        </div>
+
+        <div class="row col-md-12 mb-5">
+            <div class="col-md-6">
+                <label for="Port of RF" class="form-label">Port<span class="text-danger">*</span></label>
+                <input type="text" placeholder="Enter Port Name" name="Port of RF" id="Port of RF" class="form-control">
+            </div>
+            <div class="col-md-6">
+                <label for="total quantity of RF" class="form-label">Quantity (m<sup>3</sup>)<span class="text-danger">*</span></label>
+                <input type="number" placeholder="Enter Quantity" name="total quantity of RF" id="total quantity of RF" class="form-control">
+            </div>
+        </div>
+    </div>
+</form>
+
+
+                                         <!-- Discharge of Dirty Ballast -->
+<form action="" style="display:none;" class="mt-5" id="orb1-h-form">
+    <div class="row col-md-12 mb-3">
+      <div class="col-md-12">
+        <h4 class="h4">Discharge of Dirty Ballast</h4>
+      </div>
+    </div>
+  
+    <!-- Identity of Tanks (Dynamic) -->
+    <div class="row col-md-12">
+      <div class="col-md-12">
+        <label class="form-label">Identity of Tanks</label>
+        <button type="button" class="btn btn-sm btn-primary" id="addTankDischarge">Add Tank</button>
+      </div>
+      <div id="tankEntriesDischarge" class="col-md-12 mt-2"></div>
+    </div>
+  
+    <!-- Time and Position - Start -->
+    <div class="row col-md-12 mb-3">
+      <div class="col-md-12">
+        <h5 class="h5">Time and Position of Ship at Start of Discharge into the Sea</h5>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Time<span class="text-danger">*</span></label>
+        <input type="time" name="Time of discharge start" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Position<span class="text-danger">*</span></label>
+        <input type="text" placeholder="Enter Position" name="Position of discharge start" class="form-control">
+      </div>
+    </div>
+  
+    <!-- Time and Position - Completion -->
+    <div class="row col-md-12 mb-3">
+      <div class="col-md-12">
+        <h5 class="h5">Time and Position of Ship at Completion of Discharge into the Sea</h5>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Time<span class="text-danger">*</span></label>
+        <input type="time" name="Time of discharge complete" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Position<span class="text-danger">*</span></label>
+        <input type="text" placeholder="Enter Position" name="Position of discharge complete" class="form-control">
+      </div>
+    </div>
+  
+    <!-- Ship Speed & Quantity -->
+    <div class="row col-md-12 mb-3">
+      <div class="col-md-6">
+        <label class="form-label">Ship's Speed During Discharge (knots)<span class="text-danger">*</span></label>
+        <input type="number" placeholder="Enter Ship Speed" name="ships_speed" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Quantity Discharged into the Sea (m<sup>3</sup>)<span class="text-danger">*</span></label>
+        <input type="number" placeholder="Enter Quantity" name="quantity_discharged" class="form-control">
+      </div>
+    </div>
+  
+    <!-- Monitoring System -->
+    <div class="col-md-12 mt-3">
+      <label class="form-label">Was the Discharge Monitoring and Control System in Operation?<span class="text-danger">*</span></label>
+      <select aria-placeholder="Select Yes or No" name="monitoring_system" class="form-control">
+       
+        <option value="Yes" selected>Yes</option>
+        <option value="No">No</option>
+      </select>
+    </div>
+  
+    <!-- Regular Checkup -->
+    <div class="col-md-12 mt-3">
+      <label class="form-label">Was a Regular Checkup Kept on the Effluent and the Surface of the Water?<span class="text-danger">*</span></label>
+      <select aria-placeholder="Select Yes or No" name="regular_checkup" class="form-control">
+        
+        <option value="Yes" selected>Yes</option>
+        <option value="No">No</option>
+      </select>
+    </div>
+  
+    <!-- Oily Water Transferred to Slop Tanks (Dynamic) -->
+    <div class="col-md-12 mt-4">
+      <h5 class="h5 d-inline">Quantity of Oily Water Transferred to Slop Tank(s)</h5>
+      <button type="button" class="btn btn-sm btn-primary" id="addSlopTank">Add Tank</button>
+    </div>
+    <div id="slopTankEntries" class="col-md-12 mt-2"></div>
+  
+    <!-- Discharged to Shore Reception Facilities -->
+    <div class="row col-md-12 mt-4">
+      <div class="col-md-12">
+        <h5 class="h5">Discharged to Shore Reception Facilities</h5>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Port<span class="text-danger">*</span></label>
+        <input type="text" placeholder="Enter Port Name" name="shore_port" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Quantity Involved (m<sup>3</sup>)<span class="text-danger">*</span></label>
+        <input type="number" placeholder="Enter Quantity" name="shore_quantity" class="form-control">
+      </div>
+    </div>
+  </form>
+  
+
+<!-- Discharge of water from slop tanks into the sea -->
+<form action="" style="display:none;" class="mt-5" id="orb1-i-form">
+    <div class="row mb-3">
+        <div class="col-md-12 d-flex justify-content-between align-items-center">
+            <h4>Discharge of water from slop tanks into the sea<span class="text-danger">*</span></h4>
+            <button type="button" class="btn btn-primary" id="add-tank-btn">Add Tank</button>
+        </div>
+    </div>
+
+    <!-- Dynamic Tank Identity Section -->
+    <div id="tank-section-container">
+        <div class="tank-identity-row d-flex mb-2">
+            <input type="text" name="tank_identity[]" class="form-control me-2" placeholder="Enter Tank name">
+            <button type="button" class="btn btn-danger remove-tank-btn">Remove</button>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Static Fields (One set for all tanks) -->
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label class="form-label">Time of settling from last entry of residues<span class="text-danger">*</span></label>
+            <input type="time" name="settling_last_residues" class="form-control">
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Time of settling from last discharge<span class="text-danger">*</span></label>
+            <input type="time" name="settling_last_discharge" class="form-control">
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Rate of discharge (m³/hour)<span class="text-danger">*</span></label>
+            <input type="number" name="rate_of_discharge" class="form-control" placeholder="Enter rate">
+        </div>
+    </div>
+
+    <!-- Repeat this style for all other static fields as you have -->
+    <!-- Keep the remaining static fields here as is (No need to change) -->
+
+    <!-- Example last static section -->
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label class="form-label">Ullage oil/water interface on completion (m)<span class="text-danger">*</span></label>
+            <input type="text" name="ullage_completion" class="form-control">
+        </div>
+        <div class="col-md-8">
+            <label class="form-label">Confirm all valves closed after discharge<span class="text-danger">*</span></label>
+            <select name="valves_closed" class="form-control">
+                <option value="">Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+    </div>
+</form>
+
+  
+                                           <!-- Collection,Transfer and disposal of residues and oily mixtures not otherwise dealt with -->
+                                        <form action="" style="display:none;" class="mt-5" id="orb1-j-form">
+                                            
+                                            
+                                            <div class="row mb-3">
+                                                <div class="col-md-12 mb-2">
+                                                    <h4 class="h4 d-inline">Collection,Transfer and disposal of residues and oily mixtures not otherwise dealt with</h4>
+                                                    <button onclick="addCTSTank()" type="button" class="btn btn-primary">Add Tank</button>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3" id="CTS">
+                                                <div class="col-md-12 mb-2">
+                                                    <label for="tank-identity" class="form-label">Tank Identity<span class="text-danger">*</span></label>
+                                                    <input type="text" placeholder="Enter Tank name" name="tank-identity" id="tank-identity" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">   
+                                                <div class="col-md-12 mb-2">
+                                                    <label for="transferredQuantity" class="form-label">Quantity transferred of disposed of from each tank(quantity in m<sup>3</sup>)<span class="text-danger">*</span></label>
+                                                    <input type="number" placeholder="Enter Quantity" name="transferredQuantity" id="transferredQuantity" class="form-control">
+                                                </div>
+                                                <div class="col-md-12 mb-2">
+                                                    <label for="Method of transfer or disposal" class="form-label">Method of transfer or disposal<span class="text-danger">*</span></label>
+                                                    <select name="Method of transfer or disposal" class="form-control" id="Method-of-transfer-or-disposal">
+                                                        <option value="" selected>Method of transfer or disposal</option>
+                                                        <option value="disposal to reception facilities">Disposal to reception facilities</option>
+                                                        <option value="mixed with cargo">Mixed with cargo</option>
+                                                        <option value="transferred to or from (an)other tank(s) including transfer from machinery space oil residue(sludge) and oily bilge water tanks">transferred to or from (an)other tank(s) including transfer from machinery space oil residue(sludge) and oily bilge water tanks</option>
+                                                        <option value="other method">Other method</option>
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3" id="methodOfTransportDisposal">
+
+                                            </div>
+                                        </form>
+
+                                        <!-- Discharge of clean ballast contained cargo tanks -->
+                                        <form action="" style="display:none;" class="mt-5" id="orb1-k-form">
+                                            <div class="row mb-3">
+                                                <div class="col-md-12 mb-3">
+                                                    <h4 class="h4 d-inline">Discharge of clean ballast contained in cargo tanks</h4>
+                                                    
+                                                </div>
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="tanksDischarged" class="form-label">Identity of Tanks discharged<span class="text-danger">*</span></label>
+                                                    <button type="button" class="btn btn-primary" onclick="addTanksDischarged()">Add Tank</button>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="row mb-3" id="tanks-discharged">
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="tank-identity" class="form-label"> Tank  Identity<span class="text-danger">*</span></label>
+                                                    <input type="text"placeholder="Enter Tank name" name="tanks-in-tdt" id="tank-identity" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="Position of ship at start of discharge" class="form-label">Position of ship at start of discharge<span class="text-danger">*</span></label>
+                                                    <input type="text"placeholder="Position of ship at start of discharge" name="Position of ship at start of discharge" id="Position of ship at start of discharge" class="form-control">
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="was(were) the tank(s) empty on completion ?" class="form-label">was(were) the tank(s) empty on completion ?<span class="text-danger">*</span></label>
+                                                    <select aria-placeholder="say Yes or No" class="form-control" name="was(were) the tank(s) empty on completion ?" id="was(were) the tank(s) empty on completion ?">
+                                                
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="Position of ship on completion" class="form-label">Position of ship on completion if different from 58<span class="text-danger">*</span></label>
+                                                    <input type="text"placeholder="Enter Position" name="Position of ship on completion" id="Position of ship on completion" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label for="regular checkup kept" class="form-label">Was a regular checkup kept on the effluent and the surface of the water in the locality of the discharge<span class="text-danger">*</span></label>
+                                                    <select aria-placeholder="say Yes or No" name="regular checkup kept" class="form-control" id="regular checkup kept">
+                                                        
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </form>
+                
+                                        <!-- Discharge of ballast from dedicated clean ballast tanks (CBT Tankers only) -->
+                                        <form action="" style="display:none;" class="mt-5" id="orb1-l-form">
+                                            <div class="row mb-3">
+                                                <div class="col-md-12 mb-3">
+                                                    <h4 class="h4 d-inline">Discharge of ballast from dedicated clean ballast tanks (CBT Tankers only)</h4>
+                                                    
+                                                </div>
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="tanksDischarged" class="form-label">Identity of Tank(s) discharged</label>
+                                                    <button type="button" class="btn btn-primary" onclick="addTanksDischargedCBT()">Add Tank</button>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="row mb-3" id="tanks-discharged-CBT">
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="tank-identity" class="form-label"> Tank  Identity<span class="text-danger">*</span></label>
+                                                    <input type="text"placeholder="Enter Tank name" name="tank-identity" id="tank-identity" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="Position of ship at start of discharge of clean ballast into the sea" class="form-label">Position of ship at start of discharge of clean ballast into the sea<span class="text-danger">*</span></label>
+                                                    <input type="text"placeholder="Position of ship at start of discharge" name="Position of ship at start of discharge" id="Position of ship at start of discharge of clean ballast into the sea" class="form-control">
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="Time of ship at start of discharge of clean ballast into the sea" class="form-label">Time of ship at start of discharge of clean ballast into the sea<span class="text-danger">*</span></label>
+                                                    <input type="time"placeholder="" name="Time of ship at start of discharge of clean ballast into the sea" id="Time of ship at start of discharge of clean ballast into the sea" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="Position of ship on completion of discharge into the sea" class="form-label">Position of ship on completion of discharge into the sea<span class="text-danger">*</span></label>
+                                                    <input type="text"placeholder="Position of ship at start of discharge" name="Position of ship at start of discharge" id="Position of ship at start of discharge of clean ballast into the sea" class="form-control">
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="Time of ship on completion of discharge into the sea" class="form-label">Time of ship on completion of discharge into the sea<span class="text-danger">*</span></label>
+                                                    <input type="time"placeholder="" name="TSCDS" id="Time of ship on completion of discharge into the sea" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="quantityDischargedintothesea" class="form-label">Quantity Discharged into the sea in m<sup>3</sup><span class="text-danger">*</span></label>
+                                                    <input type="number"placeholder="Enter quantity" id="quantityDischargedintothesea" class="form-control">
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="quantityDischargedintoRF " class="form-label">Quantity Discharged to reception facilities<span class="text-danger">*</span></label>
+                                                    <input type="number"placeholder="Enter quantity" id="quantityDischargedintoRF" class="form-control">
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="portofRF" class="form-label">Port(quantity discharged to reception facilities)<span class="text-danger">*</span></label>
+                                                    <input type="number"placeholder="Enter Port Name" id="portofRF" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-4">
+                                                    <label for="WTAIOO" class="form-label">Was there any indication of oil contamination of the ballast water before or during into the sea ?<span class="text-danger">*</span></label>
+                                                    <select name="WTAIOO" id="WTAIOO" class="form-select form-control">
+                                                        <option value="" selected>select</option>
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="WDM" class="form-label">Was the discharge monitored by an oil content meter ?<span class="text-danger">*</span></label>
+                                                    <select name="WDM" id="WDM" class="form-select form-control">
+                                                        <option value="" selected>select</option>
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option> 
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-5">
+                                                <div class="col-md-12 mb-2">
+                                                    <h5 class="h5">Time and Position of ship when valves separating dedicated clean ballast tanks from the cargo and stripping lines were closed on completion of deballasting</h5>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="Position " class="form-label">Position<span class="text-danger">*</span></label>
+                                                    <input type="text"placeholder="Position" name="Position" class="form-control">
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="Time" class="form-label">Time<span class="text-danger">*</span></label>
+                                                    <input type="time"placeholder="" name="Time" class="form-control">
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <!-- Condition of oil discharge monitoring and control system -->
+                                        <form action="" style="display:none;" class="mt-5" id="orb1-m-form">
+                                            <div class="row mb-3">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="time-of-system-failure" class="form-label">Time of System Failure<span class="text-danger">*</span></label>
+                                                    <input type="time" name="time-of-system-failure" id="time-of-system-failure" class="form-control">
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="time-of-system-operational" class="form-label">Time when system has been made operational<span class="text-danger">*</span></label>
+                                                    <input type="time" name="time-of-system-operational" id="time-of-system-operational" class="form-control">
+                                                </div>
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="reason-for-failure" class="form-label">Reason for Failure<span class="text-danger">*</span></label>
+                                                    <textarea type="text" rows="5"  name="reason-for-failure" placeholder="Reason for Failure" id="reason-for-failure" class="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <!-- Accidental or other exceptional discharges of oil -->
+                                         <form action="" style="display:none;" class="mt-5" id="orb1-n-form">
+                                            <div class="row mb-3">
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="timeofoccurence" class="form-label" >Time of Occurence<span class="text-danger">*</span></label>
+                                                    <input type="time" name="timeofoccurence" id="timeofoccurence" class="form-control">
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="portattimeofoccurence" class="form-label" >Port at time of Occurence<span class="text-danger">*</span></label>
+                                                    <input type="text" name="portattimeofoccurence" id="portattimeofoccurence" class="form-control">
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="positiontimeofoccurence" class="form-label" >Position of ship at time of Occurence<span class="text-danger">*</span></label>
+                                                    <input type="text"placeholder="Enter Position" name="positiontimeofoccurence" id="positiontimeofoccurence" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="Approximate quantity in m3" class="form-label" >Approximate quantity in m<sup>3</sup><span class="text-danger">*</span></label>
+                                                    <input type="number" placeholder="Enter quantity"name="Approximate quantity in m3" id="Approximate quantity in m3" class="form-control">
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="typeOfOil" class="form-label" >Type of Oil<span class="text-danger">*</span></label>
+                                                    <select name="typeOfOil" id="typeOfOil" class="form-control">
+                                                        <option value="" selected>Oil Type</option>
+                                                        <option value="Crude Oil">Crude Oil</option>
+                                                        <option value="Fuel Oil">Fuel Oil</option>
+                                                        <option value="Lubricating Oil">Lubricating Oil</option>
+                                                        <option value="Sludge (Oily Residues)">Sludge (Oily Residues)</option>
+                                                        <option value="Bilge Water (Oily Mixtures)">Bilge Water (Oily Mixtures)</option>
+                                                        <option value="Ballast Water Contaminated with Oil">Ballast Water Contaminated with Oil</option>
+                                                        <option value="Cargo Residues (Oil Contaminants in Tanks)">Cargo Residues (Oil Contaminants in Tanks)</option>
+                                                        <option value="Slop Oil">Slop Oil</option>
+                                                        <option value="Dirty Ballast">Dirty Ballast</option>
+                                                        <option value="Tank Washings">Tank Washings</option>
+                                                        <option value="Oil-Contaminated Drain Water">Oil-Contaminated Drain Water</option>
+                                                        <option value="Oil-Based Cargoes">Oil-Based Cargoes</option>
+                                                        <option value="Recovered Oil from Spill Response">Recovered Oil from Spill Response</option>
+                                                        <option value="Sludge from Purifiers">Sludge from Purifiers</option>
+                                                        <option value="Waste Oil from Machinery Spaces">Waste Oil from Machinery Spaces</option>
+                                                    </select>
+                                                    
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="cde" class="form-label" >Circumstances of discharge or escape<span class="text-danger">*</span></label>
+                                                    <input placeholder="Enter circumstances" type="text" name="cde" id="cde" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="reasons" class="form-label" >Reasons<span class="text-danger">*</span></label>
+                                                    <textarea placeholder="General Reasons for circumstances of discharge"rows="6" type="text" name="reasons" id="reasons" class="form-control"></textarea>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="generalRemarks" class="form-label" >General Remarks<span class="text-danger">*</span></label>
+                                                    <textarea placeholder="General Remarks" type="text" name="generalRemarks" rows="6" id="generalRemarks" class="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                         </form>
+
+                                         <!-- Additional operational procedures and general remarks -->
+                                        <form action="" style="display:none;" class="mt-5" id="orb1-o-form">
+                                            <div class="row mb-3">
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="additional-operational-procedures" class="form-label">Additional Operational Procedures<span class="text-danger">*</span></label>
+                                                    <textarea placeholder="write additional procedures" name="additional-operational-procedures" id="additional-operational-procedures" cols="30" rows="5" class="form-control"></textarea>
+                                                </div>
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="general-remarks" class="form-label">General Remarks<span class="text-danger">*</span></label>
+                                                    <textarea placeholder="General Remarks" name="general-remarks" id="general-remarks" cols="30" rows="5" class="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        
+                                        <!-- Loading of Ballast water -->
+                                         <form action="" style="display:none;" class="mt-5" id="orb1-p-form">
+                                            <div class="row mb-3">
+                                                <div class="col-md-12 mb-3">
+                                                    <h4 class="h4 d-inline">Loading of Ballast water</h4>
+                                                    
+                                                </div>
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="tanksDischarged" class="form-label">Loading of Ballast water<span class="text-danger">*</span></label>
+                                                    <button type="button" class="btn btn-primary" onclick="addTanksDischargedLBW()">Add Tank</button>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="row mb-3" id="tanks-discharged-LBW">
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="tank-identity" class="form-label"> Tank  Identity<span class="text-danger">*</span></label>
+                                                    <input type="text"placeholder="Enter Tank name" name="tank-identity" id="tank-identity" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="positionOfShip" class="form-label">Position Of Ship when Ballasted<span class="text-danger">*</span></label>
+                                                    <input type="text" name="positionOfShip" id="positionOfShip" class="form-control">
+                                                
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="quantityofballast" class="form-label">Total quantity of ballast loaded in m<sup>3<span class="text-danger">*</span></label>
+                                                    <input type="text" name="quantityofballast" id="quantityofballast" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label for="Remarks" class="form-label">Remarks<span class="text-danger">*</span></label>
+                                                    <textarea name="Remarks" class="form-control" id="Remarks" placeholder="Write remarks" rows="5"></textarea>
+                                                </div>
+                                            </div>
+                                         </form>
+
+                                         <!-- Re-allocation of ballast water within the ship -->
+                                         <form action="" style="display:none;" class="mt-5" id="orb1-q-form">
+                                            <div class="row mb-3">
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="Reason for re-allocation" class="form-label">Reason for re-allocation<span class="text-danger">*</span></label>
+                                                    <textarea placeholder="Write reasons for re-allocation" name="Reason for re-allocation" class="form-control" id="Reason for re-allocation" rows="10"></textarea>
+                                                </div>
+                                            </div>
+                                         </form>
+                                        <!-- ballast water discharge to reception facility -->
+                                        <form action="" style="display:none;" class="mt-5" id="orb1-r-form">
+                                            <div class="row mb-3">
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="Port-where-ballast-water-was-discharged" class="form-label">Port where ballast water was discharged<span class="text-danger">*</span></label>
+                                                    <input type="text" placeholder="Enter Port Name" name="Port where ballast water was discharged" id="Port-where-ballast-water-was-discharged" class="form-control">
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="Name-or-Designation-to-reception-facility" class="form-label">Name or Designation to reception facility<span class="text-danger">*</span></label>
+                                                    <input placeholder="Enter name or designation" type="text" name="Name-or-Designation-to-reception-facility" id="Name-or-Designation-to-reception-facility" class="form-control">
+                                                </div>
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="TQOBW" class="form-label">Total quantity of ballast water was discharged in m<sup>3</sup><span class="text-danger">*</span></label>
+                                                    <input placeholder="Enter total quantity" type="text" name="TQOBW" id="TQOBW" class="form-control">
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                        </form>
+                                         <!-- Buttons -->
+                                        <div class="d-flex justify-content-end  mt-5" id="form-buttons" style="display: none !important;">
+                                            <button class="btn btn-danger m-1" type="reset">Cancel</button>
+                                            <button type="submit" class="btn btn-success m-1">Submit</button>
+                                            
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -392,20 +1140,533 @@
     <!-- Custom js for this page -->
     <script src="assets/js/dashboard.js"></script>
     <!-- End custom js for this page -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        document.querySelector('[data-toggle="minimize"]').addEventListener('click', function() {
+            document.getElementById('website-name').classList.toggle('d-none');
+          });
+        document.getElementById("addTankLoading").addEventListener("click", function () {
+            const tankEntries = document.getElementById("tankEntriesLOOC");
+            const tankDiv = document.createElement("div");
+            tankDiv.classList.add("row", "mb-2", "tank-entry");
+        
+            tankDiv.innerHTML = `
+                <div class="col-md-5">
+                    <input type="text" name="tankIdentity[]" class="form-control" placeholder="Tank Identity" required>
+                </div>
+                <div class="col-md-5">
+                    <input type="number" name="quantityLoadedM3[]" class="form-control" placeholder="Quantity Loaded (m³)" step="0.01" required>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-danger btn-sm remove-tank">Remove</button>
+                </div>
+            `;
+        
+            tankEntries.appendChild(tankDiv);
+        
+            // Enable remove button for new entries
+            updateRemoveButtons();
+        });
+        
+        // Handle removing tank entries
+        document.getElementById("tankEntriesLOOC").addEventListener("click", function (event) {
+            if (event.target.classList.contains("remove-tank")) {
+                event.target.closest(".tank-entry").remove();
+                updateRemoveButtons();
+            }
+        });
+        
+        // Enable/disable remove buttons to keep at least one tank entry
+        function updateRemoveButtons() {
+            const tankEntries = document.querySelectorAll(".tank-entry");
+            document.querySelectorAll(".remove-tank").forEach((button, index) => {
+                button.disabled = tankEntries.length === 1;
+            });
+        }
+        
+        // Initialize remove button state on page load
+        updateRemoveButtons();
+        </script>
+    <script>
+        $(document).ready(function () {
+            // Add Tank Identity Input
+            $('#add-tank-btn').click(function () {
+                let tankInput = `
+                    <div class="tank-identity-row d-flex mb-2">
+                        <input type="text" name="tank_identity[]" class="form-control me-2" placeholder="Enter Tank name">
+                        <button type="button" class="btn btn-danger remove-tank-btn">Remove</button>
+                    </div>`;
+                $('#tank-section-container').append(tankInput);
+            });
+    
+            // Remove specific Tank Identity Input (only if more than 1 tank)
+            $(document).on('click', '.remove-tank-btn', function () {
+                if ($('#tank-section-container .tank-identity-row').length > 1) {
+                    $(this).closest('.tank-identity-row').remove();
+                }
+            });
+        });
+    </script>
+    
     <script>
         window.addEventListener('load', function () {
-
-            if(!sessionStorage.getItem('token')) {
-
-window.location.href = 'login.html';
-}
-
             setTimeout(function () {
                 const preloader = document.getElementById('preloader');
             preloader.classList.add('hide'); 
             },500);
         });
     </script>
+    <script>
+    $(document).ready(function () {
+        $('#orb2-operation-select').on('change', function () {
+            var selectedValue = $(this).val();
+            
+            // Hide all forms first
+            $('[id^="orb1-"]').hide();
+    
+            // Show the selected form dynamically if a valid option is selected
+            if (selectedValue) {
+                $('#orb1-' + selectedValue.toLowerCase() + '-form').slideDown();
+                $('#form-buttons').show();
+            } else {
+                $('#form-buttons').hide();
+            }
+        });
+    
+        $('#cleaned-select').change(function () {
+            $('#orb1-type-of-oil').toggle($(this).val() === 'no');
+        });
+    });
+    
+    </script>
+    <script>
+        $(document).ready(function () {
+
+        //  Generic function to add simple tank fields (one input per row)
+        function addTankField(containerSelector) {
+            const tankField = `
+                <div class="row mb-2 tank-entry">
+                    <div class="col-md-10">
+                        <input type="text"  name="tankIdentity[]" class="distanks form-control" placeholder="Enter Tank Identity">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-danger btn-sm remove-tank">Remove</button>
+                    </div>
+                </div>`;
+            $(containerSelector).append(tankField);
+            updateRemoveButtons(containerSelector);
+        }
+
+        //  For complex slop discharge tank blocks (full section clone)
+        function addSlopDischargeTank() {
+            let $clone = $('.tank-section-template').clone().removeClass('tank-section-template').addClass('tank-section').show();
+            $('#tank-section-container').append($clone);
+        }
+
+        //  Ensures at least one tank remains in simple tank forms
+        function updateRemoveButtons(containerSelector) {
+            const entries = $(containerSelector).find(".tank-entry");
+            if (entries.length === 1) {
+                entries.find(".remove-tank").prop('disabled', true);
+            } else {
+                entries.find(".remove-tank").prop('disabled', false);
+            }
+        }
+
+        //  Initialize one tank field for each form
+        addTankField("#tankEntriesDischarge");
+        addTankField("#slopTankEntries");
+        
+        addTankField("#tankIdentityContainer");
+        addTankField("#tankEntriesUnload");
+        addTankField("#tankEntriesBallast");
+        addTankField("#tankEntriesCBT");
+        addTankField("#tankEntriesCleaning");
+
+        //  Add Tank - Dirty Ballast Discharge
+        $("#addTankDischarge").click(function () {
+            addTankField("#tankEntriesDischarge");
+        });
+
+        //  Add Slop Tank - Oily Water Transfer
+        $("#addSlopTank").click(function () {
+            addTankField("#slopTankEntries");
+        });
+
+        //  Add Loading Tank
+        $("#addTankLoading").click(function () {
+            addTankField("#tankEntries");
+        });
+
+        //  Add Cleaning Tank
+        $("#addTankCleaning").click(function () {
+            addTankField("#tankEntriesCleaning");
+        });
+
+        //  Add Transfer Tank
+        $("#addTankTransfer").click(function () {
+            addTankField("#tankIdentityContainer");
+        });
+
+        //  Add Unloading Tank
+        $("#addTankUnload").click(function () {
+            addTankField("#tankEntriesUnload");
+        });
+
+        //  Add Ballast Tank
+        $("#addTankBallast").click(function () {
+            addTankField("#tankEntriesBallast");
+        });
+
+        //  Add CBT Ballast Tank
+        $("#addTankCBT").click(function () {
+            addTankField("#tankEntriesCBT");
+        });
+
+        //  Add Slop Discharge Tank (for "Discharge of water from slop tanks into the sea")
+        $("#addSlopDischargeTankBtn").click(function () {
+            addSlopDischargeTank();
+        });
+
+        //  Remove tank functionality for simple tank forms
+        $(document).on("click", ".remove-tank", function () {
+            const container = $(this).closest('.tank-entry').parent();
+            if (container.find(".tank-entry").length > 1) {
+                $(this).closest(".tank-entry").remove();
+                updateRemoveButtons(container);
+            }
+        });
+
+        //  Remove full slop discharge tank section
+        $(document).on("click", ".remove-slop-discharge", function () {
+            $(this).closest(".tank-section").remove();
+        });
+    });
+    </script>
+ <script> 
+    $(document).ready(function () {
+        // Add Tank button functionality
+        $('#add-tank-btn').click(function () {
+            // Clone the hidden template, remove style/display none, and append it
+            let $clone = $('#orb1-i-form .tank-section').first().clone();
+            $clone.show(); // Make it visible
+            $clone.removeAttr('style'); // Remove inline display:none
+            $('#tank-section-container').append($clone);
+        });
+
+        // Remove specific tank block
+        $(document).on('click', '.remove-tank', function () {
+            if($('#tank-section-container .tank-section').length > 1)
+            {
+            $(this).closest('.tank-section').remove();
+            }
+        });
+
+        // Optionally: Add one tank section by default when form is shown
+      
+                $('#add-tank-btn').trigger('click');
+           
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#Method-of-transfer-or-disposal").change(function () {
+            let selectedValue = $(this).val();
+            let container = $("#methodOfTransportDisposal");
+    
+            // Clear previous content
+            container.empty();
+    
+            // Append relevant fields based on selection
+            if (selectedValue == 'disposal to reception facilities') {
+                container.append(`
+                    <div class="col-md-6 mb-2">
+                        <label for="port" class="form-label">Port</label>
+                        <input type="text" placeholder="Enter port name" name="port" id="portNames" class="form-control">
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label for="QuantityInvolved" class="form-label">Quantity involved</label>
+                        <input type="number" placeholder="Enter Quantity" name="QuantityInvolved" id="QuantityInvolved" class="form-control">
+                    </div>
+                `);
+            }
+            else if (selectedValue == 'mixed with cargo') {
+                container.append(`
+                    <div class="col-md-6 mb-2">
+                        <label for="QuantityInvolved" class="form-label">Quantity in m<sup>3</sup></label>
+                        <input type="number" placeholder="Enter Quantity" name="QuantityInvolved" id="QuantityInvolved" class="form-control">
+                    </div>
+                `);
+            }
+            else if (selectedValue == 'transferred to or from (an)other tank(s) including transfer from machinery space oil residue(sludge) and oily bilge water tanks') {
+                container.append(`
+                    <div class="col-md-12 mb-3">
+                        <h5 class="h5 d-inline form-label">Identify of Tanks</h5>
+                        <button type="button" class="btn btn-primary" id="addTankBtn">Add Tank</button>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="transferredQuantity" class="form-label">Quantity transferred</label>
+                        <input type="number" placeholder="Enter Quantity" name="transferredQuantity" id="transferredQuantity" class="form-control">
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label for="totalQuantity" class="form-label">Total Quantity in m<sup>3</sup></label>
+                        <input type="number" placeholder="Enter Quantity" name="totalQuantity" id="totalQuantity" class="form-control">
+                    </div>
+                    <div id="tankContainer">
+                        ${generateTankItem(true)} <!-- Default single tank item -->
+                    </div>
+                `);
+            }
+            else if (selectedValue == 'other method') {
+                container.append(`
+                    <div class="col-md-6 mb-3">
+                        <label for="NameOfMethod" class="form-label">Method Name</label>
+                        <input type="text" placeholder="Enter Method Name" name="NameOfMethod" id="NameOfMethod" class="form-control">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="QuantityDisposed" class="form-label">Quantity disposed of in m<sup>3</sup></label>
+                        <input type="number" placeholder="Enter Quantity" name="QuantityDisposed" id="QuantityDisposed" class="form-control">
+                    </div>
+                `);
+            }
+        });
+    
+        // Function to generate a tank input field with or without a remove button
+        function generateTankItem(isFirstTank = false) {
+            return `
+                <div class="col-md-12 mb-3 tank-item">
+                    <label class="form-label">Tank Identity</label>
+                    <div class="d-flex">
+                        <input type="text" placeholder="Enter Tank Name" name="tankIdentity[]" class="form-control me-2">
+                        ${isFirstTank ? '' : '<button type="button" class="btn btn-danger removeTankBtn">Remove</button>'}
+                    </div>
+                </div>
+            `;
+        }
+    
+        // Event delegation to handle adding tanks dynamically
+        $(document).on("click", "#addTankBtn", function () {
+            $("#tankContainer").append(generateTankItem());
+        });
+    
+        // Event delegation to remove a tank item dynamically, ensuring at least one remains
+        $(document).on("click", ".removeTankBtn", function () {
+            if ($(".tank-item").length > 1) {
+                $(this).closest(".tank-item").remove();
+            }
+        });
+    });
+    
+</script>
+<script>
+    $(document).ready(function () {
+        // Function to generate a Tank Identity input with or without a remove button
+        function generateTankItem(isFirstTank = false) {
+            return `
+                <div class="col-md-12 mb-3 tank-item">
+                    <label class="form-label">Tank Identity</label>
+                    <div class="d-flex">
+                        <input type="text" placeholder="Enter Tank name" name="tanks-in-tdt" class="form-control me-2">
+                        ${isFirstTank ? '' : '<button type="button" class="btn btn-danger removeTankBtn">Remove</button>'}
+                    </div>
+                </div>
+            `;
+        }
+    
+        // Ensure at least one tank identity is always present on page load
+        $("#tanks-discharged").html(generateTankItem(true));
+    
+        // Function to add a new tank identity dynamically
+        window.addTanksDischarged = function () {
+            $("#tanks-discharged").append(generateTankItem());
+        };
+    
+        // Event delegation to remove a tank identity dynamically, ensuring at least one remains
+        $(document).on("click", ".removeTankBtn", function () {
+            if ($(".tank-item").length > 1) {
+                $(this).closest(".tank-item").remove();
+            }
+        });
+    });
+    
+</script>
+<script>
+ $(document).ready(function () {
+    // Function to generate a tank input field with or without a remove button
+    function generateCTSTank(isFirstTank = false) {
+        return `
+            <div class="col-md-12 mb-3 tank-item">
+                <label class="form-label">Tank Identity</label>
+                <div class="d-flex">
+                    <input type="text" placeholder="Enter Tank name" name="tank-identity[]" class="form-control me-2">
+                    ${isFirstTank ? '' : '<button type="button" class="btn btn-danger removeCTSTankBtn">Remove</button>'}
+                </div>
+            </div>
+        `;
+    }
+
+    // Ensure at least one tank identity is always present on page load
+    $("#CTS").html(generateCTSTank(true));
+
+    // Function to add a new tank identity
+    window.addCTSTank = function () {
+        $("#CTS").append(generateCTSTank());
+    };
+
+    // Event delegation to remove a tank identity dynamically, ensuring at least one remains
+    $(document).on("click", ".removeCTSTankBtn", function () {
+        if ($(".tank-item").length > 1) {
+            $(this).closest(".tank-item").remove();
+        }
+    });
+});
+</script>
+<script>
+    function addTanksDischargedCBT() {
+        let container = $("#tanks-discharged-CBT");
+        let newTank = `
+            <div class="col-md-12 mb-3 tank-item">
+                <label class="form-label">Tank Identity</label>
+                <div class="d-flex gap-2">
+                    <input type="text" placeholder="Enter Tank name" name="tank-identity" class="form-control">
+                    <button type="button" class="btn btn-danger remove-tank-btn">Remove</button>
+                </div>
+            </div>
+        `;
+        container.append(newTank);
+    }
+    
+    // Handle dynamic removal and ensure at least one tank remains
+    $(document).on('click', '.remove-tank-btn', function () {
+        const container = $("#tanks-discharged-CBT");
+        if (container.find('.tank-item').length > 1) {
+            $(this).closest('.tank-item').remove();
+        } 
+    });
+</script>
+<script>
+    function addTanksDischargedLBW() {
+        let container = $("#tanks-discharged-LBW");
+        let newTank = `
+            <div class="col-md-12 mb-3 tank-item">
+                <label class="form-label">Tank Identity</label>
+                <div class="d-flex gap-2">
+                    <input type="text" placeholder="Enter Tank name" name="tank-identity" class="form-control">
+                    <button type="button" class="btn btn-danger remove-tank-btn">Remove</button>
+                </div>
+            </div>
+        `;
+        container.append(newTank);
+    }
+    
+    // Dynamic removal of tank with safety check for minimum one tank
+    $(document).on('click', '.remove-tank-btn', function () {
+        const container = $("#tanks-discharged-LBW");
+        if (container.find('.tank-item').length > 1) {
+            $(this).closest('.tank-item').remove();
+        } 
+    });
+</script>
+<script>
+    function generateTankBlock() {
+        return `
+        <div class="tank-wash-block border rounded p-3 mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5>Tank Washing Entry</h5>
+                <button type="button" class="btn btn-danger btn-sm remove-tank-cow">Remove</button>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Tank Identity<span class="text-danger">*</span></label>
+                    <input type="text" name="tankIdentity[]" class="form-control" placeholder="Enter Tank Name">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Port where crude oil wash carried out<span class="text-danger">*</span></label>
+                    <input type="text" name="cowPort[]" class="form-control">
+                </div>
+            </div>
+    
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Ship's position<span class="text-danger">*</span></label>
+                    <input type="text" name="cowShipPosition[]" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Number of machines in use<span class="text-danger">*</span></label>
+                    <input type="number" name="machinesInUse[]" class="form-control">
+                </div>
+            </div>
+    
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label class="form-label">Time of Start of Washing<span class="text-danger">*</span></label>
+                    <input type="time" name="startTimeWashing[]" class="form-control form">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Washing Pattern Employed<span class="text-danger">*</span></label>
+                    <select name="washingPattern[]" class="form-control form-select">
+                        <option value="" selected>Select </option>
+                        <option value="yes" >Yes</option>
+                        <option value = "no">No</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Washing Line Pressure<span class="text-danger">*</span></label>
+                    <input type="number" name="washingLinePressure[]" class="form-control">
+                </div>
+            </div>
+    
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Time Washing Completed/Stopped<span class="text-danger">*</span></label>
+                    <input type="time" name="endTimeWashing[]" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Method of Establishing Tank Cleanliness<span class="text-danger">*</span></label>
+                    <select name="methodOfEstablishing[]" class="form-select form-control">
+                        <option value="" selected>Select Method</option>
+                        <option value="Direct Observation">Direct Observation</option>
+                        <option value="Tank Washing Log">Tank Washing Log</option>
+                        <option value="Pressure Readings">Pressure Readings</option>
+                        <option value="Residue Measurement">Residue Measurement</option>
+                        <option value="Sampling and Inspection">Sampling and Inspection</option>
+                        <option value="Witness by Authorities">Witness by Authorities</option>
+                        <option value="Automation Logs">Automation Logs</option>
+                    </select>
+                </div>
+            </div>
+    
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <label class="form-label">Remarks<span class="text-danger">*</span></label>
+                    <textarea name="cowRemarks[]" class="form-control" rows="3"></textarea>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+    
+    $(document).ready(function() {
+        // Add first tank by default
+        $('#tankEntriesCOW').append(generateTankBlock());
+    
+        // Add Tank button
+        $('#addTankCOW').click(function() {
+            $('#tankEntriesCOW').append(generateTankBlock());
+        });
+    
+        // Remove tank block, ensure at least one remains
+        $(document).on('click', '.remove-tank-cow', function() {
+            if ($('.tank-wash-block').length > 1) {
+                $(this).closest('.tank-wash-block').remove();
+            } 
+        });
+    });
+</script> 
+<script src="assets/js/apiRequest.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="assets/js/axiosInstance.js"></script>  
+  <script src="assets/js/orb2.js" type="text/javascript"></script>  
 </body>
 
 </html>

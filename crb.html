@@ -37,7 +37,12 @@
             z-index: 9999;
         }
 
-
+        #website-name {
+            transition: opacity 0.3s;
+          }
+          #website-name.d-none {
+            opacity: 0;
+          }
         #preloader-content {
             text-align: center;
         }
@@ -69,7 +74,7 @@
                 <a class="sidebar-brand text-decoration-none text-white d-flex align-items-center gap-2"
                     href="index.html">
                     <span class="mdi mdi-database fs-6 text-success" style="font-size: 2rem !important;"></span>
-                    <span class="fs-6">ELOG</span>
+                    <span class="fs-6" id="website-name">ELOG</span>
                 </a>
             </div>
 
@@ -1003,6 +1008,10 @@
     <script src="assets/js/dashboard.js"></script>
     <!-- End custom js for this page -->
     <script>
+        document.querySelector('[data-toggle="minimize"]').addEventListener('click', function() {
+            document.getElementById('website-name').classList.toggle('d-none');
+          });
+          
         window.addEventListener('load', function () {
             if(!sessionStorage.getItem('token')){
                 window.location.href = 'login.html';

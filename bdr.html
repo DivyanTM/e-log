@@ -24,7 +24,12 @@
   <!-- <link rel="shortcut icon" href="assets/images/favicon.png" /> -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
- 
+    #website-name {
+      transition: opacity 0.3s;
+    }
+    #website-name.d-none {
+      opacity: 0;
+    }
     #preloader {
         position: fixed;
         top: 0;
@@ -71,7 +76,7 @@
       <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
         <a class="sidebar-brand text-decoration-none text-white d-flex align-items-center gap-2" href="index.html">
           <span class="mdi mdi-database fs-6 text-success" style="font-size: 2rem !important;"></span>
-          <span class="fs-6">ELOG</span>
+          <span class="fs-6" id="website-name">ELOG</span>
         </a>
       </div>
 
@@ -211,70 +216,74 @@
               <div class="card">
                 <div class="card-body">
                   <h3 class="card-title">Bunker Delivery Note</h3>
-                  
-                
+                  <p class="card-description">Fuel oil deliveries, including supplier information, fuel grade, sulphur content, and compliance with emission regulations.</p>
+                  <div class="row">
+                    <div class="d-flex col-md-12 justify-content-end">
+                      <button class="btn btn-info"><a href="bdrRecords.html" class="text-white text-decoration-none">View Records</a></button>
+                    </div>
+                  </div>
                   <div class="row mt-5">
                     <form id="bunkerDeliveryForm" class="col-md-12">
   
                         <!-- Bunkering Details -->
                         <div class="row mb-3">
                           <div class="col-md-6">
-                            <label class="form-label">Port of Bunkering</label>
-                            <input type="text" class="form-control" id="port" placeholder="Enter the port of bunkering" required>
+                            <label class="form-label">Port of Bunkering<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="port" placeholder="Enter the port of bunkering" >
                           </div>
                           <div class="col-md-6">
-                            <label class="form-label">Date of Commencement of Delivery</label>
-                            <input type="date" class="form-control" id="deliveryDate" required>
+                            <label class="form-label">Date of Commencement of Delivery<span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" id="deliveryDate" >
                           </div>
                         </div>
                       
                         <!-- Supplier Details -->
                         <div class="mb-3">
-                          <label class="form-label">Name of the Fuel Oil Supplier</label>
-                          <input type="text" class="form-control" placeholder="Enter the name of the supplier" id="supplierName" required>
+                          <label class="form-label">Name of the Fuel Oil Supplier<span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" placeholder="Enter the name of the supplier" id="supplierName" >
                         </div>
                         <div class="mb-3">
-                          <label class="form-label">Address of the Fuel Oil Supplier</label>
-                          <input type="text" class="form-control" placeholder="Enter the address of the supplier" id="supplierAddress" required>
+                          <label class="form-label">Address of the Fuel Oil Supplier<span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" placeholder="Enter the address of the supplier" id="supplierAddress" >
                         </div>
                         <div class="mb-3">
-                          <label class="form-label">Telephone Number of the Fuel Oil Supplier</label>
-                          <input type="tel" class="form-control" placeholder="Enter the telephone number of the supplier" id="supplierTelephone" required>
+                          <label class="form-label">Telephone Number of the Fuel Oil Supplier<span class="text-danger">*</span></label>
+                          <input type="tel" class="form-control" placeholder="Enter the telephone number of the supplier" id="supplierTelephone" >
                         </div>
                       
                         <!-- Fuel Oil Details -->
                         <div class="row mb-3">
                           <div class="col-md-6">
-                            <label class="form-label">Product Name</label>
-                            <input type="text" placeholder="Enter the product name" class="form-control" id="productName" required>
+                            <label class="form-label">Product Name<span class="text-danger">*</span></label>
+                            <input type="text" placeholder="Enter the product name" class="form-control" id="productName" >
                           </div>
                           <div class="col-md-6">
-                            <label class="form-label">Quantity Delivered (Metric Tons)</label>
-                            <input type="number" placeholder="Enter the quantity delivered" class="form-control" id="quantity" required>
+                            <label class="form-label">Quantity Delivered (Metric Tons)<span class="text-danger">*</span></label>
+                            <input type="number" step="0.01" min="0" placeholder="Enter the quantity delivered" class="form-control" id="quantity" >
                           </div>
                         </div>
                         <div class="row mb-3">
                           <div class="col-md-6">
-                            <label class="form-label">Density at 15°C (kg/m³)</label>
-                            <input type="number" placeholder="Enter the density" class="form-control" id="density" required>
+                            <label class="form-label">Density at 15°C (kg/m³)<span class="text-danger">*</span></label>
+                            <input type="number" step="0.01" min="0" placeholder="Enter the density" class="form-control" id="density" >
                           </div>
                           <div class="col-md-6">
-                            <label class="form-label">Sulfur Content (% m/m)</label>
-                            <input type="number" placeholder="Enter the sulfur content" class="form-control" id="sulfurContent" required>
+                            <label class="form-label">Sulfur Content (% m/m)<span class="text-danger">*</span></label>
+                            <input type="number" step="0.01" min="0" placeholder="Enter the sulfur content" class="form-control" id="sulfurContent" >
                           </div>
                         </div>
                       
                         <!-- Supplier Declaration (File Upload) -->
                         <div class="mb-3">
-                          <label class="form-label">Supplier Declaration (Upload Signed Document)</label>
-                          <input type="file" class="form-control" id="supplierDeclaration" accept=".pdf,.doc,.docx" required>
-                          <small class="form-text text-muted">Upload a signed declaration document (PDF or Word).</small>
+                          <label class="form-label">Supplier Declaration (Upload Signed Document)<span class="text-danger">*</span></label>
+                          <input type="file" class="form-control" id="supplierDeclaration" accept=".pdf" >
+                          <small class="form-text text-muted">Upload a signed declaration PDF document.</small>
                         </div>
                       
                        
                         <div class="mb-3 d-flex justify-content-end">
-                            <button type="reset" class="btn btn-danger m-1">Reset</button>
-                            <button type="submit" class="btn btn-primary m-1">Submit</button>
+                            <button type="button" onclick='clear()' class="btn btn-danger m-1">Reset</button>
+                            <button type="submit" class="btn btn-success m-1">Submit</button>
                         </div>
                       
                     </form>
@@ -318,8 +327,15 @@
   <!-- endinject -->
   <!-- Custom js for this page -->
   <script src="assets/js/dashboard.js"></script>
+  <script src="assets/js/apiRequest.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="assets/js/axiosInstance.js"></script>
   <!-- End custom js for this page -->
   <script>
+    document.querySelector('[data-toggle="minimize"]').addEventListener('click', function() {
+      document.getElementById('website-name').classList.toggle('d-none');
+    });
+    
     window.addEventListener('load', function () {
       if(!sessionStorage.getItem('token')) {
 
@@ -331,6 +347,7 @@ window.location.href = 'login.html';
         },500);
     });
 </script>
+<script src="assets/js/bdn.js" type="text/javascript"></script>
 </body>
 
 </html>

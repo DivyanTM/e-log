@@ -26,15 +26,9 @@ document.querySelector('#fosForm').addEventListener('submit', async function (ev
        
         let response=await api.createfosRecord(data);
         alert(response.message);
-    } catch (error) {
+    } 
+    catch (error) {
         alert( error.response.data.message);
-        // console.error("Error in API call:", error.response ? error.response.data : error.message);
     }
-
-    // let records=await api.getAllFORRecords();
-    // console.log(records);
-    // console.log({date:date,sampleSealNumber:sampleSealNumber,bunkerDeliveryNoteReferenceNumber:bunkerDeliveryNoteReferenceNumber,
-    //     originOfSample:originOfSample,letterOfProtestIssued:letterOfProtestIssued,letterOfProtestCopyTo:letterOfProtestCopyTo,
-    //     dateSampleDestroyed:dateSampleDestroyed});
     
 }); 

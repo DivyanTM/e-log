@@ -53,6 +53,12 @@
     #preloader.hide {
         display: none;
     }
+    #website-name {
+      transition: opacity 0.3s;
+    }
+    #website-name.d-none {
+      opacity: 0;
+    }
 </style>
 </head>
 
@@ -69,7 +75,7 @@
       <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
         <a class="sidebar-brand text-decoration-none text-white d-flex align-items-center gap-2" href="index.html">
           <span class="mdi mdi-database fs-6 text-success" style="font-size: 2rem !important;"></span>
-          <span class="fs-6">ELOG</span>
+          <span class="fs-6" id="website-name">ELOG</span>
         </a>
       </div>
 
@@ -372,6 +378,10 @@ window.location.href = 'login.html';
             const preloader = document.getElementById('preloader');
         preloader.classList.add('hide'); 
         },500);
+    });
+
+    document.querySelector('[data-toggle="minimize"]').addEventListener('click', function() {
+      document.getElementById('website-name').classList.toggle('d-none');
     });
 </script>
 </body>
