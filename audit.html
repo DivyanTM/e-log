@@ -6,6 +6,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>ELOG</title>
+  
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+  <!-- Buttons extension CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+  <!-- Responsive extension CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
+
   <!-- plugins:css -->
   <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
@@ -22,7 +30,7 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <!-- End layout styles -->
   <!-- <link rel="shortcut icon" href="assets/images/favicon.png" /> -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ 
   <style>
  
     #preloader {
@@ -54,7 +62,119 @@
     #preloader.hide {
         display: none;
     }
+    .dataTables_length {
+        font-size: 16px !important;
+        
+        margin-bottom: 15px !important;
+        margin-left:20px !important;
+      }
+      .dataTables_length select {
+        padding: 6px 12px !important;
+        border-radius: 8px !important;
+        border: 1px solid #fff !important;
+       
+        
+      }
+      /* General styling for all DataTable buttons */
+.dt-button {
+    
+    color: white !;
+    padding: 8px 16px !important;
+    border: none !important;
+    margin-right: 3px !important;
+    cursor: pointer !important;
+    font-weight: bold !important;
+    transition: background-color 0.3s !important;
+  }
+  
+  /* Hover effect */
+  .dt-button:hover {
+    background-color: #43c9c2 !important;
+  }
+  
+  /* Optional: Style specific buttons differently */
+  .buttons-excel {
+    background-color: #28a745 !important;
+  }
+  
+  .buttons-pdf {
+    background-color: #dc3545 !important;
+  }
+  
+  .buttons-csv{
+    background-color: #14ca33 !important;
+  }
+  .buttons-copy{
+    background-color: #2f7a7a !important;
+  }
+  /* Style the Copy to Clipboard dialog */
+.dt-button-info {
+    background-color: #000 !important;
+    color: #28a745 !important;
+    border-radius: 10px;
+    padding: 20px !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3) !important;
+    font-size: 16px !important;
+    z-index: 9999 !important;
+  }
+  
+  /* Style the header */
+  .dt-button-info h2 {
+    margin: 0 0 10px !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+    color: #fff !important;
+  }
+  
+  /* Optional: Style the message inside */
+  .dt-button-info div {
+    font-size: 16px !important;
+  }
+  /* Pagination container */
+.dataTables_paginate {
+    margin-top: 15px !important;
+  }
+  
+  /* All pagination buttons */
+  .dataTables_paginate .paginate_button {
+    cursor: pointer !important;
+   
+  }
+  
+  /* Hover effect */
+  .dataTables_paginate .paginate_button:hover {
+    background-color: none !important;
+    color: none !important;
+    cursor: pointer !important;
+  }
+  
+  
+  /* Current active page */
+  .dataTables_paginate .paginate_button.current {
+    background-color: #000 !important;
+    color: white !important;
+    font-weight: bold;
+  }
+  
+  /* Disabled buttons */
+  .dataTables_paginate .paginate_button.disabled, .dataTables_paginate .paginate_button.disabled:hover{
+    color: #aaa !important;
+    cursor: not-allowed !important;
+  }
+  .table th, .jsgrid .jsgrid-table th,
+  .table td,
+  .jsgrid .jsgrid-table td{
+    padding:17px !important;
+  }
+  .table th{
+    font-weight: 50;
+    
+    color: #fff !important;
+    opacity: 0.7;
+    background-color: #000;
+  }
 </style>
+
 </head>
 
 <body>
@@ -209,137 +329,46 @@
             <div class="col-md-12 stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h3 class="card-title">Ozone-Depleting Substances Record Book</h3>
-                  <p class="card-description">Ozone-Depleting Substances Operations</p>
-                
-
-                  <div class="row">
-                    <div class="col-md-12">
-                      <label class="form-label" for="odsrb-table">Select Table</label>
-                      <select name="odsrb-table" id="odsrb-table" class="form-select form-control">
-                        <option value="" selected disabled>Select Table</option>
-                        <option value="odsrb-table-1">Equipments containing ODS</option>
-                        <option value="odsrb-table-2">Record of Ozone-Depleting Substances</option>
-                      </select>
+                  <h3 class="card-title">Audit Trail</h3>
+                  <p class="card-description">A detailed log of user activities and system events to ensure transparency and accountability.</p>
+                  <div class="table-responsive">
+                    <table id="employeeTable" class="table table-striped ">
+                        <thead>
+                            <tr>
+                              <th>SNO</th>
+                              <th>NAME OF CREATOR</th>
+                              <th>OPERATION TYPE</th>
+                              <th>RECORD BOOK</th>
+                              <th>DATE</th>
+                              <th>TIME</th>
+                              <th>REMARKS</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr><td>1</td><td>Admin</td><td>INSERT</td><td>Oil Record</td><td>2025-03-21</td><td>09:00</td><td>Initial entry created</td></tr>
+                            <tr><td>2</td><td>John Doe</td><td>UPDATE</td><td>Safety Log</td><td>2025-03-21</td><td>09:30</td><td>Updated tank levels</td></tr>
+                            <tr><td>3</td><td>Jane Smith</td><td>DELETE</td><td>Engine Log</td><td>2025-03-21</td><td>10:00</td><td>Removed duplicate entry</td></tr>
+                            <tr><td>4</td><td>Admin</td><td>INSERT</td><td>Deck Log</td><td>2025-03-21</td><td>10:15</td><td>Added new operation</td></tr>
+                            <tr><td>5</td><td>Mike Ross</td><td>UPDATE</td><td>Ballast Log</td><td>2025-03-21</td><td>10:45</td><td>Corrected volume error</td></tr>
+                            <tr><td>6</td><td>Rachel Green</td><td>INSERT</td><td>Fuel Log</td><td>2025-03-21</td><td>11:00</td><td>Added fueling record</td></tr>
+                            <tr><td>7</td><td>Harvey Specter</td><td>DELETE</td><td>Engine Log</td><td>2025-03-21</td><td>11:20</td><td>Removed invalid data</td></tr>
+                            <tr><td>8</td><td>Donna Paulsen</td><td>UPDATE</td><td>Oil Record</td><td>2025-03-21</td><td>11:45</td><td>Updated discharge details</td></tr>
+                            <tr><td>9</td><td>Admin</td><td>INSERT</td><td>Maintenance Log</td><td>2025-03-21</td><td>12:00</td><td>Routine maintenance recorded</td></tr>
+                            <tr><td>10</td><td>John Doe</td><td>UPDATE</td><td>Safety Log</td><td>2025-03-21</td><td>12:30</td><td>Inspection completed</td></tr>
+                            <tr><td>11</td><td>Jane Smith</td><td>INSERT</td><td>Ballast Log</td><td>2025-03-21</td><td>13:00</td><td>Ballast operation started</td></tr>
+                            <tr><td>12</td><td>Mike Ross</td><td>DELETE</td><td>Fuel Log</td><td>2025-03-21</td><td>13:30</td><td>Removed test data</td></tr>
+                            <tr><td>13</td><td>Rachel Green</td><td>UPDATE</td><td>Deck Log</td><td>2025-03-21</td><td>14:00</td><td>Adjusted timings</td></tr>
+                            <tr><td>14</td><td>Harvey Specter</td><td>INSERT</td><td>Engine Log</td><td>2025-03-21</td><td>14:15</td><td>Added new entry</td></tr>
+                            <tr><td>15</td><td>Donna Paulsen</td><td>UPDATE</td><td>Oil Record</td><td>2025-03-21</td><td>14:45</td><td>Corrected coordinates</td></tr>
+                            <tr><td>16</td><td>Admin</td><td>INSERT</td><td>Maintenance Log</td><td>2025-03-21</td><td>15:00</td><td>Lubrication completed</td></tr>
+                            <tr><td>17</td><td>John Doe</td><td>DELETE</td><td>Ballast Log</td><td>2025-03-21</td><td>15:30</td><td>Duplicate removed</td></tr>
+                            <tr><td>18</td><td>Jane Smith</td><td>INSERT</td><td>Deck Log</td><td>2025-03-21</td><td>16:00</td><td>New cargo loaded</td></tr>
+                            <tr><td>19</td><td>Mike Ross</td><td>UPDATE</td><td>Safety Log</td><td>2025-03-21</td><td>16:30</td><td>Safety drill logged</td></tr>
+                            <tr><td>20</td><td>Rachel Green</td><td>INSERT</td><td>Fuel Log</td><td>2025-03-21</td><td>17:00</td><td>Fuel topped up</td></tr>
+                          </tbody>
+                      </table>
+                  </div>
                     </div>
-                    <form action="" class="col-md-12 mt-5" id="odsrb-table-1" style="display: none;">
-                      <div class="row">
-                        <div class="col-md-6">
-                          <label for="table1-en" class="form-label">Equipment Name</label>
-                          <input type="text" class="form-control" id="table1-en" placeholder="Enter equipment name">
-                        </div>
-                        <div class="col-md-6">
-                          <label for="table1-refrigerant" class="form-label">Refrigerant</label>
-                          <input type="text" class="form-control" id="table1-refrigerant" placeholder="Enter Refrigerant Name">
-                        </div>
-                        </div>
-                        <div class="row mt-3">
-                        <div class="col-md-6">
-                          <label for="table1-location">Location on Board</label>
-                          <input type="text" class="form-control" id="table1-location" placeholder="Enter location">
-                        </div>
-                        <div class="col-md-6">
-                          <label for="table1-capacity">Capacity (kg)</label>
-                          <input type="text" class="form-control" id="table1-capacity" placeholder="Enter Capacity in kg">
-                        </div>
-                        </div>
-                        <div class="row mt-3">
-                          <div class="col-md-12">
-                            <label for="table1-remarks">Remarks</label>
-                            <textarea class="form-control" id="table1-remarks" rows="3" placeholder="Enter remarks"></textarea>
-                          </div>
-                        </div>
-                        <div class="row mt-3">
-                          <div class="col-md-12 d-flex justify-content-end ">
-                            <button type="reset" class="btn btn-danger m-1">Reset</button>
-                          <button type="submit" class="btn btn-primary m-1">Submit</button>
-                          </div>
-                        </div>
-                    </form>
-                    <form class="col-md-12 mt-5" id="odsrb-table-2" style="display: none;">
-                      <div class="row">
-                        <div class="col-md-4">
-                          <label class="form-label">Date</label>
-                          <input type="date" class="form-control">
-                        </div>
-                        <div class="col-md-4">
-                          <label class="form-label">Location on Board</label>
-                          <input type="text" class="form-control" placeholder="Enter location">
-                        </div>
-                        <div class="col-md-4">
-                          <label class="form-label" for="table2-odsname">ODS Name</label>
-                          <input type="text" id="table2-odsname" class="form-control" placeholder="Enter ODS name">
-                        </div>
-                      </div>
-  
-                      <div class="row mt-3">
-                        <div class="col-md-4">
-                          <label class="form-label">Capacity (kg)</label>
-                          <input type="number" class="form-control" placeholder="Enter capacity">
-                        </div>
-                        <div class="col-md-4">
-                          <label class="form-label">Equipment Name</label>
-                          <input type="text" class="form-control" placeholder="Enter equipment name">
-                        </div>
-                        <div class="col-md-4">
-                          <label class="form-label">Manufacturer</label>
-                          <input type="text" class="form-control" placeholder="Enter manufacturer">
-                        </div>
-                      </div>
-  
-                      <div class="row mt-3">
-                        <div class="col-md-6">
-                          <label class="form-label">Year of Installation</label>
-                          <input type="number" class="form-control" placeholder="Enter year">
-                        </div>
-                        <div class="col-md-6">
-                          <label class="form-label">Process Type</label>
-                          <select class="form-select form-control">
-                            <option selected>Choose...</option>
-                            <option>Refrigerant Addition</option>
-                            <option>Refrigerant Discharged</option>
-                            <option>Leak Test</option>
-                          </select>
-                        </div>
-                      </div>
-  
-                      <div class="mt-3">
-                        <label class="form-label">Process Amount (kg)</label>
-                        <input type="number" class="form-control" placeholder="Enter amount">
-                      </div>
-  
-               
-                   
-                      <div class="row mt-3">
-                        <div class="col-md-12">
-                          <label for="tabl2-occasion" class="form-label">Select Occasion</label>
-                          <select name="tabl2-occasion" id="tabl2-occasion" class="form-select form-control">
-                            <option value="" selected disabled>Select Occasion</option>
-                            <option value="">Recharge (full)</option>
-                            <option value="">Recharge (partial)</option>
-                            <option value="">Repair or Maintenance</option>
-                            <option value="">Dishcarge to atm (Delibrate)</option>
-                            <option value="">Dishcarge to atm (non-delibrate)</option>
-                            <option value="">Discharge to reception facility</option>
-                            <option value="">Supply to ship</option>
-                          </select>
-                        </div>
-                      </div>
-  
-                      <div class="rcol-md-12 mt-3 d-flex justify-content-end">
-                        <button type="reset" class="btn btn-danger m-1">Reset</button>
-                        <button type="submit" class="btn btn-primary m-1">Submit</button>
-                      </div>
-  
-                    </form>
-                    </div>
-
-                  <script>
-                    // document.getElementById('issueStatusOzone').addEventListener('change', function () {
-                    //   var issueDetails = document.getElementById('issueDetailsOzone');
-                    //   issueDetails.style.display = (this.value === 'yes') ? 'block' : 'none';
-                    // });
-                  </script>
                 </div>
               </div>
 
@@ -362,6 +391,23 @@
   <script src="assets/vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page -->
+     <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <!-- DataTables JS -->
+  <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+  <!-- Buttons extension JS -->
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
+  <!-- JSZip for Excel Export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <!-- PDFMake for PDF Export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+  <!-- Responsive extension JS -->
+  <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+
   <script src="assets/vendors/chart.js/Chart.min.js"></script>
   <script src="assets/vendors/progressbar.js/progressbar.min.js"></script>
   <script src="assets/vendors/jvectormap/jquery-jvectormap.min.js"></script>
@@ -378,48 +424,38 @@
   <!-- Custom js for this page -->
   <script src="assets/js/dashboard.js"></script>
   <!-- End custom js for this page -->
-   <script>
-    $('#odsrb-table').on('change', function() {
-      var selectedTable = $(this).val();
-    if(selectedTable === 'odsrb-table-1') {
-      $('#odsrb-table-1').show();
-      $('#odsrb-table-2').hide();
-    } else if(selectedTable === 'odsrb-table-2') {
-      $('#odsrb-table-1').hide();
-      $('#odsrb-table-2').show();
-    }
-    });
-   </script>
-     <script>
-      window.addEventListener('load', function () {
-        let token=sessionStorage.getItem('token');
-       
-        if(!sessionStorage.getItem('token')){
-          window.location='login.html';
-        }
-  
-        if (token) {
-          const base64Url = token.split(".")[1]; 
-          const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-          const decodedData = JSON.parse(atob(base64));
-          
-        if(decodedData.user.role_id!==1){
-          window.location='CEDashboard.html';
-        }
-          // document.querySelector('#username').textContent=decodedData.username;
-      }
-  
+  <script>
+    window.addEventListener('load', function () {
         setTimeout(function () {
-          const preloader = document.getElementById('preloader');
-          preloader.classList.add('hide');
-        }, 500);
+            const preloader = document.getElementById('preloader');
+        preloader.classList.add('hide'); 
+        },500);
+    });
+    
+    
+ 
+    
+</script>
+<script>
+    $(document).ready(function () {
+      $('#employeeTable').DataTable({
+        responsive: true,
+        paging: true,
+        searching: true,
+        ordering: true,
+        info: true,
+        dom: 'Blfrtip',  // B = Buttons, f = Search box, r = Processing, t = Table, i = Info, p = Pagination
+        buttons: [
+          'copy',
+          'csv',
+          'excel',
+          'pdf',
+          
+        ]
       });
-  
-      // document.querySelector('#logout').addEventListener('click',function(){
-      //   sessionStorage.removeItem('token');
-      //   window.location='login.html';
-      // });
-    </script>
+    });
+  </script>
+
 </body>
 
 </html>

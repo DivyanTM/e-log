@@ -400,20 +400,36 @@
     }
     });
    </script>
-   <script>
-    window.addEventListener('load', function () {
-
-      if(!sessionStorage.getItem('token')) {
-
-window.location.href = 'login.html';
-}
-
+    <script>
+      window.addEventListener('load', function () {
+        let token=sessionStorage.getItem('token');
+       
+        if(!sessionStorage.getItem('token')){
+          window.location='login.html';
+        }
+  
+        if (token) {
+          const base64Url = token.split(".")[1]; 
+          const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+          const decodedData = JSON.parse(atob(base64));
+          
+        if(decodedData.user.role_id!==1){
+          window.location='CEDashboard.html';
+        }
+          // document.querySelector('#username').textContent=decodedData.username;
+      }
+  
         setTimeout(function () {
-            const preloader = document.getElementById('preloader');
-        preloader.classList.add('hide'); 
-        },500);
-    });
-</script>
+          const preloader = document.getElementById('preloader');
+          preloader.classList.add('hide');
+        }, 500);
+      });
+  
+      // document.querySelector('#logout').addEventListener('click',function(){
+      //   sessionStorage.removeItem('token');
+      //   window.location='login.html';
+      // });
+    </script>
 </body>
 
 </html>

@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>ELOG</title>
+    <title>Garbage Record Book - Records</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
@@ -131,8 +131,8 @@
                 <div class="col-md-12 stretch-card">
                     <div class="card">
                         <div class="card-header">
-                          <h2 class="card-title mb-0">Fuel Oil Record</h2>
-                          <p class="text-secondary">Tracking and Control Record for MARPOL Fuel Oil Sample</p>
+                          <h3 class="card-title mb-0">Garbage Record Book</h3>
+                          <p class="text-secondary">Garbage Disposal Operations</p>
                         </div>
                         <div class="card-body">
                           <div id="orb1Grid" class="ag-theme-quartz-dark" style="width: 100%;height: 900px;"></div>
@@ -190,16 +190,17 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", async function () {
-    const response=await axiosInstance.get('/fos/all');
-    let data=response.data.records;
-      
+      const records=await api.getAllGRBRecords();
+
+      console.log(records);
+
+      let data=records;
    if(data){
     data.map(element => {
-      element.letterOfProtestIssued = element.letterOfProtestIssued ? "Yes" : "No";
-      element.approvalStatus=element.approvalStatus ? "Approved" : "Pending";
+       
       element.date=new Date(element.date).toLocaleDateString('eng-GB');
-      element.dateSampleDestroyed=new Date(element.dateSampleDestroyed).toLocaleDateString('eng-GB');
-      element.verifiedBy=element.verifiedBy ? element.verifiedBy : "N/A";
+      element.time=new Date(element.time).toLocaleTimeString('eng-GB');
+      element.approvalStatus=element.approvalStatus ? "Approved" : "Pending";
     });
 
    }else{
@@ -207,19 +208,27 @@
    }
 
   const gridOptions = {
+
     columnDefs: [
-     
       { headerName: "Record No", field: "recordID" },
       { headerName: "Date", field: "date" },
-      { headerName: "Bunker Delivery Note Reference Number", field: "bunkerDeliveryNoteReferenceNumber" },
-      { headerName: "origin Of Sample", field: "originOfSample" },
-      { headerName: "Sample Seal Number", field: "sampleSealNumber" },
-      { headerName: "Letter Of Protest Issued?", field: "letterOfProtestIssued" },
-      { headerName: "Letter Of Protest Copy To", field: "letterOfProtestCopyTo" },
-      { headerName: "Date Sample Destroyed", field: "dateSampleDestroyed" },
-      { headerName: "Approval Status", field: "approvalStatus",cellRenderer: createActionsCellRenderer  },
-      { headerName: "Approved By", field: "verifiedBy" },
-      { headerName: "Created By", field: "fullname"},
+      { headerName: "Time", field: "time" },
+      { headerName: "Position", field: "position" },
+      { headerName: "Area", field: "area" },
+      { headerName: "Occasion", field: "occasion" },
+      { headerName: "Method of Disposal", field: "methodOfDisposal" },
+      { headerName: "Palstics", field: "plastics" },
+      { headerName: "Food Wastes", field: "foodWaste" },
+      { headerName: "Domestic Wastes", field: "domesticWaste" },
+      { headerName: "Cooking Oil", field: "cookingOil"},
+      { headerName:  "Incenerator Ash",field:"incineratorAsh"},
+      { headerName:  "Operational Wastes",field:"operationalWaste"},
+      { headerName:  "Animal Carcasses",field:"animalCarcasses"},
+      { headerName:  "Fishing Gears",field:"fishingGear"},
+      { headerName:  "E-Waste",field:"eWaste"},
+      { headerName:  "Remarks",field:"remarks"},
+      { headerName:  "Approval Status",field:"approvalStatus",cellRenderer: createActionsCellRenderer},
+      { headerName: "Created By",field:"createdBy"},
     ],
 
     

@@ -21166,3 +21166,8 @@ div.tagsinput {
   left: 0;
   top: 0; 
 }
+
+.bg-card{
+  background: #191c24 !important;
+  color:white !important;
+}

@@ -5,6 +5,7 @@
   }
   $(function() {
     if ($("#currentBalanceCircle").length) {
+     
       var bar = new ProgressBar.Circle(currentBalanceCircle, {
         color: '#000',
         // This has to be the same size as the maximum width to

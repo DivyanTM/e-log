@@ -14,6 +14,12 @@
     <link rel="stylesheet" href="assets/vendors/flag-icon-css/css/flag-icon.min.css">
     <link rel="stylesheet" href="assets/vendors/owl-carousel-2/owl.carousel.min.css">
     <link rel="stylesheet" href="assets/vendors/owl-carousel-2/owl.theme.default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+
+    <link rel="stylesheet" href="assets/css/toast.css">
+    <script src="assets/js/toast.js"></script>
+
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <!-- endinject -->
@@ -207,107 +213,109 @@
                         <div class="card-body">
                             <h3 class="card-title">Garbage Record Book</h3>
                             <p class="card-description">Garbage Disposal Operations</p>
-                            <form>
+                            <div class="row">
+                              <div class="d-flex col-md-12 justify-content-end">
+                                <button class="btn btn-info"><a href="grbRecords.html" class="text-white text-decoration-none">View Records</a></button>
+                              </div>
+                            </div>
+                            <form id="grbForm">
                               <div class="row mb-3">
                                   <div class="col-md-6">
-                                    <label for="occasion-grb" class="form-label">Occasion</label>
-                                  <select name="occasion-grb" class="form-select form-control" id="occasion-grb">
-                                      <option disabled selected>Select Occasion</option>
-                                      <option value="1">Garbage is discharged to a reception facility ashore or to other ships</option>
-                                      <option value="2">Garbage is incinerated</option>
-                                      <option value="3">Garbage is discharged into sea</option>
-                                      <option value="4">Accidental or other exceptional discharge or loss of garbage into the sea</option>
+                                    <label for="occasion-grb" class="form-label">Occasion<span class="text-danger m-1">*</span></label>
+                                  <select name="occasion" class="form-select form-control" id="occasion-grb">
+                                      <option selected>Garbage is discharged to a reception facility ashore or to other ships</option>
+                                      <option>Garbage is incinerated</option>
+                                      <option>Garbage is discharged into sea</option>
+                                      <option>Accidental or other exceptional discharge or loss of garbage into the sea</option>
                                   </select>
                                   </div>
                                   <div class="col-md-6">
-                                    <label for="area-grb" class="form-label">Select Area of Operation</label>
-                                    <select name="area-grb" class="form-select form-control" id="area-grb">
-                                        <option disabled selected>Select area</option>
-                                        <option value="1">Spatial Area</option>
-                                        <option value="2">Special Area</option>
+                                    <label for="area-grb" class="form-label">Select Area of Operation<span class="text-danger m-1">*</span></label>
+                                    <select name="area" class="form-select form-control" id="area-grb">
+                                        <option selected>Spatial Area</option>
+                                        <option>Special Area</option>
                                     </select>
                                   </div>
                               </div>
                               <div class="row mb-3">
                                   <div class="col-md-6">
-                                      <label class="form-label">Date</label>
-                                      <input type="date" class="form-control">
+                                      <label class="form-label">Date<span class="text-danger m-1">*</span></label>
+                                      <input type="date" name="date" class="form-control">
                                   </div>
                                   <div class="col-md-6">
-                                      <label class="form-label">Time</label>
-                                      <input type="time" class="form-control">
+                                      <label class="form-label">Time<span class="text-danger m-1">*</span></label>
+                                      <input type="time" name="time" class="form-control" step="1">
                                   </div>
                               </div>
                               <div class="row mb-3">
                                   <div class="col-md-12">
-                                    <label class="form-label">Position of the Ship (Latitude/Longitude or Port)</label>
-                                  <input type="text" class="form-control" placeholder="Enter position or port">
+                                    <label class="form-label">Position of the Ship (Latitude/Longitude or Port)<span class="text-danger m-1">*</span></label>
+                                  <input type="text" name="position" class="form-control" placeholder="Enter position or port">
                                   </div>
                               </div>
                               <div class="row mb-3 mt-3">
                                   <div class="col-md-12">
-                                    <label for="grb-disposal-method" class="form-label">Methods of Disposal</label>
-                                    <select name="grb-disposal-method" class="form-select form-control" id="grb-disposal-method">
-                                        <option disabled selected>Select Method</option>
-                                        <option value="1">To reception facilities or to other ships</option>
-                                        <option value="2">Incineration</option>
-                                        <option value="3">Discharge into Sea</option>
+                                    <label for="grb-disposal-method" class="form-label">Methods of Disposal<span class="text-danger m-1">*</span></label>
+                                    <select name="methodOfDisposal" class="form-select form-control" id="grb-disposal-method">
+                                        <option selected>To reception facilities or to other ships</option>
+                                        <option>Incineration</option>
+                                        <option>Discharge into Sea</option>
                                     </select>
                                   </div>
                               </div>
                               <!-- Garbage Categories and Amounts -->
                               <div class="row mb-3 mt-3">
-                                <h5 class="col-md-12 mb-3">Garbage Categories and Amounts (m³)</h5>
+                                <h5 class="col-md-12 mb-3">Garbage Categories and Amounts (m³)<span class="text-danger m-1">*</span></h5>
                                 <!-- Plastics -->
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label">Plastics</label>
-                                    <input type="number" class="form-control" placeholder="Enter amount" min="0">
+                                    <input type="number" class="form-control" name="plastics" step="any" placeholder="Enter amount" min="0">
                                 </div>
                                 <!-- Food Waste -->
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label">Food Waste</label>
-                                    <input type="number" class="form-control" placeholder="Enter amount" min="0">
+                                    <input type="number" step="any" name="foodWaste" class="form-control" placeholder="Enter amount" min="0">
                                 </div>
                                 <!-- Domestic Waste -->
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label">Domestic Waste</label>
-                                    <input type="number" class="form-control" placeholder="Enter amount" min="0">
+                                    <input type="number"  step="any" name="domesticWaste" class="form-control" placeholder="Enter amount" min="0">
                                 </div>
                                 <!-- Cooking Oil -->
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label">Cooking Oil</label>
-                                    <input type="number" class="form-control" placeholder="Enter amount" min="0">
+                                    <input type="number" step="any" name="cookingOil"  class="form-control" placeholder="Enter amount" min="0">
                                 </div>
                                 <!-- Incinerator Ash -->
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label">Incinerator Ash</label>
-                                    <input type="number" class="form-control" placeholder="Enter amount" min="0">
+                                    <input type="number" step="any" name="incineratorAsh" class="form-control" placeholder="Enter amount" min="0">
                                 </div>
                                 <!-- Operational Waste -->
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label">Operational Waste</label>
-                                    <input type="number" class="form-control" placeholder="Enter amount" min="0">
+                                    <input type="number" step="any" name="operationalWaste" class="form-control" placeholder="Enter amount" min="0">
                                 </div>
                                 <!-- Animal Carcasses -->
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label">Animal Carcasses</label>
-                                    <input type="number" class="form-control" placeholder="Enter amount" min="0">
+                                    <input type="number" step="any" name="animalCarcasses" class="form-control" placeholder="Enter amount" min="0">
                                 </div>
                                 <!-- Fishing Gear -->
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label">Fishing Gear</label>
-                                    <input type="number" class="form-control" placeholder="Enter amount" min="0">
+                                    <input type="number" step="any" name="fishingGear" class="form-control" placeholder="Enter amount" min="0">
                                 </div>
                                 <!-- E-Waste -->
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label">E-Waste</label>
-                                    <input type="number" class="form-control" placeholder="Enter amount" min="0">
+                                    <input type="number" step="any" name="eWaste" class="form-control" placeholder="Enter amount" min="0">
                                 </div>
                             </div>
 
                               <div class="mb-3">
                                   <label class="form-label">Remarks</label>
-                                  <textarea class="form-control" rows="3" placeholder="Enter remarks (start/stop time, position, etc.)"></textarea>
+                                  <textarea class="form-control" name="remarks" rows="3" placeholder="Enter remarks (start/stop time, position, etc.)"></textarea>
                               </div>
                               <!-- <div class="mb-3">
                                   <label class="form-label">Certification/Signature</label>
@@ -320,12 +328,6 @@
                   
                           </form>
                         
-                            <script>
-                                document.getElementById('issueStatusGarbage').addEventListener('change', function() {
-                                    var issueDetails = document.getElementById('issueDetailsGarbage');
-                                    issueDetails.style.display = (this.value === 'yes') ? 'block' : 'none';
-                                });
-                            </script>
                         </div>
                     </div>
                     
@@ -353,6 +355,7 @@
     <script src="assets/vendors/jvectormap/jquery-jvectormap.min.js"></script>
     <script src="assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
     <script src="assets/vendors/owl-carousel-2/owl.carousel.min.js"></script>
+    
     <!-- End plugin js for this page -->
     <!-- inject:js -->
     <script src="assets/js/off-canvas.js"></script>
@@ -362,21 +365,42 @@
     <script src="assets/js/todolist.js"></script>
     <!-- endinject -->
     <!-- Custom js for this page -->
-    <script src="assets/js/dashboard.js"></script>
+    <script src="assets/js/grb.js"></script>
+
+    <script src="assets/js/apiRequest.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="assets/js/axiosInstance.js"></script>
+    
     <!-- End custom js for this page -->
     <script>
       window.addEventListener('load', function () {
-
-        if(!sessionStorage.getItem('token')) {
-
-window.location.href = 'login.html';
-}
-
-          setTimeout(function () {
-              const preloader = document.getElementById('preloader');
-          preloader.classList.add('hide'); 
-          },500);
+        let token=sessionStorage.getItem('token');
+       
+        if(!sessionStorage.getItem('token')){
+          window.location='login.html';
+        }
+  
+        if (token) {
+          const base64Url = token.split(".")[1]; 
+          const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+          const decodedData = JSON.parse(atob(base64));
+          
+        if(decodedData.user.role_id!==1){
+          window.location='CEDashboard.html';
+        }
+          // document.querySelector('#username').textContent=decodedData.username;
+      }
+  
+        setTimeout(function () {
+          const preloader = document.getElementById('preloader');
+          preloader.classList.add('hide');
+        }, 500);
       });
-  </script>
+  
+      // document.querySelector('#logout').addEventListener('click',function(){
+      //   sessionStorage.removeItem('token');
+      //   window.location='login.html';
+      // });
+    </script>
   </body>
 </html>

@@ -8,8 +8,17 @@ const api={
     createfosRecord :(data)=> postData('/fos', data) ,
 
 
-    getAllFORRecords:()=>fetchData('/fos/all',"records"),
+    getAllFORRecords:()=>fetchData('/for/all',"records"),
 
+    creategrbRecord :(data)=> postData('/grb', data),
+
+    createNoXRecord :(data)=> postData('/nox', data),
+
+    getAllGRBRecords:()=>fetchData('/grb/all',"records"),
+
+    getAllFOSRecords:()=>fetchData('/fos/all',"records"),
+    getAllAuditLogs:()=>fetchData('/auditlogs',"logs"),
+    getAllUnverifiedRecords:()=>fetchData('/ce/unverified/all','unverifiedRecords')
 }
 
 const fetchData = (url, key) => axiosInstance.get(url).then(res => key ? res.data[key] : res.data);

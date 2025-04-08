@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>ELOG</title>
+    <title>FOS - Records</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
@@ -190,8 +190,9 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", async function () {
-    const response=await axiosInstance.get('/fos/all');
-    let data=response.data.records;
+      let data=await api.getAllFOSRecords();
+
+      console.log(data);
       
    if(data){
     data.map(element => {

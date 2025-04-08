@@ -190,15 +190,16 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", async function () {
-    const response=await axiosInstance.get('/fos/all');
-    let data=response.data.records;
+   
+    let data=await api.getAllFORRecords();
+
+    console.log(data);
       
    if(data){
     data.map(element => {
-      element.letterOfProtestIssued = element.letterOfProtestIssued ? "Yes" : "No";
+        
       element.approvalStatus=element.approvalStatus ? "Approved" : "Pending";
       element.date=new Date(element.date).toLocaleDateString('eng-GB');
-      element.dateSampleDestroyed=new Date(element.dateSampleDestroyed).toLocaleDateString('eng-GB');
       element.verifiedBy=element.verifiedBy ? element.verifiedBy : "N/A";
     });
 
@@ -212,14 +213,13 @@
       { headerName: "Record No", field: "recordID" },
       { headerName: "Date", field: "date" },
       { headerName: "Bunker Delivery Note Reference Number", field: "bunkerDeliveryNoteReferenceNumber" },
-      { headerName: "origin Of Sample", field: "originOfSample" },
-      { headerName: "Sample Seal Number", field: "sampleSealNumber" },
-      { headerName: "Letter Of Protest Issued?", field: "letterOfProtestIssued" },
-      { headerName: "Letter Of Protest Copy To", field: "letterOfProtestCopyTo" },
-      { headerName: "Date Sample Destroyed", field: "dateSampleDestroyed" },
+      { headerName: "Grade", field: "grade" },
+      { headerName: "Sulphur", field: "sulphur" },
+      { headerName: "Tank NUmber", field: "tankNumber" },
+      { headerName: "Quantity", field: "quantity" },
+      { headerName: "Created By", field: "createdBy" },
       { headerName: "Approval Status", field: "approvalStatus",cellRenderer: createActionsCellRenderer  },
       { headerName: "Approved By", field: "verifiedBy" },
-      { headerName: "Created By", field: "fullname"},
     ],
 
     
