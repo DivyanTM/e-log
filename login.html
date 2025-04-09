@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -32,19 +31,16 @@
             object-fit: cover;
             z-index: -1;
         }
-
         .content-wrapper {
             position: relative;
             z-index: 1;
         }
-
-        #login-card {
+        #login-card{
             border-radius: 26px !important;
             background: linear-gradient(116.79deg, rgba(40, 40, 40, 1) 0%, rgba(35, 35, 35, 0.2) 99.45%);
             backdrop-filter: blur(50px);
             padding: 40px 40px 10px 40px;
         }
-
         .input-group {
             background-color: #1e1e1e;
             border: 1px solid #333;
@@ -52,14 +48,12 @@
             overflow: hidden;
             width: 340px !important;
         }
-
         .input-group-text {
             background-color: #1e1e1e;
             color: #aaa;
             border: none;
             padding: 10px 12px;
         }
-
         .form-control {
             background-color: #1e1e1e;
             color: #fff;
@@ -67,22 +61,20 @@
             padding: 10px 12px;
             box-shadow: none;
         }
-
         .form-control::placeholder {
             color: #aaa;
         }
-
         .form-control:focus {
             box-shadow: none;
             border: none;
             background-color: #1e1e1e;
             outline: none;
         }
+        
     </style>
-</head>
-
-<body>
-
+  </head>
+  <body>
+   
     <div class="content-wrapper d-flex align-items-center justify-content-center vh-100">
         <video class="video-background" autoplay loop muted>
             <source src="/assets/videos/loginBG.mp4" type="video/mp4">
@@ -91,60 +83,33 @@
         <div class="row w-100">
             <div class="col-md-5 mx-auto">
                 <div class="card" id="login-card">
-                    <img class="card-img-top img-fluid mx-auto d-block" src="assets/images/E Log system.png"
-                        alt="elog system" style="width: 250px !important;" />
+                    <img class="card-img-top img-fluid mx-auto d-block" src="assets/images/E Log system.png" alt="elog system" style="width: 250px !important;" />
                     <div class="card-body">
                         <form>
                             <div class="input-group mx-auto mb-3">
-                                <span class="input-group-text"><i class="mdi mdi-account"
-                                        style="font-size: 18px !important;"></i></span>
+                                <span class="input-group-text"><i class="mdi mdi-account" style="font-size: 18px !important;"></i></span>
                                 <input type="text" class="form-control" id="username" placeholder="Enter username">
                             </div>
-
                             <div class="input-group mx-auto mb-3">
-                                <span class="input-group-text"><i class="mdi mdi-lock"
-                                        style="font-size: 18px !important;"></i></span>
+                                <span class="input-group-text"><i class="mdi mdi-lock" style="font-size: 18px !important;"></i></span>
                                 <input type="password" class="form-control" id="password" placeholder="Enter password">
-                                <span class="input-group-text" onclick="togglePassword()" style="cursor: pointer;">
-                                    <i id="toggleIcon" class="mdi mdi-eye-outline"></i>
-                                </span>
                             </div>
                         </form>
-
-                        <script>
-                            function togglePassword() {
-                                let passwordField = document.getElementById("password");
-                                let toggleIcon = document.getElementById("toggleIcon");
-
-                                if (passwordField.type === "password") {
-                                    passwordField.type = "text";
-                                    toggleIcon.classList.remove("mdi-eye-outline");
-                                    toggleIcon.classList.add("mdi-eye-off-outline");
-                                } else {
-                                    passwordField.type = "password";
-                                    toggleIcon.classList.remove("mdi-eye-off-outline");
-                                    toggleIcon.classList.add("mdi-eye-outline");
-                                }
-                            }
-                        </script>
-
                         <div class="row">
-                            <button class="btn mx-auto px-5 py-2" id="login"
-                                style="background-color: #1A5ACC;">Login</button>
+                            <button class="btn mx-auto px-5 py-2" id="login" style="background-color: #1A5ACC;">Login</button>
                         </div>
                         <div class="row">
-                            <img src="assets/images/integri.png" alt="integri" class="mx-auto mt-3"
-                                style="width: 160px !important;">
+                            <img src="assets/images/integri.png" alt="integri" class="mx-auto mt-3" style="width: 160px !important;">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-
+    
+                            
+                            
+   
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
@@ -170,6 +135,8 @@
     <script type="module" src="/assets/js/axiosInstance.js"></script>
     <script src="assets/js/apiRequest.js"></script>
     <script src="assets/js/login.js"></script>
-</body>
-
+  </body>
 </html>
+
+
+

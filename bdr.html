@@ -55,6 +55,7 @@
         display: none;
     }
 </style>
+
 </head>
 
 <body>
@@ -209,137 +210,77 @@
             <div class="col-md-12 stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h3 class="card-title">Ozone-Depleting Substances Record Book</h3>
-                  <p class="card-description">Ozone-Depleting Substances Operations</p>
+                  <h3 class="card-title">Bunker Delivery Note</h3>
+                  
                 
-
-                  <div class="row">
-                    <div class="col-md-12">
-                      <label class="form-label" for="odsrb-table">Select Table</label>
-                      <select name="odsrb-table" id="odsrb-table" class="form-select form-control">
-                        <option value="" selected disabled>Select Table</option>
-                        <option value="odsrb-table-1">Equipments containing ODS</option>
-                        <option value="odsrb-table-2">Record of Ozone-Depleting Substances</option>
-                      </select>
-                    </div>
-                    <form action="" class="col-md-12 mt-5" id="odsrb-table-1" style="display: none;">
-                      <div class="row">
-                        <div class="col-md-6">
-                          <label for="table1-en" class="form-label">Equipment Name</label>
-                          <input type="text" class="form-control" id="table1-en" placeholder="Enter equipment name">
-                        </div>
-                        <div class="col-md-6">
-                          <label for="table1-refrigerant" class="form-label">Refrigerant</label>
-                          <input type="text" class="form-control" id="table1-refrigerant" placeholder="Enter Refrigerant Name">
-                        </div>
-                        </div>
-                        <div class="row mt-3">
-                        <div class="col-md-6">
-                          <label for="table1-location">Location on Board</label>
-                          <input type="text" class="form-control" id="table1-location" placeholder="Enter location">
-                        </div>
-                        <div class="col-md-6">
-                          <label for="table1-capacity">Capacity (kg)</label>
-                          <input type="text" class="form-control" id="table1-capacity" placeholder="Enter Capacity in kg">
-                        </div>
-                        </div>
-                        <div class="row mt-3">
-                          <div class="col-md-12">
-                            <label for="table1-remarks">Remarks</label>
-                            <textarea class="form-control" id="table1-remarks" rows="3" placeholder="Enter remarks"></textarea>
+                  <div class="row mt-5">
+                    <form id="bunkerDeliveryForm" class="col-md-12">
+  
+                        <!-- Bunkering Details -->
+                        <div class="row mb-3">
+                          <div class="col-md-6">
+                            <label class="form-label">Port of Bunkering</label>
+                            <input type="text" class="form-control" id="port" placeholder="Enter the port of bunkering" required>
+                          </div>
+                          <div class="col-md-6">
+                            <label class="form-label">Date of Commencement of Delivery</label>
+                            <input type="date" class="form-control" id="deliveryDate" required>
                           </div>
                         </div>
-                        <div class="row mt-3">
-                          <div class="col-md-12 d-flex justify-content-end ">
+                      
+                        <!-- Supplier Details -->
+                        <div class="mb-3">
+                          <label class="form-label">Name of the Fuel Oil Supplier</label>
+                          <input type="text" class="form-control" placeholder="Enter the name of the supplier" id="supplierName" required>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Address of the Fuel Oil Supplier</label>
+                          <input type="text" class="form-control" placeholder="Enter the address of the supplier" id="supplierAddress" required>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Telephone Number of the Fuel Oil Supplier</label>
+                          <input type="tel" class="form-control" placeholder="Enter the telephone number of the supplier" id="supplierTelephone" required>
+                        </div>
+                      
+                        <!-- Fuel Oil Details -->
+                        <div class="row mb-3">
+                          <div class="col-md-6">
+                            <label class="form-label">Product Name</label>
+                            <input type="text" placeholder="Enter the product name" class="form-control" id="productName" required>
+                          </div>
+                          <div class="col-md-6">
+                            <label class="form-label">Quantity Delivered (Metric Tons)</label>
+                            <input type="number" placeholder="Enter the quantity delivered" class="form-control" id="quantity" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <div class="col-md-6">
+                            <label class="form-label">Density at 15°C (kg/m³)</label>
+                            <input type="number" placeholder="Enter the density" class="form-control" id="density" required>
+                          </div>
+                          <div class="col-md-6">
+                            <label class="form-label">Sulfur Content (% m/m)</label>
+                            <input type="number" placeholder="Enter the sulfur content" class="form-control" id="sulfurContent" required>
+                          </div>
+                        </div>
+                      
+                        <!-- Supplier Declaration (File Upload) -->
+                        <div class="mb-3">
+                          <label class="form-label">Supplier Declaration (Upload Signed Document)</label>
+                          <input type="file" class="form-control" id="supplierDeclaration" accept=".pdf,.doc,.docx" required>
+                          <small class="form-text text-muted">Upload a signed declaration document (PDF or Word).</small>
+                        </div>
+                      
+                       
+                        <div class="mb-3 d-flex justify-content-end">
                             <button type="reset" class="btn btn-danger m-1">Reset</button>
-                          <button type="submit" class="btn btn-primary m-1">Submit</button>
-                          </div>
+                            <button type="submit" class="btn btn-primary m-1">Submit</button>
                         </div>
+                      
                     </form>
-                    <form class="col-md-12 mt-5" id="odsrb-table-2" style="display: none;">
-                      <div class="row">
-                        <div class="col-md-4">
-                          <label class="form-label">Date</label>
-                          <input type="date" class="form-control">
-                        </div>
-                        <div class="col-md-4">
-                          <label class="form-label">Location on Board</label>
-                          <input type="text" class="form-control" placeholder="Enter location">
-                        </div>
-                        <div class="col-md-4">
-                          <label class="form-label" for="table2-odsname">ODS Name</label>
-                          <input type="text" id="table2-odsname" class="form-control" placeholder="Enter ODS name">
-                        </div>
-                      </div>
-  
-                      <div class="row mt-3">
-                        <div class="col-md-4">
-                          <label class="form-label">Capacity (kg)</label>
-                          <input type="number" class="form-control" placeholder="Enter capacity">
-                        </div>
-                        <div class="col-md-4">
-                          <label class="form-label">Equipment Name</label>
-                          <input type="text" class="form-control" placeholder="Enter equipment name">
-                        </div>
-                        <div class="col-md-4">
-                          <label class="form-label">Manufacturer</label>
-                          <input type="text" class="form-control" placeholder="Enter manufacturer">
-                        </div>
-                      </div>
-  
-                      <div class="row mt-3">
-                        <div class="col-md-6">
-                          <label class="form-label">Year of Installation</label>
-                          <input type="number" class="form-control" placeholder="Enter year">
-                        </div>
-                        <div class="col-md-6">
-                          <label class="form-label">Process Type</label>
-                          <select class="form-select form-control">
-                            <option selected>Choose...</option>
-                            <option>Refrigerant Addition</option>
-                            <option>Refrigerant Discharged</option>
-                            <option>Leak Test</option>
-                          </select>
-                        </div>
-                      </div>
-  
-                      <div class="mt-3">
-                        <label class="form-label">Process Amount (kg)</label>
-                        <input type="number" class="form-control" placeholder="Enter amount">
-                      </div>
-  
-               
-                   
-                      <div class="row mt-3">
-                        <div class="col-md-12">
-                          <label for="tabl2-occasion" class="form-label">Select Occasion</label>
-                          <select name="tabl2-occasion" id="tabl2-occasion" class="form-select form-control">
-                            <option value="" selected disabled>Select Occasion</option>
-                            <option value="">Recharge (full)</option>
-                            <option value="">Recharge (partial)</option>
-                            <option value="">Repair or Maintenance</option>
-                            <option value="">Dishcarge to atm (Delibrate)</option>
-                            <option value="">Dishcarge to atm (non-delibrate)</option>
-                            <option value="">Discharge to reception facility</option>
-                            <option value="">Supply to ship</option>
-                          </select>
-                        </div>
-                      </div>
-  
-                      <div class="rcol-md-12 mt-3 d-flex justify-content-end">
-                        <button type="reset" class="btn btn-danger m-1">Reset</button>
-                        <button type="submit" class="btn btn-primary m-1">Submit</button>
-                      </div>
-  
-                    </form>
+                    
+                  </div>
                     </div>
-
-                  <script>
-                    // document.getElementById('issueStatusOzone').addEventListener('change', function () {
-                    //   var issueDetails = document.getElementById('issueDetailsOzone');
-                    //   issueDetails.style.display = (this.value === 'yes') ? 'block' : 'none';
-                    // });
-                  </script>
                 </div>
               </div>
 
@@ -378,48 +319,36 @@
   <!-- Custom js for this page -->
   <script src="assets/js/dashboard.js"></script>
   <!-- End custom js for this page -->
-   <script>
-    $('#odsrb-table').on('change', function() {
-      var selectedTable = $(this).val();
-    if(selectedTable === 'odsrb-table-1') {
-      $('#odsrb-table-1').show();
-      $('#odsrb-table-2').hide();
-    } else if(selectedTable === 'odsrb-table-2') {
-      $('#odsrb-table-1').hide();
-      $('#odsrb-table-2').show();
-    }
-    });
-   </script>
-     <script>
-      window.addEventListener('load', function () {
-        let token=sessionStorage.getItem('token');
-       
-        if(!sessionStorage.getItem('token')){
-          window.location='login.html';
-        }
-  
-        if (token) {
-          const base64Url = token.split(".")[1]; 
-          const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-          const decodedData = JSON.parse(atob(base64));
-          
-        if(decodedData.user.role_id!==1){
-          window.location='CEDashboard.html';
-        }
-          // document.querySelector('#username').textContent=decodedData.username;
+  <script>
+    window.addEventListener('load', function () {
+      let token=sessionStorage.getItem('token');
+     
+      if(!sessionStorage.getItem('token')){
+        window.location='login.html';
       }
-  
-        setTimeout(function () {
-          const preloader = document.getElementById('preloader');
-          preloader.classList.add('hide');
-        }, 500);
-      });
-  
-      // document.querySelector('#logout').addEventListener('click',function(){
-      //   sessionStorage.removeItem('token');
-      //   window.location='login.html';
-      // });
-    </script>
+
+      if (token) {
+        const base64Url = token.split(".")[1]; 
+        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+        const decodedData = JSON.parse(atob(base64));
+        
+      if(decodedData.user.role_id!==1){
+        window.location='CEDashboard.html';
+      }
+        // document.querySelector('#username').textContent=decodedData.username;
+    }
+
+      setTimeout(function () {
+        const preloader = document.getElementById('preloader');
+        preloader.classList.add('hide');
+      }, 500);
+    });
+
+    // document.querySelector('#logout').addEventListener('click',function(){
+    //   sessionStorage.removeItem('token');
+    //   window.location='login.html';
+    // });
+  </script>
 </body>
 
 </html>

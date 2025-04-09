@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Fuel Oil Records</title>
+  <title>ELOG</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
@@ -209,73 +209,154 @@
             <div class="col-md-12 stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h3 class="card-title">Fuel Oil Record</h3>
-                  <p class="card-description">Record of Fuel Oil Received</p>
-                    <div class="row">
-                      <div class="d-flex col-md-12 justify-content-end">
-                        <button class="btn btn-info"><a href="records.html" class="text-white text-decoration-none">View Records</a></button>
-                      </div>
-                    </div>
-                    <div class="row">
-                        <form id="fosForm" class="col-md-12 mt-3">
-                          <div class="row mb-3">
-                            <div class="col-md-6 form-group">
-                                <label for="date" class="form-label">Date<span class="text-danger">*</span></label>
-                                <input type="date" class="form-control" id="date" name="date" placeholder="Enter Date">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label for="sampleSeal" class="form-label">MARPOL Sample Seal Number<span class="text-danger">*</span></label>
-                                <input type="number" class="form-control" name="sampleSealNumber" id="sampleSeal" placeholder="Enter Sample Seal No">
-                            </div>
-                          </div>
+                  <h3 class="card-title">Engine Log Book</h3>
+                  <p class="card-description"></p>
+                    <div class="row mt-5">
+                        <form class="col-md-12">
+                            <!-- Voyage Details -->
                             <div class="row mb-3">
-                                <div class="col-md-6 form-group">
-                                    <label for="reference" class="form-label">Bunker Delivery Note Ref.NO.<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="bunkerDeliveryNoteReferenceNumber" id="reference" placeholder="Enter Bunker Delivery Note Reference Number">
+                                <div class="col-md-4">
+                                    <label class="form-label">From (Port)</label>
+                                    <input type="text" class="form-control" placeholder="Departure Port">
                                 </div>
-                                <div class="col-md-6 form-group">
-                                    <label for="origin">Origin of Sample<span class="text-danger">*</span></label>
-                                    <select name="originOfSample" class="form-select form-control" id="origin">
-                                      <option value="Supplier" selected>Supplier</option>
-                                      <option value="Ship">Ship</option>
+                                <div class="col-md-4">
+                                    <label class="form-label">To (Port)</label>
+                                    <input type="text" class="form-control" placeholder="Destination Port">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Voyage Number</label>
+                                    <input type="text" class="form-control" placeholder="Voyage No.">
+                                </div>
+                            </div>
+                    
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">Date</label>
+                                    <input type="date" class="form-control">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Zone Time (UTC ±)</label>
+                                    <input type="text" class="form-control" placeholder="UTC Offset">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Time (HHMM)</label>
+                                    <input type="text" class="form-control" placeholder="e.g., 1200">
+                                </div>
+                            </div>
+                    
+                            <!-- Navigation Details -->
+                            <h4 class="mt-4">Navigation Data</h4>
+                            <div class="row mb-3">
+                                <div class="col-md-3">
+                                    <label class="form-label">Speed (Knots)</label>
+                                    <input type="number" class="form-control" placeholder="Speed">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">True Course (°)</label>
+                                    <input type="number" class="form-control" placeholder="000 - 360">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Gyro Course (°)</label>
+                                    <input type="number" class="form-control" placeholder="000 - 360">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Gyro Error (°)</label>
+                                    <input type="text" class="form-control" placeholder="Error in degrees">
+                                </div>
+                            </div>
+                    
+                            <!-- Weather & Sea Conditions -->
+                            <h4 class="mt-4">Weather & Sea Conditions</h4>
+                            <div class="row mb-3">
+                                <div class="col-md-3">
+                                    <label class="form-label">Wind Force (Beaufort Scale)</label>
+                                    <input type="number" class="form-control" placeholder="0 - 12">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Wind Direction</label>
+                                    <input type="text" class="form-control" placeholder="N, NE, E, SE, S, etc.">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Sea Condition</label>
+                                    <input type="text" class="form-control" placeholder="Calm, Moderate, Rough">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Visibility (Nautical Miles)</label>
+                                    <input type="number" class="form-control" placeholder="Nautical Miles">
+                                </div>
+                            </div>
+                    
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">Barometric Pressure (hPa)</label>
+                                    <input type="number" class="form-control" placeholder="Pressure in hPa">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Air Temperature (°C)</label>
+                                    <input type="number" class="form-control" placeholder="Air Temp">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Sea Temperature (°C)</label>
+                                    <input type="number" class="form-control" placeholder="Sea Temp">
+                                </div>
+                            </div>
+                    
+                            <!-- Engine & Steering -->
+                            <h4 class="mt-4">Engine & Steering</h4>
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">Main Engine RPM</label>
+                                    <input type="number" class="form-control" placeholder="Engine RPM">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Steering Mode</label>
+                                    <select class="form-select">
+                                        <option>Auto</option>
+                                        <option>Manual</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Bridge Condition</label>
+                                    <select class="form-select">
+                                        <option>Normal</option>
+                                        <option>Restricted Visibility</option>
+                                        <option>Heavy Traffic</option>
                                     </select>
                                 </div>
                             </div>
+                    
+                            <!-- Lookout & Remarks -->
+                            <h4 class="mt-4">Lookout & Remarks</h4>
                             <div class="row mb-3">
-                                <div class="col-md-12 form-group ">
-                                    <label for="" class="form-label">Letter of Protest Issued<span class="text-danger">*</span></label>
-                                    <select name="letterOfProtestIssued" class="form-select form-control" id="letterIsued">
-                                        <option value="1">Yes</option>
-                                        <option value="0" selected>No</option>
-                                    </select>
-                                    </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Lookout on Duty</label>
+                                    <input type="text" class="form-control" placeholder="Lookout Name">
                                 </div>
-                                <div class="row mb-3" id="copyToRow" style="display: none;">
-                                    <div class="col-md-12">
-                                        <label for="copyTo">Letter of Protest Copy to</label>
-                                        <select name="letterOfProtestCopyTo" class="form-select form-control" id="">
-                                          <option value="N/A" selected>select option</option>
-                                            <option value="Supplier">Supplier</option>
-                                            <option value="PSC">PSC</option>
-                                            <option value="Flag">Flag</option>
-                                        </select>
-                                    </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Watch Officer</label>
+                                    <input type="text" class="form-control" placeholder="Officer Name">
                                 </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-12">
-                                        <label for="date" class="form-label">Date Sample Destroyed (less than 12 months)<span class="text-danger">*</span></label>
-                                        <input type="date" name="dateSampleDestroyed" class="form-control" id="date" placeholder="Enter date">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12 d-flex justify-content-end">
-                                        <button type="reset" class="btn btn-danger m-1">Reset</button>
-                                        <button type="submit" id="submitBtn" class="btn btn-primary m-1">Submit</button>
-                                    </div>
-                                    
+                                <div class="col-md-4">
+                                    <label class="form-label">Position (Latitude & Longitude)</label>
+                                    <input type="text" class="form-control" placeholder="e.g., 14°32'N 120°45'E">
                                 </div>
                             </div>
+                    
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <label class="form-label">Remarks</label>
+                                    <textarea class="form-control" rows="3" placeholder="Additional notes..."></textarea>
+                                </div>
+                            </div>
+                    
+                            <!-- Submit Button -->
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Submit Log Entry</button>
+                            </div>
+                    
                         </form>
+                    </div>
+                 
                     </div>
                 </div>
               </div>
@@ -311,16 +392,13 @@
   <script src="assets/js/misc.js"></script>
   <script src="assets/js/settings.js"></script>
   <script src="assets/js/todolist.js"></script>
-  <script src="assets/js/apiRequest.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="assets/js/axiosInstance.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page -->
-  <script src="assets/js/fos.js"></script>
+  <script src="assets/js/dashboard.js"></script>
   <!-- End custom js for this page -->
    <script>
-   $('#letterIsued').on('change', function() {
-     if (this.value === '1') {
+   $('#letterIsuued').on('change', function() {
+     if (this.value == 'yes') {
        $('#copyToRow').slideDown();
      } else {
        $('#copyToRow').slideUp();
@@ -328,35 +406,35 @@
    });
    </script>
     <script>
-      window.addEventListener('load', function () {
-        let token=sessionStorage.getItem('token');
-       
-        if(!sessionStorage.getItem('token')){
-          window.location='login.html';
+        window.addEventListener('load', function () {
+          let token=sessionStorage.getItem('token');
+         
+          if(!sessionStorage.getItem('token')){
+            window.location='login.html';
+          }
+    
+          if (token) {
+            const base64Url = token.split(".")[1]; 
+            const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+            const decodedData = JSON.parse(atob(base64));
+            
+          if(decodedData.user.role_id!==1){
+            window.location='CEDashboard.html';
+          }
+            // document.querySelector('#username').textContent=decodedData.username;
         }
-  
-        if (token) {
-          const base64Url = token.split(".")[1]; 
-          const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-          const decodedData = JSON.parse(atob(base64));
-          
-        if(decodedData.user.role_id!==1){
-          window.location='CEDashboard.html';
-        }
-          // document.querySelector('#username').textContent=decodedData.username;
-      }
-  
-        setTimeout(function () {
-          const preloader = document.getElementById('preloader');
-          preloader.classList.add('hide');
-        }, 500);
-      });
-  
-      // document.querySelector('#logout').addEventListener('click',function(){
-      //   sessionStorage.removeItem('token');
-      //   window.location='login.html';
-      // });
-    </script>
+    
+          setTimeout(function () {
+            const preloader = document.getElementById('preloader');
+            preloader.classList.add('hide');
+          }, 500);
+        });
+    
+        // document.querySelector('#logout').addEventListener('click',function(){
+        //   sessionStorage.removeItem('token');
+        //   window.location='login.html';
+        // });
+      </script>
 </body>
 
 </html>

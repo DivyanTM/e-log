@@ -22,9 +22,47 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- End layout styles -->
     <!-- <link rel="shortcut icon" href="assets/images/favicon.png" /> -->
+    <style>
+ 
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(10px); 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; 
+        }
+
+  
+        #preloader-content {
+            text-align: center;
+        }
+
+       
+        #preloader-content img {
+            width: 150px; 
+            height: auto;
+        }
+
+
+        #preloader.hide {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
+    <div id="preloader">
+        <div id="preloader-content">
+            <img src="assets/gifs/ship1.gif" alt="Loading...">
+            <p class="mt-3">Loading...</p>
+        </div>
+    </div>
     <div class="container-scroller">
         <!-- partial:partials/_sidebar.html -->
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
@@ -56,6 +94,7 @@
                     </a>
                     <div class="collapse" id="ui-basic">
                         <ul class="nav flex-column sub-menu">
+                            <!-- ORB1 and ORB2 -->
                             <li class="nav-item">
                                 <a class="nav-link" href="orb1.html" style="font-size: 16px;">
                                     <i class="mdi mdi-oil text-gray" style="font-size: 20px; margin-right: 8px;"></i>
@@ -68,46 +107,76 @@
                                     ORB-II
                                 </a>
                             </li>
+                        
+                            <!-- GRB -->
                             <li class="nav-item">
                                 <a class="nav-link" href="grb.html" style="font-size: 16px;">
-                                    <i class="mdi mdi-trash-can text-gray"
-                                        style="font-size: 20px; margin-right: 8px;"></i> GRB
+                                    <i class="mdi mdi-trash-can text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                                    Garbage RB
                                 </a>
                             </li>
+                        
+                            <!-- CRB -->
                             <li class="nav-item">
                                 <a class="nav-link" href="crb.html" style="font-size: 16px;">
-                                    <i class="mdi mdi-clipboard-text text-gray"
-                                        style="font-size: 20px; margin-right: 8px;"></i> CRB
+                                    <i class="mdi mdi-clipboard-text text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                                    Cargo RB
                                 </a>
                             </li>
+                        
+                            <!-- APR B (NOX Tier Changeover) -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="aprb.html" style="font-size: 16px;">
+                                    <i class="mdi mdi-swap-horizontal text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                                    NOX Change
+                                </a>
+                            </li>
+                        
+                            <!-- BDR (Bunker Delivery) -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="bdr.html" style="font-size: 16px;">
+                                    <i class="mdi mdi-gas-station text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                                    Bunker Deliv
+                                </a>
+                            </li>
+                        
+                            <!-- BWRB (Ballast Water Record Book) -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="bwrb.html" style="font-size: 16px;">
+                                    <i class="mdi mdi-ferry text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                                    Ballast WB
+                                </a>
+                            </li>
+                        
+                            <!-- FOR (Fuel Oil Received Record Book) -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="for.html" style="font-size: 16px;">
+                                    <i class="mdi mdi-call-received text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                                    Fuel Received
+                                </a>
+                            </li>
+                        
+                            <!-- FOS (Fuel Oil Sample Control and Tracking) -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="fos.html" style="font-size: 16px;">
+                                    <i class="mdi mdi-flask text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                                    Fuel Sample
+                                </a>
+                            </li>
+                        
+                            <!-- LSFCO (Low Sulphur Fuel Change Over) -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="lsfco.html" style="font-size: 16px;">
+                                    <i class="mdi mdi-leaf text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                                    LSFO Change
+                                </a>
+                            </li>
+                        
+                            <!-- ODSRB (Ozone Depleting Substance Record Book) -->
                             <li class="nav-item">
                                 <a class="nav-link" href="odsrb.html" style="font-size: 16px;">
                                     <i class="mdi mdi-earth text-gray" style="font-size: 20px; margin-right: 8px;"></i>
                                     ODS RB
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="bwrb.html" style="font-size: 16px;">
-                                    <i class="mdi mdi-ferry text-gray" style="font-size: 20px; margin-right: 8px;"></i>
-                                    BWRB
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="srb.html" style="font-size: 16px;">
-                                    <i class="mdi mdi-water text-gray" style="font-size: 20px; margin-right: 8px;"></i>
-                                    SRB
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="aprb.html" style="font-size: 16px;">
-                                    <i class="mdi mdi-weather-windy text-gray"
-                                        style="font-size: 20px; margin-right: 8px;"></i> Engine NOx
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="eerb.html" style="font-size: 16px;">
-                                    <i class="mdi mdi-chart-line text-gray"
-                                        style="font-size: 20px; margin-right: 8px;"></i> EERB
                                 </a>
                             </li>
                         </ul>
@@ -143,29 +212,29 @@
                                 <div class="card-body">
                                     <h3 class="card-title">NOx Tier Changeover</h3>
                                     <p class="card-description">NOx Tier Changeover</p>
-                                    <form>
+                                    <form id="noxForm">
 
                                         <!-- Date -->
                                         <div class="mb-3">
-                                            <label for="date" class="form-label">Date</label>
-                                            <input type="date" id="date" class="form-control" required>
+                                            <label for="date" class="form-label">Date<span class="text-danger m-1">*</span></label>
+                                            <input type="date" id="date" name="date" class="form-control" required>
                                         </div>
 
                                         <!-- SMT Time -->
                                         <div class="mb-3">
-                                            <label for="smtTime" class="form-label">SMT Time</label>
-                                            <input type="time" id="smtTime" class="form-control" required>
+                                            <label for="smtTime" class="form-label">SMT Time<span class="text-danger m-1">*</span></label>
+                                            <input type="time" name="smtTime" id="smtTime" class="form-control" required>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="shipPosition" class="form-label">Ship’s Position</label>
-                                            <input type="text" id="shipPosition" class="form-control"
+                                            <label for="shipPosition" class="form-label">Ship’s Position<span class="text-danger m-1">*</span></label>
+                                            <input type="text" id="shipPosition" name="position" class="form-control"
                                                 placeholder="Enter latitude/longitude" required>
                                         </div>
 
                                         <!-- Event -->
                                         <div class="mb-3">
-                                            <label for="event" class="form-label">Event</label>
-                                            <select id="event" class="form-select others-toggle"
+                                            <label for="event" class="form-label">Event<span class="text-danger m-1">*</span></label>
+                                            <select id="event" name="event" class="form-select form-control others-toggle"
                                                 data-target="otherEventInput" required>
                                                 <option value="" disabled selected>Select Event</option>
                                                 <option value="ECA Entry">ECA Entry</option>
@@ -175,14 +244,14 @@
                                                 <option value="Standby Engine">Standby Engine</option>
                                                 <option value="Others">Others</option>
                                             </select>
-                                            <input type="text" id="otherEventInput" class="form-control mt-2 d-none"
+                                            <input type="text" id="otherEventInput" name="otherEvent" class="form-control mt-2 d-none"
                                                 placeholder="Enter event">
                                         </div>
 
                                         <!-- Engine Name -->
                                         <div class="mb-3">
-                                            <label for="engineName" class="form-label">Engine Name</label>
-                                            <select id="engineName" class="form-select others-toggle"
+                                            <label for="engineName" class="form-label">Engine Name<span class="text-danger m-1">*</span></label>
+                                            <select id="engineName" name="engineName" class="form-select form-control others-toggle"
                                                 data-target="otherEngineNameInput" required>
                                                 <option value="" disabled selected>Select Engine</option>
                                                 <option value="Main Engine">Main Engine</option>
@@ -197,8 +266,8 @@
 
                                         <!-- Engine Status -->
                                         <div class="mb-3">
-                                            <label for="engineStatus" class="form-label">Engine Status</label>
-                                            <select id="engineStatus" class="form-select others-toggle"
+                                            <label for="engineStatus" class="form-label">Engine Status<span class="text-danger m-1">*</span></label>
+                                            <select id="engineStatus" name="engineStatus" class="form-select form-control others-toggle"
                                                 data-target="otherEngineStatusInput" required>
                                                 <option value="" disabled selected>Select Status</option>
                                                 <option value="Started">Started</option>
@@ -212,8 +281,8 @@
 
                                         <!-- Engine Tier Status -->
                                         <div class="mb-3">
-                                            <label for="tierStatus" class="form-label">Engine Tier Status</label>
-                                            <select id="tierStatus" class="form-select" required>
+                                            <label for="tierStatus" class="form-label">Engine Tier Status<span class="text-danger m-1">*</span></label>
+                                            <select id="tierStatus" name="engineTierStatus" class="form-select form-control" required>
                                                 <option value="" disabled selected>Select Tier Status</option>
                                                 <option value="Tier II">Tier II</option>
                                                 <option value="Tier III">Tier III</option>
@@ -223,38 +292,17 @@
                                         <!-- Remarks -->
                                         <div class="mb-3">
                                             <label for="remarks" class="form-label">Remarks</label>
-                                            <select id="remarks" class="form-select others-toggle"
-                                                data-target="otherRemarksInput" required>
-                                                <option value="" disabled selected>Select Remark</option>
-                                                <option value="Changed over from Tier II to Tier III">Changed over from
-                                                    Tier II to Tier III</option>
-                                                <option value="Engine Standby">Engine Standby</option>
-                                                <option value="Others">Others</option>
-                                            </select>
-                                            <input type="text" id="otherRemarksInput" class="form-control mt-2 d-none"
-                                                placeholder="Enter remarks">
+                                            <textarea name="remarks" name="remarks" class="form-control" id="remarks" rows="3" placeholder="Enter remarks if any"></textarea>
                                         </div>
 
-                                        < <button type="submit" class="btn btn-primary w-100">Submit</button>
+                                        <div class="mb-3 d-flex justify-content-end">
+                                            <button type="reset" class="btn btn-danger m-1">Reset</button>
+                                            <button type="submit" class="btn btn-primary m-1">Submit</button>
+                                        </div>
 
                                     </form>
 
-                                    <script>
-                                        // Show input field when "Others" is selected
-                                        document.querySelectorAll('.others-toggle').forEach(select => {
-                                            select.addEventListener('change', function () {
-                                                let target = document.getElementById(this.dataset.target);
-                                                target.classList.toggle('d-none', this.value !== 'Others');
-                                            });
-                                        });
-                                    </script>
-
-                                    <script>
-                                        document.getElementById('issueStatusAPRB').addEventListener('change', function () {
-                                            var issueDetails = document.getElementById('issueDetailsAPRB');
-                                            issueDetails.style.display = (this.value === 'yes') ? 'block' : 'none';
-                                        });
-                                    </script>
+                                   
                                 </div>
                             </div>
 
@@ -291,8 +339,62 @@
     <script src="assets/js/todolist.js"></script>
     <!-- endinject -->
     <!-- Custom js for this page -->
-    <script src="assets/js/dashboard.js"></script>
+    <script src="assets/js/aprb.js"></script>
     <!-- End custom js for this page -->
+
+
+
+    <script src="assets/js/apiRequest.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="assets/js/axiosInstance.js"></script>
+    
+
+    <script>
+        window.addEventListener('load', function () {
+          let token=sessionStorage.getItem('token');
+         
+          if(!sessionStorage.getItem('token')){
+            window.location='login.html';
+          }
+    
+          if (token) {
+            const base64Url = token.split(".")[1]; 
+            const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+            const decodedData = JSON.parse(atob(base64));
+            
+          if(decodedData.user.role_id!==1){
+            window.location='CEDashboard.html';
+          }
+            // document.querySelector('#username').textContent=decodedData.username;
+        }
+    
+          setTimeout(function () {
+            const preloader = document.getElementById('preloader');
+            preloader.classList.add('hide');
+          }, 500);
+        });
+    
+        // document.querySelector('#logout').addEventListener('click',function(){
+        //   sessionStorage.removeItem('token');
+        //   window.location='login.html';
+        // });
+      </script>
+     <script>
+                                       
+        document.querySelectorAll('.others-toggle').forEach(select => {
+            select.addEventListener('change', function () {
+                let target = document.getElementById(this.dataset.target);
+                target.classList.toggle('d-none', this.value !== 'Others');
+            });
+        });
+    </script>
+
+    <script>
+        // document.getElementById('issueStatusAPRB').addEventListener('change', function () {
+        //     var issueDetails = document.getElementById('issueDetailsAPRB');
+        //     issueDetails.style.display = (this.value === 'yes') ? 'block' : 'none';
+        // });
+    </script>
 </body>
 
 </html>

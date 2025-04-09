@@ -22,9 +22,47 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- End layout styles -->
     <!-- <link rel="shortcut icon" href="assets/images/favicon.png" /> -->
+    <style>
+ 
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(10px); 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; 
+        }
+
+  
+        #preloader-content {
+            text-align: center;
+        }
+
+       
+        #preloader-content img {
+            width: 150px; 
+            height: auto;
+        }
+
+
+        #preloader.hide {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
+    <div id="preloader">
+        <div id="preloader-content">
+            <img src="assets/gifs/ship1.gif" alt="Loading...">
+            <p class="mt-3">Loading...</p>
+        </div>
+    </div>
     <div class="container-scroller">
         <!-- partial:partials/_sidebar.html -->
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
@@ -56,6 +94,7 @@
                     </a>
                     <div class="collapse" id="ui-basic">
                         <ul class="nav flex-column sub-menu">
+                            <!-- ORB1 and ORB2 -->
                             <li class="nav-item">
                                 <a class="nav-link" href="orb1.html" style="font-size: 16px;">
                                     <i class="mdi mdi-oil text-gray" style="font-size: 20px; margin-right: 8px;"></i>
@@ -68,46 +107,76 @@
                                     ORB-II
                                 </a>
                             </li>
+                        
+                            <!-- GRB -->
                             <li class="nav-item">
                                 <a class="nav-link" href="grb.html" style="font-size: 16px;">
-                                    <i class="mdi mdi-trash-can text-gray"
-                                        style="font-size: 20px; margin-right: 8px;"></i> GRB
+                                    <i class="mdi mdi-trash-can text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                                    Garbage RB
                                 </a>
                             </li>
+                        
+                            <!-- CRB -->
                             <li class="nav-item">
                                 <a class="nav-link" href="crb.html" style="font-size: 16px;">
-                                    <i class="mdi mdi-clipboard-text text-gray"
-                                        style="font-size: 20px; margin-right: 8px;"></i> CRB
+                                    <i class="mdi mdi-clipboard-text text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                                    Cargo RB
                                 </a>
                             </li>
+                        
+                            <!-- APR B (NOX Tier Changeover) -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="aprb.html" style="font-size: 16px;">
+                                    <i class="mdi mdi-swap-horizontal text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                                    NOX Change
+                                </a>
+                            </li>
+                        
+                            <!-- BDR (Bunker Delivery) -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="bdr.html" style="font-size: 16px;">
+                                    <i class="mdi mdi-gas-station text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                                    Bunker Deliv
+                                </a>
+                            </li>
+                        
+                            <!-- BWRB (Ballast Water Record Book) -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="bwrb.html" style="font-size: 16px;">
+                                    <i class="mdi mdi-ferry text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                                    Ballast WB
+                                </a>
+                            </li>
+                        
+                            <!-- FOR (Fuel Oil Received Record Book) -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="for.html" style="font-size: 16px;">
+                                    <i class="mdi mdi-call-received text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                                    Fuel Received
+                                </a>
+                            </li>
+                        
+                            <!-- FOS (Fuel Oil Sample Control and Tracking) -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="fos.html" style="font-size: 16px;">
+                                    <i class="mdi mdi-flask text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                                    Fuel Sample
+                                </a>
+                            </li>
+                        
+                            <!-- LSFCO (Low Sulphur Fuel Change Over) -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="lsfco.html" style="font-size: 16px;">
+                                    <i class="mdi mdi-leaf text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                                    LSFO Change
+                                </a>
+                            </li>
+                        
+                            <!-- ODSRB (Ozone Depleting Substance Record Book) -->
                             <li class="nav-item">
                                 <a class="nav-link" href="odsrb.html" style="font-size: 16px;">
                                     <i class="mdi mdi-earth text-gray" style="font-size: 20px; margin-right: 8px;"></i>
                                     ODS RB
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="bwrb.html" style="font-size: 16px;">
-                                    <i class="mdi mdi-ferry text-gray" style="font-size: 20px; margin-right: 8px;"></i>
-                                    BWRB
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="srb.html" style="font-size: 16px;">
-                                    <i class="mdi mdi-water text-gray" style="font-size: 20px; margin-right: 8px;"></i>
-                                    SRB
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="aprb.html" style="font-size: 16px;">
-                                    <i class="mdi mdi-weather-windy text-gray"
-                                        style="font-size: 20px; margin-right: 8px;"></i> APRB
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="eerb.html" style="font-size: 16px;">
-                                    <i class="mdi mdi-chart-line text-gray"
-                                        style="font-size: 20px; margin-right: 8px;"></i> EERB
                                 </a>
                             </li>
                         </ul>
@@ -323,6 +392,36 @@
     <!-- Custom js for this page -->
     <script src="assets/js/dashboard.js"></script>
     <!-- End custom js for this page -->
+    <script>
+        window.addEventListener('load', function () {
+          let token=sessionStorage.getItem('token');
+         
+          if(!sessionStorage.getItem('token')){
+            window.location='login.html';
+          }
+    
+          if (token) {
+            const base64Url = token.split(".")[1]; 
+            const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+            const decodedData = JSON.parse(atob(base64));
+            
+          if(decodedData.user.role_id!==1){
+            window.location='CEDashboard.html';
+          }
+            // document.querySelector('#username').textContent=decodedData.username;
+        }
+    
+          setTimeout(function () {
+            const preloader = document.getElementById('preloader');
+            preloader.classList.add('hide');
+          }, 500);
+        });
+    
+        // document.querySelector('#logout').addEventListener('click',function(){
+        //   sessionStorage.removeItem('token');
+        //   window.location='login.html';
+        // });
+      </script>
 </body>
 
 </html>
