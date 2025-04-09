@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('form').on('submit', function (e) {
+    $('form').on('submit', async function (e) {
       e.preventDefault();
 
     
@@ -24,7 +24,14 @@ $(document).ready(function () {
       };
       
       if (Object.values(data).every(value => value !== null && value !== '')) {
-        console.log(data);
+        try{
+          const response=await axiosInstance.post('/for/create', data);
+          console.log(response);
+          alert(response.data.message);
+        }catch(err){
+          alert(err.response.data.message);
+          console.log('error: ',err.response.data.message);
+        }
       } else {
         alert('Please enter all the required fields');
       }

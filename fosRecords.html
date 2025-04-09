@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>ELOG</title>
+    <title>FOS - Records</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
@@ -18,44 +18,6 @@
     <!-- inject:css -->
     <!-- endinject -->
     <!-- Layout styles -->
-     <style>
-      #website-name {
-        transition: opacity 0.3s;
-      }
-      #website-name.d-none {
-        opacity: 0;
-      }
-      #preloader {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(255, 255, 255, 0.1); 
-        backdrop-filter: blur(10px); 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999; 
-    }
-
-
-    #preloader-content {
-        text-align: center;
-    }
-
-   
-    #preloader-content img {
-        width: 150px; 
-        height: auto;
-    }
-
-
-    #preloader.hide {
-        display: none;
-    }
-
-     </style>
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- End layout styles -->
     <!-- <link rel="shortcut icon" href="assets/images/favicon.png" /> -->
@@ -65,19 +27,13 @@
     
   </head>
   <body>
-    <div id="preloader">
-      <div id="preloader-content">
-          <img src="assets/gifs/ship1.gif" alt="Loading...">
-          <p class="mt-3">Loading...</p>
-      </div>
-  </div>
     <div class="container-scroller">
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
           <a class="sidebar-brand text-decoration-none text-white d-flex align-items-center gap-2" href="index.html">
             <span class="mdi mdi-database fs-6 text-success" style="font-size: 2rem !important;"></span>
-            <span class="fs-6" id="website-name">ELOG</span>
+            <span class="fs-6">ELOG</span>
           </a>
         </div>
         
@@ -234,10 +190,9 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", async function () {
-    const response=await axiosInstance.get('/fos/all');
-    console.log(response);
-    alert("response");
-    let data=response.data.records;
+      let data=await api.getAllFOSRecords();
+
+      console.log(data);
       
    if(data){
     data.map(element => {
@@ -304,23 +259,6 @@
   agGrid.createGrid(gridDiv, gridOptions);  
 
 });
-    </script>
-    <script>
-      window.addEventListener('load', function () {
-
-        if(!sessionStorage.getItem('token')) {
-  
-  window.location.href = 'login.html';
-  }
-  
-          setTimeout(function () {
-              const preloader = document.getElementById('preloader');
-          preloader.classList.add('hide'); 
-          },500);
-      });
-      document.querySelector('[data-toggle="minimize"]').addEventListener('click', function() {
-        document.getElementById('website-name').classList.toggle('d-none');
-      });
     </script>
   </body>
 </html>

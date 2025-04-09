@@ -368,22 +368,41 @@
   <!-- End custom js for this page -->
   <script>
     window.addEventListener('load', function () {
+      let token=sessionStorage.getItem('token');
+     
+      if(!sessionStorage.getItem('token')){
+        window.location='login.html';
+      }
 
-      if(!sessionStorage.getItem('token')) {
+      if (token) {
+        const base64Url = token.split(".")[1]; 
+        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+        const decodedData = JSON.parse(atob(base64));
+        
+      if(decodedData.user.role_id!==1){
+        window.location='CEDashboard.html';
+      }
+        // document.querySelector('#username').textContent=decodedData.username;
+    }
 
-window.location.href = 'login.html';
-}
-
-        setTimeout(function () {
-            const preloader = document.getElementById('preloader');
-        preloader.classList.add('hide'); 
-        },500);
+      setTimeout(function () {
+        const preloader = document.getElementById('preloader');
+        preloader.classList.add('hide');
+      }, 500);
     });
 
+<<<<<<< HEAD
     document.querySelector('[data-toggle="minimize"]').addEventListener('click', function() {
       document.getElementById('website-name').classList.toggle('d-none');
     });
 </script>
+=======
+    // document.querySelector('#logout').addEventListener('click',function(){
+    //   sessionStorage.removeItem('token');
+    //   window.location='login.html';
+    // });
+  </script>
+>>>>>>> a41fedb746a21d98049ff4ca8964ddfc69803fa8
 </body>
 
 </html>

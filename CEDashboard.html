@@ -20,16 +20,10 @@
   <!-- endinject -->
   <!-- Layout styles -->
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css">
   <!-- End layout styles -->
   <!-- <link rel="shortcut icon" href="assets/images/favicon.png" /> -->
   <style>
-    #website-name {
-      transition: opacity 0.3s;
-    }
-    #website-name.d-none {
-      opacity: 0;
-    }
-    
     #preloader {
       position: fixed;
       top: 0;
@@ -75,7 +69,7 @@
       <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
         <a class="sidebar-brand text-decoration-none text-white d-flex align-items-center gap-2" href="index.html">
           <span class="mdi mdi-database fs-6 text-success" style="font-size: 2rem !important;"></span>
-          <span class="fs-6" id="website-name">ELOG</span>
+          <span class="fs-6">ELOG</span>
         </a>
       </div>
 
@@ -133,7 +127,7 @@
             <span class="nav-link">Navigation</span>
           </li> -->
         <li class="nav-item menu-items active-link">
-          <a class="nav-link" href="index.html">
+          <a class="nav-link" href="#">
             <span class="menu-icon">
               <i class="mdi mdi-speedometer text-gray"></i>
             </span>
@@ -151,62 +145,62 @@
           <div class="collapse" id="ui-basic">
             <ul class="nav flex-column sub-menu">
               <!-- ORB1 and ORB2 -->
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                   <a class="nav-link" href="orb1.html" style="font-size: 16px;">
                       <i class="mdi mdi-oil text-gray" style="font-size: 20px; margin-right: 8px;"></i>
                       ORB-I
                   </a>
-              </li>
-              <li class="nav-item">
+              </li> -->
+              <!-- <li class="nav-item">
                   <a class="nav-link" href="orb2.html" style="font-size: 16px;">
                       <i class="mdi mdi-fuel text-gray" style="font-size: 20px; margin-right: 8px;"></i>
                       ORB-II
                   </a>
-              </li>
+              </li> -->
           
               <!-- GRB -->
               <li class="nav-item">
-                  <a class="nav-link" href="grb.html" style="font-size: 16px;">
+                  <a class="nav-link" href="grbRecords.html" style="font-size: 16px;">
                       <i class="mdi mdi-trash-can text-gray" style="font-size: 20px; margin-right: 8px;"></i>
                       Garbage RB
                   </a>
               </li>
           
               <!-- CRB -->
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                   <a class="nav-link" href="crb.html" style="font-size: 16px;">
                       <i class="mdi mdi-clipboard-text text-gray" style="font-size: 20px; margin-right: 8px;"></i>
                       Cargo RB
                   </a>
               </li>
-          
+           -->
               <!-- APR B (NOX Tier Changeover) -->
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                   <a class="nav-link" href="aprb.html" style="font-size: 16px;">
                       <i class="mdi mdi-swap-horizontal text-gray" style="font-size: 20px; margin-right: 8px;"></i>
                       NOX Change
                   </a>
-              </li>
+              </li> -->
           
               <!-- BDR (Bunker Delivery) -->
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                   <a class="nav-link" href="bdr.html" style="font-size: 16px;">
                       <i class="mdi mdi-gas-station text-gray" style="font-size: 20px; margin-right: 8px;"></i>
                       Bunker Deliv
                   </a>
-              </li>
+              </li> -->
           
               <!-- BWRB (Ballast Water Record Book) -->
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                   <a class="nav-link" href="bwrb.html" style="font-size: 16px;">
                       <i class="mdi mdi-ferry text-gray" style="font-size: 20px; margin-right: 8px;"></i>
                       Ballast WB
                   </a>
-              </li>
+              </li> -->
           
               <!-- FOR (Fuel Oil Received Record Book) -->
               <li class="nav-item">
-                  <a class="nav-link" href="for.html" style="font-size: 16px;">
+                  <a class="nav-link" href="forRecords.html" style="font-size: 16px;">
                       <i class="mdi mdi-call-received text-gray" style="font-size: 20px; margin-right: 8px;"></i>
                       Fuel Received
                   </a>
@@ -214,27 +208,27 @@
           
               <!-- FOS (Fuel Oil Sample Control and Tracking) -->
               <li class="nav-item">
-                  <a class="nav-link" href="fos.html" style="font-size: 16px;">
+                  <a class="nav-link" href="fosRecords.html" style="font-size: 16px;">
                       <i class="mdi mdi-flask text-gray" style="font-size: 20px; margin-right: 8px;"></i>
                       Fuel Sample
                   </a>
               </li>
           
               <!-- LSFCO (Low Sulphur Fuel Change Over) -->
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                   <a class="nav-link" href="lsfco.html" style="font-size: 16px;">
                       <i class="mdi mdi-leaf text-gray" style="font-size: 20px; margin-right: 8px;"></i>
                       LSFO Change
                   </a>
-              </li>
+              </li> -->
           
               <!-- ODSRB (Ozone Depleting Substance Record Book) -->
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                   <a class="nav-link" href="odsrb.html" style="font-size: 16px;">
                       <i class="mdi mdi-earth text-gray" style="font-size: 20px; margin-right: 8px;"></i>
                       ODS RB
                   </a>
-              </li>
+              </li> -->
           </ul>
 
 
@@ -342,6 +336,30 @@
 
           </div>
         </li> -->
+        <li class="nav-item menu-items">
+          <a class="nav-link" href="auditTrail.html">
+            <span class="menu-icon">
+              <i class="mdi mdi-history text-gray"></i>
+            </span>
+            <span class="menu-title">Audit Logs</span>
+          </a>
+        </li>
+        <li class="nav-item menu-items">
+          <a class="nav-link" href="verifyRecords.html">
+            <span class="menu-icon">
+              <i class="mdi mdi-check-circle-outline text-gray"></i>
+            </span>
+            <span class="menu-title">Verify Records</span>
+          </a>
+        </li>
+        <li class="nav-item menu-items">
+          <a class="nav-link" href="verifiedRecords.html">
+            <span class="menu-icon">
+              <i class="mdi mdi-progress-check text-gray"></i>
+            </span>
+            <span class="menu-title">Verified Records</span>
+          </a>
+        </li>
       </ul>
     </nav>
     <!-- partial -->
@@ -401,6 +419,86 @@
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
+            <div class="row">
+                <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                          <div class="col-9">
+                            <div class="d-flex align-items-center align-self-start">
+                              <h3 class="mb-0 display-2 font-weight-normal">12</h3>
+                            </div>
+                          </div>
+                          <div class="col-3">
+                            <div class="icon icon-box-danger">
+                              <span class="mdi mdi-file-clock-outline icon-item"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <h6 class="text-muted font-weight-normal">Pending Logs for Review</h6>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-9">
+                          <div class="d-flex align-items-center align-self-start">
+                            <h3 class="mb-0 display-2 font-weight-normal">18</h3>
+                          </div>
+                        </div>
+                        <div class="col-3">
+                          <div class="icon icon-box-success">
+                            <span class="mdi mdi-file-check-outline icon-item"></span>
+                          </div>
+                        </div>
+                      </div>
+                      <h6 class="text-muted font-weight-normal">Reviewed Logs</h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-9">
+                          <div class="d-flex align-items-center align-self-start">
+                            <h3 class="mb-0 display-2 font-weight-normal">5</h3>
+                            
+                          </div>
+                        </div>
+                        <div class="col-3">
+                          <div class="icon icon-box-danger">
+                            <span class="mdi mdi-alert-circle-outline icon-item"></span>
+                          </div>
+                        </div>
+                      </div>
+                      <h6 class="text-muted font-weight-normal">Compliance Alerts</h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-9">
+                          <div class="d-flex align-items-center align-self-start">
+                            <h3 class="mb-0 display-2 font-weight-normal">50</h3>
+                            
+                          </div>
+                        </div>
+                        <div class="col-3">
+                          <div class="icon icon-box-success">
+                            <span class="mdi mdi-file-document-outline icon-item"></span>
+                          </div>
+                        </div>
+                      </div>
+                      <h6 class="text-muted font-weight-normal">Total Logs This Month</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
           <div class="row">
             <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
               <div class="card">
@@ -1163,10 +1261,6 @@ border-radius: 10px; ">
         const base64Url = token.split(".")[1]; 
         const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
         const decodedData = JSON.parse(atob(base64));
-        
-      if(decodedData.user.role_id!==1){
-        window.location='CEDashboard.html';
-      }
         document.querySelector('#username').textContent=decodedData.username;
     }
 
@@ -1181,12 +1275,25 @@ border-radius: 10px; ">
       window.location='login.html';
     });
   </script>
-  <script>
-    document.querySelector('[data-toggle="minimize"]').addEventListener('click', function() {
-      document.getElementById('website-name').classList.toggle('d-none');
-    });
-    
-  </script>
+   <script>
+    let token=sessionStorage.getItem('token');
+  
+  if(!sessionStorage.getItem('token')){
+    window.location='login.html';
+  }
+
+  if (token) {
+    const base64Url = token.split(".")[1]; 
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const decodedData = JSON.parse(atob(base64));
+    // document.querySelector('#username').textContent=decodedData.username;
+    // console.log(decodedData);
+
+    if(decodedData.user.role_id!==2){
+      window.location='index.html';
+    }
+}
+</script>
   <script src="assets/vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page -->

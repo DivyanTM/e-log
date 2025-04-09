@@ -261,10 +261,10 @@
                   </form>
 
                   <script>
-                    document.getElementById('issueStatusBallast').addEventListener('change', function () {
-                      var issueDetails = document.getElementById('issueDetailsBallast');
-                      issueDetails.style.display = (this.value === 'yes') ? 'block' : 'none';
-                    });
+                    // document.getElementById('issueStatusBallast').addEventListener('change', function () {
+                    //   var issueDetails = document.getElementById('issueDetailsBallast');
+                    //   issueDetails.style.display = (this.value === 'yes') ? 'block' : 'none';
+                    // });
                   </script>
                 </div>
               </div>
@@ -418,16 +418,34 @@
     });
     
     window.addEventListener('load', function () {
-      if(!sessionStorage.getItem('token')) {
+      let token=sessionStorage.getItem('token');
+     
+      if(!sessionStorage.getItem('token')){
+        window.location='login.html';
+      }
 
-window.location.href = 'login.html';
-}
-        setTimeout(function () {
-            const preloader = document.getElementById('preloader');
-        preloader.classList.add('hide'); 
-        },500);
+      if (token) {
+        const base64Url = token.split(".")[1]; 
+        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+        const decodedData = JSON.parse(atob(base64));
+        
+      if(decodedData.user.role_id!==1){
+        window.location='CEDashboard.html';
+      }
+        // document.querySelector('#username').textContent=decodedData.username;
+    }
+
+      setTimeout(function () {
+        const preloader = document.getElementById('preloader');
+        preloader.classList.add('hide');
+      }, 500);
     });
-</script>
+
+    // document.querySelector('#logout').addEventListener('click',function(){
+    //   sessionStorage.removeItem('token');
+    //   window.location='login.html';
+    // });
+  </script>
 </body>
 
 </html>

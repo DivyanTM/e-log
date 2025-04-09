@@ -4,16 +4,22 @@ const api = {
         const token = res.headers?.authorization?.split(" ")[1] || null;
         return { data: res.data, token };
     },
-    createorb2:(data) => postData('/orb2/submit-operations', data),
-    
-    createbdnrecord: (data) => postData('/bdn', data, true), 
-    getbdnRecords: () => fetchData('/bdn/all', "records"),
-    createfosRecord: (data) => postData('/fos', data),
-    createodsRecords1: (data) => postData('/ods/create-records1', data),
-    createodsRecords2: (data) => postData('/ods/create-records2', data),
-    
-    
-};
+
+    createfosRecord :(data)=> postData('/fos', data) ,
+
+
+    getAllFORRecords:()=>fetchData('/for/all',"records"),
+
+    creategrbRecord :(data)=> postData('/grb', data),
+
+    createNoXRecord :(data)=> postData('/nox', data),
+
+    getAllGRBRecords:()=>fetchData('/grb/all',"records"),
+
+    getAllFOSRecords:()=>fetchData('/fos/all',"records"),
+    getAllAuditLogs:()=>fetchData('/auditlogs',"logs"),
+    getAllUnverifiedRecords:()=>fetchData('/ce/unverified/all','unverifiedRecords')
+}
 
 const fetchData = (url, key) => axiosInstance.get(url).then(res => key ? res.data[key] : res.data);
 

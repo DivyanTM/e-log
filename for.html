@@ -298,6 +298,13 @@
   <script src="assets/js/misc.js"></script>
   <script src="assets/js/settings.js"></script>
   <script src="assets/js/todolist.js"></script>
+
+<script src="assets/js/apiRequest.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="assets/js/axiosInstance.js"></script>
+
+
+
   <!-- endinject -->
   <!-- Custom js for this page -->
   <script src="assets/js/for.js"></script>
@@ -308,10 +315,12 @@
     });
 
     window.addEventListener('load', function () {
-      if(!sessionStorage.getItem('token')) {
-
-            window.location.href = 'login.html';
+      let token=sessionStorage.getItem('token');
+     
+      if(!sessionStorage.getItem('token')){
+        window.location='login.html';
       }
+<<<<<<< HEAD
       
         setTimeout(function () {
             const preloader = document.getElementById('preloader');
@@ -319,8 +328,31 @@
         },500);
     });
     
+=======
+>>>>>>> a41fedb746a21d98049ff4ca8964ddfc69803fa8
 
-</script>
+      if (token) {
+        const base64Url = token.split(".")[1]; 
+        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+        const decodedData = JSON.parse(atob(base64));
+        
+      if(decodedData.user.role_id!==1){
+        window.location='CEDashboard.html';
+      }
+        // document.querySelector('#username').textContent=decodedData.username;
+    }
+
+      setTimeout(function () {
+        const preloader = document.getElementById('preloader');
+        preloader.classList.add('hide');
+      }, 500);
+    });
+
+    // document.querySelector('#logout').addEventListener('click',function(){
+    //   sessionStorage.removeItem('token');
+    //   window.location='login.html';
+    // });
+  </script>
 </body>
 
 </html>
