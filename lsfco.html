@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <!-- Required meta tags -->
+  <!--   meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>ELOG</title>
@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <!-- End layout styles -->
   <!-- <link rel="shortcut icon" href="assets/images/favicon.png" /> -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
     #preloader {
       position: fixed;
@@ -207,56 +208,161 @@
             <div class="col-md-12 stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h3 class="card-title">Ballast Water Record Book</h3>
-                  <p class="card-description">Ballast Water Operations</p>
-                  <form id="ballastRecordForm">
-                    <!-- Occasion Selection -->
-                    <div class="mb-3">
-                      <label class="form-label">Select Occasion</label>
-                      <select class="form-select form-control" id="occasion" onchange="updateForm()">
-                        <option value="">Choose...</option>
-                        <option value="5">Ballast Water Uptake</option>
-                        <option value="4">Ballast Water Circulation/Treatment</option>
-                        <option value="3">Ballast Water Discharge into the Sea</option>
-                        <option value="2">Ballast Water Discharge to Reception Facility</option>
-                        <option value="1">Accidental or Exceptional Discharge</option>
-                      </select>
-                    </div>
+                  <h3 class="card-title">Low Sulphur Fuel Change Over Record Book</h3>
+                  <p class="card-description">LSF Change over records for Sulphur Emission Control Area</p>
 
-                    <!-- Common Fields -->
-                    <div class="mb-3">
-                      <label class="form-label">Date (YY/MM/DD)</label>
-                      <input type="date" class="form-control" id="date" required>
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">Time (24hr)</label>
-                      <input type="time" class="form-control" id="time" required>
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">Position (Port/Latitude/Longitude)</label>
-                      <input type="text" class="form-control" id="position" placeholder="Enter position" required>
-                    </div>
+                  <div class="row">
 
-                    <!-- Dynamic Fields -->
-                    <div id="dynamicFields"></div>
 
-                    <!-- Submit Button -->
-                    <div class="col-md-12 d-flex justify-content-end">
-                      <button type="reset" class="btn btn-danger m-1">
-                        Reset
-                      </button>
+                    <form id="fuelChangeoverForm" class="col-md-12">
+                      <!-- Begin Changeover to LSFO -->
+                      <div class="mb-4">
+                        <label class="form-label mb-2">Begin Changeover to LSFO</label>
+                        <div class="row">
+                          <div class="col-md-4">
+                            <label class="form-label" class="form-label" for="beginLSFODateTime">Date and Time</label>
+                            <input type="datetime-local" name="begin_LSFO_datetime" class="form-control">
+                          </div>
+                          <div class="col-md-4">
+                            <label for="beginLSFOLatitude" class="form-label">Latitude</label>
+                            <input type="text" class="form-control" name="begin_LSFO_latitude"
+                              placeholder="Enter Latitude">
+                          </div>
+                          <div class="col-md-4">
+                            <label for="beginLSFOLongitude" class="form-label">Longitude</label>
+                            <input type="text" class="form-control" name="begin_LSFO_longitude"
+                              placeholder="Enter Longitude">
+                          </div>
+                        </div>
+                      </div>
 
-                      <button type="submit" class="btn btn-primary m-1 ">Submit</button>
-                    </div>
+                      <!-- Complete Changeover to LSFO -->
+                      <div class="mb-4">
+                        <label class="form-label mb-2">Complete Changeover to LSFO</label>
+                        <div class="row">
+                          <div class="col-md-4">
+                            <label for="completeLSFODateTime" class="form-label">Date and Time</label>
+                            <input type="datetime-local" class="form-control" name="complete_LSFO_datetime">
+                          </div>
+                          <div class="col-md-4">
+                            <label for="completeLSFOLatitude" class="form-label">Latitude</label>
+                            <input type="text" class="form-control" name="complete_LSFO_latitude"
+                              placeholder="Enter Latitude">
+                          </div>
+                          <div class="col-md-4">
+                            <label for="completeLSFOLongitude" class="form-label">Longitude</label>
+                            <input type="text" class="form-control" name="complete_LSFO_longitude"
+                              placeholder="Enter Longitude">
+                          </div>
+                        </div>
+                      </div>
 
-                  </form>
+                      <!-- Grade/Volume of LSFO in Each Tank on Completion -->
+                      <div class="mb-4">
+                        <label class="form-label">Grade/Volume of LSFO in Each Tank on Completion</label>
+                        <textarea class="form-control" name="lsfo_volume_completion" rows="3"
+                          placeholder="Enter details (e.g., LSFO: 0.10%, 500 m³ in Tank 1, 300 m³ in Tank 2)"></textarea>
+                      </div>
 
-                  <script>
-                    document.getElementById('issueStatusBallast').addEventListener('change', function () {
-                      var issueDetails = document.getElementById('issueDetailsBallast');
-                      issueDetails.style.display = (this.value === 'yes') ? 'block' : 'none';
-                    });
-                  </script>
+                      <!-- Regulated Area Entry -->
+                      <div class="mb-4">
+                        <label class="form-label">Regulated Area Entry</label>
+                        <div class="row">
+                          <div class="col-md-4">
+                            <label for="regulatedAreaEntryDateTime" class="form-label">Date and Time</label>
+                            <input type="datetime-local" class="form-control" name="regulated_entry_datetime">
+                          </div>
+                          <div class="col-md-4">
+                            <label for="regulatedAreaEntryLatitude" class="form-label">Latitude</label>
+                            <input type="text" class="form-control" name="regulated_entry_latitude"
+                              placeholder="Enter Latitude">
+                          </div>
+                          <div class="col-md-4">
+                            <label for="regulatedAreaEntryLongitude" class="form-label">Longitude</label>
+                            <input type="text" class="form-control" name="regulated_entry_longitude"
+                              placeholder="Enter Longitude">
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Regulated Area Exit -->
+                      <div class="mb-4">
+                        <label class="form-label">Regulated Area Exit</label>
+                        <div class="row">
+                          <div class="col-md-4">
+                            <label for="regulatedAreaExitDateTime" class="form-label">Date and Time</label>
+                            <input type="datetime-local" class="form-control" name="regulated_exit_datetime">
+                          </div>
+                          <div class="col-md-4">
+                            <label for="regulatedAreaExitLatitude" class="form-label">Latitude</label>
+                            <input type="text" class="form-control" name="regulated_exit_latitude"
+                              placeholder="Enter Latitude">
+                          </div>
+                          <div class="col-md-4">
+                            <label for="regulatedAreaExitLongitude" class="form-label">Longitude</label>
+                            <input type="text" class="form-control" name="regulated_exit_longitude"
+                              placeholder="Enter Longitude">
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Begin Changeover to HSFO -->
+                      <div class="mb-4">
+                        <label class="form-label">Begin Changeover to HSFO</label>
+                        <div class="row">
+                          <div class="col-md-4">
+                            <label for="beginHSFODateTime" class="form-label">Date and Time</label>
+                            <input type="datetime-local" class="form-control" name="begin_HSFO_datetime">
+                          </div>
+                          <div class="col-md-4">
+                            <label for="beginHSFOLatitude">Latitude</label>
+                            <input type="text" class="form-control" name="begin_HSFO_latitude"
+                              placeholder="Enter Latitude">
+                          </div>
+                          <div class="col-md-4">
+                            <label for="beginHSFOLongitude">Longitude</label>
+                            <input type="text" class="form-control" name="begin_HSFO_longitude"
+                              placeholder="Enter Longitude">
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Complete Changeover to HSFO -->
+                      <div class="mb-3">
+                        <label class="form-label">Complete Changeover to HSFO</label>
+                        <div class="row">
+                          <div class="col-md-4">
+                            <label for="completeHSFODateTime" class="form-label">Date and Time</label>
+                            <input type="datetime-local" class="form-control" name="complete_HSFO_datetime">
+                          </div>
+                          <div class="col-md-4">
+                            <label for="completeHSFOLatitude" class="form-label">Latitude</label>
+                            <input type="text" class="form-control" name="complete_HSFO_latitude"
+                              placeholder="Enter Latitude">
+                          </div>
+                          <div class="col-md-4">
+                            <label for="completeHSFOLongitude" class="form-label">Longitude</label>
+                            <input type="text" class="form-control" name="complete_HSFO_longitude"
+                              placeholder="Enter Longitude">
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Grade/Volume of LSFO in Each Tank on Start of Changeover -->
+                      <div class="mb-3">
+                        <label class="form-label">Grade/Volume of LSFO in Each Tank on Start of Changeover</label>
+                        <textarea class="form-control" name="lsfo_volume_start" rows="3"
+                          placeholder="Enter details (e.g., LSFO: 0.10%, 400 m³ in Tank 1, 200 m³ in Tank 2)"></textarea>
+                      </div>
+
+                      <div class="d-flex justify-content-end ">
+                        <button type="reset" class="btn btn-danger m-1">Reset</button>
+                        <!-- Submit Button -->
+                        <button type="submit" id="submitBtn" class="btn btn-primary m-1">Submit</button>
+                      </div>
+                    </form>
+                  </div>
+
                 </div>
               </div>
 
@@ -278,114 +384,6 @@
   <!-- plugins:js -->
   <script src="assets/vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->
-  <script>
-    function updateForm() {
-      const occasion = document.getElementById("occasion").value;
-      const dynamicFields = document.getElementById("dynamicFields");
-      let fieldsHTML = "";
-
-      switch (occasion) {
-        case "5":
-          fieldsHTML = `
-            <div class="mb-3">
-              <label class="form-label">Water Depth (m)</label>
-              <input type="number" class="form-control" id="waterDepth" placeholder="Enter water depth" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Estimated Volume of Uptake (m³)</label>
-              <input type="number" class="form-control" id="uptakeVolume" placeholder="Enter volume" required>
-            </div>
-          `;
-          break;
-
-        case "4":
-          fieldsHTML = `
-            <div class="mb-3">
-              <label class="form-label">Estimated Volume Circulated or Treated (m³)</label>
-              <input type="number" class="form-control" id="circulationVolume" placeholder="Enter volume" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Treatment System Used</label>
-              <input type="text" class="form-control" id="treatmentSystem" placeholder="Enter system details">
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Conform to BWM Plan?</label>
-              <select class="form-select form-control" id="bwmPlan">
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-              </select>
-            </div>
-          `;
-          break;
-
-        case "3":
-          fieldsHTML = `
-            <div class="mb-3">
-              <label class="form-label">Estimated Volume Discharged (m³)</label>
-              <input type="number" class="form-control" id="dischargeVolume" placeholder="Enter volume" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Remaining Volume (m³)</label>
-              <input type="number" class="form-control" id="remainingVolume" placeholder="Enter volume" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Conform to BWM Plan?</label>
-              <select class="form-select form-control" id="bwmPlan">
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-              </select>
-            </div>
-          `;
-          break;
-
-        case "2":
-          fieldsHTML = `
-            <div class="mb-3">
-              <label class="form-label">Port/Facility Name</label>
-              <input type="text" class="form-control" id="facilityName" placeholder="Enter port/facility name" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Estimated Volume Discharged (m³)</label>
-              <input type="number" class="form-control" id="dischargeVolume" placeholder="Enter volume" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Conform to BWM Plan?</label>
-              <select class="form-select form-control" id="bwmPlan">
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-              </select>
-            </div>
-          `;
-          break;
-
-        case "1":
-          fieldsHTML = `
-            <div class="mb-3">
-              <label class="form-label">Estimated Volume Discharged (m³)</label>
-              <input type="number" class="form-control" id="dischargeVolume" placeholder="Enter volume" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Circumstances and Remarks</label>
-              <textarea class="form-control" id="remarks" placeholder="Enter details" required></textarea>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Conform to BWM Plan?</label>
-              <select class="form-select form-control" id="bwmPlan">
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-              </select>
-            </div>
-          `;
-          break;
-
-        default:
-          fieldsHTML = "";
-          break;
-      }
-
-      dynamicFields.innerHTML = fieldsHTML;
-    }
-  </script>
   <!-- Plugin js for this page -->
   <script src="assets/vendors/chart.js/Chart.min.js"></script>
   <script src="assets/vendors/progressbar.js/progressbar.min.js"></script>
@@ -400,21 +398,22 @@
   <script src="assets/js/settings.js"></script>
   <script src="assets/js/todolist.js"></script>
   <!-- endinject -->
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-  <script src="assets/js/apiRequest.js"></script>
-  <script src="assets/js/axiosInstance.js"></script>
-  <script src="assets/js/bwr.js"></script>
-
   <!-- Custom js for this page -->
-  <script src="assets/js/dashboard.js"></script>
+
+  <script src="assets/js/lsfo.js"></script>
+  <script src="assets/js/apiRequest.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="assets/js/axiosInstance.js"></script>
+
   <!-- End custom js for this page -->
   <script>
     window.addEventListener('load', function () {
+
       if (!sessionStorage.getItem('token')) {
 
         window.location.href = 'login.html';
       }
+
       setTimeout(function () {
         const preloader = document.getElementById('preloader');
         preloader.classList.add('hide');
