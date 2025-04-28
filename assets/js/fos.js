@@ -10,7 +10,11 @@ document.querySelector('#fosForm').addEventListener('submit', async function (ev
     let letterOfProtestCopyTo=formData.get('letterOfProtestCopyTo');
     let dateSampleDestroyed=formData.get('dateSampleDestroyed');
 
-
+if(!date || !sampleSealNumber || !bunkerDeliveryNoteReferenceNumber 
+    || !originOfSample || !letterOfProtestCopyTo || !letterOfProtestCopyTo || !dateSampleDestroyed)
+{
+   return showErrorNotification("please fill all the fields");
+}
 
     const data={
         date:date,
@@ -25,10 +29,10 @@ document.querySelector('#fosForm').addEventListener('submit', async function (ev
     try {
        
         let response=await api.createfosRecord(data);
-        alert(response.message);
+        showSuccessNotification(response.message);
     } 
     catch (error) {
-        alert( error.response.data.message);
+        showErrorNotification( error.response.data.message);
     }
     
 }); 

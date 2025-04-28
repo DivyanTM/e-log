@@ -22,13 +22,13 @@ document.getElementById('noxForm').addEventListener('submit', async function(e) 
         // console.log("Form data:", data);
         try {
             let response = await api.createNoXRecord(data);
-            alert(response.message);
+            showSuccessNotification(response.message);
         } catch (error) {
-            alert(error.response.data.message);
-            console.log(error);
+            showErrorNotification(error.response.data.message);
+            
         }
         return;
     }
     
-    alert("All the required fields must be filled out");
+    showErrorNotification("All the required fields must be filled out");
 });

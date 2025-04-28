@@ -22,21 +22,31 @@ document.getElementById('grbForm').addEventListener('submit', async function (ev
         
         if (!hasWasteType) {
             alert('Enter at least one waste type');
-            // showError('Enter at least one waste type');
+           
             return;
         }
 
         try {
             let response = await api.creategrbRecord(data);
-            alert(response.message);
+            showSuccessNotification(response.message);
         } catch (error) {
-            alert(error.response.data.message);
-            // showError(error.response.data.message);
+            showErrorNotification(error.response.data.message);
+            
             console.log(error);
         }
     } else {
-        // console.log("Please fill all the fields");
-        // showError('Please fill all the fields');
-        alert('Please fill all the fields');
+        
+        showErrorNotification('Please fill all the fields');
     }
 });
+
+
+function showRecordsLoader() {
+    document.getElementById("recordsLoader").style.display = "flex";
+  }
+  
+  
+  function hideRecordsLoader() {
+    document.getElementById("recordsLoader").style.display = "none";
+  }
+  setTimeout(hideRecordsLoader,4000);

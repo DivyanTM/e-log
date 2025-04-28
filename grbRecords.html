@@ -131,7 +131,13 @@
                 <div class="col-md-12 stretch-card">
                     <div class="card">
                         <div class="card-header">
-                          <h3 class="card-title mb-0">Garbage Record Book</h3>
+                          <div class="custom-loader-overlay" id="recordsLoader">
+                            <div class="loader-wrapper">
+                              <div class="loader"></div>
+                              
+                            </div>
+                          </div>
+                          <h3 class="card-title mb-2 mt-2">Garbage Record Book</h3>
                           <p class="text-secondary">Garbage Disposal Operations</p>
                         </div>
                         <div class="card-body">
@@ -187,86 +193,90 @@
 
     <script src="assets/js/dashboard.js"></script>
     <!-- End custom js for this page -->
-
+ <script src="assets/js/grb.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", async function () {
-      const records=await api.getAllGRBRecords();
-
-      console.log(records);
-
-      let data=records;
-   if(data){
-    data.map(element => {
-       
-      element.date=new Date(element.date).toLocaleDateString('eng-GB');
-      element.time=new Date(element.time).toLocaleTimeString('eng-GB');
-      element.approvalStatus=element.approvalStatus ? "Approved" : "Pending";
-    });
-
-   }else{
-    data=[]
-   }
-
-  const gridOptions = {
-
-    columnDefs: [
-      { headerName: "Record No", field: "recordID" },
-      { headerName: "Date", field: "date" },
-      { headerName: "Time", field: "time" },
-      { headerName: "Position", field: "position" },
-      { headerName: "Area", field: "area" },
-      { headerName: "Occasion", field: "occasion" },
-      { headerName: "Method of Disposal", field: "methodOfDisposal" },
-      { headerName: "Palstics", field: "plastics" },
-      { headerName: "Food Wastes", field: "foodWaste" },
-      { headerName: "Domestic Wastes", field: "domesticWaste" },
-      { headerName: "Cooking Oil", field: "cookingOil"},
-      { headerName:  "Incenerator Ash",field:"incineratorAsh"},
-      { headerName:  "Operational Wastes",field:"operationalWaste"},
-      { headerName:  "Animal Carcasses",field:"animalCarcasses"},
-      { headerName:  "Fishing Gears",field:"fishingGear"},
-      { headerName:  "E-Waste",field:"eWaste"},
-      { headerName:  "Remarks",field:"remarks"},
-      { headerName:  "Approval Status",field:"approvalStatus",cellRenderer: createActionsCellRenderer},
-      { headerName: "Created By",field:"createdBy"},
-    ],
-
+        showRecordsLoader();
+        const records = await api.getAllGRBRecords();
     
-
-    rowData: [
-      ...data
-  ],
-    pagination: true,
-    paginationPageSize: 20,
-    domLayout: "normal",
-    theme: "legacy",
-    defaultColDef: {
-      sortable: true,
-      filter: true,
-      resizable: true,
-    },
-    // domLayout: 'autoHeight',
-  };
-
-  function createActionsCellRenderer(params) {
-    const div = document.createElement('div');
-    const btn = document.createElement('button');
-    btn.innerText = params.data.approvalStatus;
-    div.classList.add('d-flex', 'justify-content-center','mt-1');
-    if(params.data.approvalStatus === "Approved"){
-      btn.classList.add('btn', 'btn-success','w-100');
-    }else{
-      btn.classList.add('btn', 'btn-warning','w-100');
-    }
-    div.appendChild(btn);
-    return div;
-  }
-
-  const gridDiv = document.querySelector("#orb1Grid");
-  gridDiv.classList.add("ag-theme-quartz-dark");
-  agGrid.createGrid(gridDiv, gridOptions);  
-
-});
+        console.log(records);
+    
+        let data = records;
+        if (data) {
+          data.map((element) => {
+            element.date = new Date(element.date).toLocaleDateString('en-GB');
+            element.time = new Date(element.time).toLocaleTimeString('en-GB');
+            element.approvalStatus = element.approvalStatus ? "Approved" : "Pending";
+          });
+        } else {
+          data = [];
+        }
+    
+        const gridOptions = {
+          columnDefs: [
+            { 
+              headerName: "SNO", 
+              valueGetter: "node.rowIndex + 1", 
+              sortable: false, 
+              filter: false, 
+              width: 100 
+            },
+            { headerName: "Date", field: "date" },
+            { headerName: "Time", field: "time" },
+            { headerName: "Position", field: "position" },
+            { headerName: "Area", field: "area" },
+            { headerName: "Occasion", field: "occasion" },
+            { headerName: "Method of Disposal", field: "methodOfDisposal" },
+            { headerName: "Plastics", field: "plastics" },
+            { headerName: "Food Wastes", field: "foodWaste" },
+            { headerName: "Domestic Wastes", field: "domesticWaste" },
+            { headerName: "Cooking Oil", field: "cookingOil" },
+            { headerName: "Incinerator Ash", field: "incineratorAsh" },
+            { headerName: "Operational Wastes", field: "operationalWaste" },
+            { headerName: "Animal Carcasses", field: "animalCarcasses" },
+            { headerName: "Fishing Gears", field: "fishingGear" },
+            { headerName: "E-Waste", field: "eWaste" },
+            { headerName: "Remarks", field: "remarks" },
+            { 
+              headerName: "Approval Status", 
+              field: "approvalStatus",
+              cellRenderer: createActionsCellRenderer 
+            },
+            { headerName: "Created By", field: "createdBy" },
+          ],
+    
+          rowData: [...data],
+          pagination: true,
+          paginationPageSize: 20,
+          domLayout: "normal",
+          theme: "legacy",
+          defaultColDef: {
+            sortable: true,
+            filter: true,
+            resizable: true,
+          },
+        };
+    
+        function createActionsCellRenderer(params) {
+          const div = document.createElement('div');
+          const btn = document.createElement('button');
+          btn.innerText = params.data.approvalStatus;
+          div.classList.add('d-flex', 'justify-content-center', 'mt-1');
+          if (params.data.approvalStatus === "Approved") {
+            btn.classList.add('btn', 'btn-success', 'w-100');
+          } else {
+            btn.classList.add('btn', 'btn-warning', 'w-100');
+          }
+          div.appendChild(btn);
+          return div;
+        }
+    
+        const gridDiv = document.querySelector("#orb1Grid");
+        gridDiv.classList.add("ag-theme-quartz-dark");
+        hideRecordsLoader();
+        agGrid.createGrid(gridDiv, gridOptions);
+      });
     </script>
+    
   </body>
 </html>

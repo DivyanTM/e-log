@@ -1,6 +1,6 @@
     function handleOperationChange() {
         const operation = document.getElementById('orb2-operation-select').value;
-        const submitBtn = document.querySelector('#form-buttons button.btn-success');
+        const submitBtn = document.querySelector('#form-buttons button.btn-primary');
         const cancelBtn = document.querySelector('#form-buttons button.btn-danger');
         const formButtons = document.getElementById('form-buttons');
     
@@ -10,7 +10,7 @@
     
             // Dynamically assign the onclick function
             submitBtn.setAttribute('onclick', `submitOperation('${operation}')`);
-            cancelBtn.setAttribute('onclick',`clearOrb2${operation}FormData()`)
+            cancelBtn.setAttribute('onclick',`clearOrb2${operation}FormData()`);
         } else {
             // Hide buttons if nothing is selected
             formButtons.style.display = 'none';
@@ -21,6 +21,7 @@
     
     
     function submitOperation(opType) {
+        
         switch (opType) {
           case 'A':
             console.log("Loading of oil cargo");
@@ -102,15 +103,15 @@
         const form = document.getElementById('orb1-a-form');
         let isValid = true;
     
-        // Fetch form values
+        
         const placeOfLoading = form.querySelector('#placeOfLoading').value.trim();
         const typeOfOilLoaded = form.querySelector('#typeOfOilLoaded').value.trim();
         const quantityAdded = parseFloat(form.querySelector('#quantityAdded').value.trim());
         const totalContentOfTanks = parseFloat(form.querySelector('#totalContentOfTanks').value.trim());
     
-        // Fetch dynamic tank entries
+        
         const tankEntries = [];
-        form.querySelectorAll(".tank-entry").forEach(row => {
+        form.querySelectorAll(".tank-entryofLooc").forEach(row => {
             const tankIdentity = row.querySelector("input[name='tankIdentity[]']").value.trim();
             const quantityLoadedM3 = row.querySelector("input[name='quantityLoadedM3[]']").value.trim();
     
@@ -176,101 +177,116 @@
     
         try {
             const response = await api.createorb2(data);
-            console.log(response.message);
-            alert(response.message);
+            showSuccessNotification(response.message);
         } catch (error) {
-            console.error("Error:", error);
+            showErrorNotification(error.message);
         }
+        hideRecordsLoader();
     }
 
     async function fetchOrb2BFormData() {
         const form = document.getElementById('orb1-b-form');
-        const tankIdentities = [];
+        const tankContainer = document.getElementById('tankIdentityContainers');
+        const tankEntries = tankContainer.querySelectorAll('.row');
+        const tanks = [];
         let isValid = true;
-        
-        // Collect tank identities
-        form.querySelectorAll('#tankIdentityContainer .tank-entry input[name="tankIdentity[]"]').forEach(input => {
-            if (input.value.trim() !== '') {
-                tankIdentities.push(input.value.trim());
+    
+        // Collect dynamic tank data
+        tankEntries.forEach(row => {
+            const tankIdentity = row.querySelector('input[name="tankIdentity[]"]')?.value.trim();
+            const tankRole = row.querySelector('select[name="tankRole[]"]')?.value;
+            const tankQuantity = parseFloat(row.querySelector('input[name="tankQuantity[]"]')?.value.trim());
+    
+            if (tankIdentity && !isNaN(tankQuantity)) {
+                tanks.push({ tankIdentity, tankRole, tankQuantity });
             }
         });
     
-        // Fetch form values
-        const formData = {
-            fromTank: form.querySelector('#fromTank').value.trim(),
-            toTank: form.querySelector('#toTank').value.trim(),
-            quantityTransferred:parseFloat(form.querySelector('#quantityTransferred').value.trim()),
-            totalQuantityTanks: parseFloat(form.querySelector('#totalQuantityTanks').value.trim()),
-            tankEmptied: form.querySelector('#tankEmptied').value,
-            quantityRetained:parseFloat(form.querySelector('#quantityRetained').value.trim()),
-            tanks: tankIdentities
-        };
+        // Collect form values
+        const quantityTransferred = parseFloat(form.querySelector('#quantityTransferred').value.trim());
+        const totalQuantityTanks = parseFloat(form.querySelector('#totalQuantityTanks').value.trim());
+        const tankEmptied = form.querySelector('#tankEmptied').value;
+        const quantityRetained = parseFloat(form.querySelector('#quantityRetained').value.trim());
     
-        // Validation checks
+        // Validation helper
         function showError(field, message) {
             alert(`Error in ${field}: ${message}`);
             isValid = false;
         }
     
-        if (!formData.fromTank) showError('From Tank', 'This field is required.');
-        if (!formData.toTank) showError('To Tank', 'This field is required.');
-        if (!formData.tankEmptied) showError('Tank Emptied', 'This field is required.');
-        
-        if (formData.quantityTransferred === '' || isNaN(formData.quantityTransferred) || Number(formData.quantityTransferred) < 0) {
+        // Validate fields
+        if (isNaN(quantityTransferred) || quantityTransferred < 0) {
             showError('Quantity Transferred', 'Must be a valid non-negative number.');
         }
-        
-        if (formData.totalQuantityTanks === '' || isNaN(formData.totalQuantityTanks) || Number(formData.totalQuantityTanks) < 0) {
-            showError('Total Quantity Tanks', 'Must be a valid non-negative number.');
+        if (isNaN(totalQuantityTanks) || totalQuantityTanks < 0) {
+            showError('Total Quantity of Tanks', 'Must be a valid non-negative number.');
+        }
+        if (!tankEmptied) {
+            showError('Tank Emptied', 'This field is required.');
+        }
+        if (tankEmptied === "No" && (isNaN(quantityRetained) || quantityRetained < 0)) {
+            showError('Quantity Retained', 'Must be a valid non-negative number when tanks are not emptied.');
         }
     
-        if (formData.quantityRetained === '' || isNaN(formData.quantityRetained) || Number(formData.quantityRetained) < 0) {
-            showError('Quantity Retained', 'Must be a valid non-negative number.');
+        if (tanks.length === 0) {
+            showError('Tanks', 'At least one tank entry is required.');
         }
     
-        if (tankIdentities.length === 0) {
-            showError('Tank Identities', 'At least one tank identity must be selected.');
-        }
+        if (!isValid) return;
     
-        if (!isValid) {
-            return; // Stop if any validation fails
-        }
-    
+        // Construct data object
         const data = {
             operationType: 'B',
-            formData
+            formData: {
+                quantityTransferred,
+                totalQuantityTanks,
+                tankEmptied,
+                quantityRetained: tankEmptied === "No" ? quantityRetained : 0,
+                tanks
+            }
         };
     
-        console.log(data);
+        console.log("Submitting:", data);
         clearOrb2BFormData();
-
+    
         try {
-            const response = await api.createorb2(data);
-            console.log(response.message);
-            alert(response.message);
+            const response = await api.createorb2(data); 
+            showSuccessNotification(response.message);
         } catch (error) {
-            console.error("Error:", error);
+            showErrorNotification(error.message);
         }
+        hideRecordsLoader();
     }
+    
     
     async function fetchOrb2CFormData() {
         const form = document.getElementById('orb1-c-form');
         let errors = [];
     
-        // Collect tank identities
+        
         const tanks = [];
-        form.querySelectorAll('#tankEntriesUnload .tank-entry input[name="tankIdentity[]"]').forEach(input => {
-            if (input.value.trim() !== '') {
-                tanks.push(input.value.trim());
+        form.querySelectorAll('#tankEntriesUnload .tank-entry').forEach((entry, index) => {
+            const identityInput = entry.querySelector('input[name^="tankIdentityUnload_"]');
+            const quantityInput = entry.querySelector('input[name^="tankQuantityUnload_"]');
+            const identity = identityInput?.value.trim();
+            const quantity = quantityInput?.value.trim();
+    
+            if (identity && quantity && !isNaN(quantity) && parseFloat(quantity) >= 0) {
+                tanks.push({
+                    identity,
+                    quantity: quantity
+                });
+            } else {
+                errors.push(`Tank entry ${index + 1} is incomplete or invalid.`);
             }
         });
     
-        // Get form values
+        
         const placeOfUnloading = form.querySelector('#PlaceOfUnloading').value.trim();
         const tankEmptiedUnload = form.querySelector('#tankEmptiedUnload').value;
-        const quantityRetainedUnload = form.querySelector('#quantityRetainedUnload').value.trim();
+        const quantityRetainedUnload =  form.querySelector('#quantityRetainedUnload').value.trim() || "0.0";
     
-        // Validation checks
+        console.log("QR IN ULOAD : ",quantityRetainedUnload);
         if (!placeOfUnloading) {
             errors.push("Place of Unloading is required.");
         }
@@ -279,44 +295,49 @@
             errors.push("Tank Emptied selection is required.");
         }
     
-        if (!quantityRetainedUnload) {
-            errors.push("Quantity Retained is required.");
-        } else if (isNaN(quantityRetainedUnload) || parseFloat(quantityRetainedUnload) < 0) {
-            errors.push("Quantity Retained must be a valid non-negative number.");
+        if (tankEmptiedUnload !== 'Yes') {
+            if (!quantityRetainedUnload) {
+                errors.push("Quantity Retained is required.");
+            } else if (isNaN(quantityRetainedUnload) || parseFloat(quantityRetainedUnload) < 0) {
+                errors.push("Quantity Retained must be a valid non-negative number.");
+            }
         }
+        
     
         if (tanks.length === 0) {
-            errors.push("At least one Tank Identity is required.");
+            errors.push("At least one valid tank entry is required.");
         }
     
-        // If there are validation errors, show alert and stop
+        
         if (errors.length > 0) {
             alert(errors.join("\n"));
             return null;
         }
     
-        // If validation passes, return data
+        
         const formData = {
             tanks,
             placeOfUnloading,
             tankEmptiedUnload,
-            quantityRetainedUnload: parseFloat(quantityRetainedUnload), 
+            quantityRetainedUnload: parseFloat(quantityRetainedUnload),
         };
     
-        let data = {
+        const data = {
             operationType: 'C',
             formData
-        }
+        };
+    console.log(data);
         clearOrb2CFormData();
+    
         try {
             const response = await api.createorb2(data);
-            console.log(response.message);
-            alert(response.message);
+            showSuccessNotification(response.message);
         } catch (error) {
-            console.error("Error:", error);
+            showErrorNotification(error.message);
         }
-        
+        hideRecordsLoader();
     }
+    
     
     async function fetchOrb2DFormData() {
         const form = document.getElementById('orb1-d-form');
@@ -387,103 +408,124 @@
         clearOrb2DFormData();
         try {
             const response = await api.createorb2(data);
-            console.log(response.message);
-            alert(response.message);
+         
+            showSuccessNotification(response.message);
         } catch (error) {
-            console.error("Error:", error);
+            showErrorNotification(error.message);
         }
     
-         
+        hideRecordsLoader();  
     }
     
     async function fetchOrb2EFormData() {
         const form = document.getElementById('orb1-e-form');
     
-        // Retrieve values and trim whitespace
+        // Retrieve and trim position fields
         const startBallasting = form.querySelector('input[name="start_ballasting_place"]').value.trim();
         const endBallasting = form.querySelector('input[name="end_ballasting_place"]').value.trim();
     
-        // Validate that start and end ballasting places are not empty
+        // Validation
         if (!startBallasting) {
             alert("Start Ballasting Place is required.");
             return;
         }
-    
         if (!endBallasting) {
             alert("End Ballasting Place is required.");
             return;
         }
     
-        // Retrieve tank identities and validate them
-        const tanks = [];
-        const tankInputs = document.querySelectorAll('input[name="tankIdentity[]"]');
-        
-        tankInputs.forEach(input => {
-            let value = input.value.trim();
-            
-            // Ensure tank identity is not empty
-            if (value) {
-                tanks.push(value);
-            }
-        });
+        // Retrieve dynamic tank entries
+        const tankIdentities = form.querySelectorAll('input[name="tankIdentity[]"]');
+        const startTimes = form.querySelectorAll('input[name="startTime[]"]');
+        const endTimes = form.querySelectorAll('input[name="endTime[]"]');
+        const quantities = form.querySelectorAll('input[name="quantityReceived[]"]');
     
-        // Ensure at least one tank is provided
+        const tanks = [];
+    
+        for (let i = 0; i < tankIdentities.length; i++) {
+            const identity = tankIdentities[i].value.trim();
+            const startTime = startTimes[i].value;
+            const endTime = endTimes[i].value;
+            const quantity = quantities[i].value.trim();
+    
+            if (!identity || !startTime || !endTime || !quantity) {
+                alert(`All tank fields (identity, start time, end time, quantity) must be filled for tank ${i + 1}.`);
+                return;
+            }
+    
+            tanks.push({
+                identity,
+                startTime,
+                endTime,
+                quantity: parseFloat(quantity)
+            });
+        }
+    
         if (tanks.length === 0) {
-            alert("At least one tank identity is required.");
+            alert("At least one tank entry is required.");
             return;
         }
     
-        // Construct validated and formatted data object
+        // Final data structure
         const formData = {
             startBallasting,
             endBallasting,
             tanks
         };
+    
         const data = {
-            operationType : 'E',
+            operationType: 'E',
             formData
         };
-        console.log("From form : ",data);
-        clearOrb2EFormData();
+    
+        console.log("From form: ", data);
+    clearOrb2EFormData();
+        
         try {
             const response = await api.createorb2(data);
-            console.log(response.message);
-            alert(response.message);
+           
+            showSuccessNotification(response.message);
         } catch (error) {
-            console.error("Error:", error);
+            showErrorNotification(error.message);
+            
         }
-        
+        hideRecordsLoader();
     }
+    
     
     async function fetchOrb2FFormData() {
         const form = document.getElementById('orb1-f-form');
     
-        // Fetch static fields and validate them
+     
         const port = form.querySelector('input[name="port"]').value.trim();
+        const positionPortBallast = form.querySelector('input[name="positionPortBallast"]').value.trim();
         const positionFlush = form.querySelector('input[name="PositionFlush"]').value.trim();
         const oilyWaterQty = form.querySelector('input[name="oilyWaterQty"]').value.trim();
-        const cleanBallastQty = form.querySelector('input[name="cleanBallastQty"]').value.trim();
+        const slopTankInputs = form.querySelectorAll('input[name="sloptankIdentity[]"]');
+        const slopTankIdentities = Array.from(slopTankInputs).map(input => input.value.trim()).filter(val => val !== '');
+        const positionAdditionalBallast = form.querySelector('input[name="positionAdditionalBallast"]').value.trim();
         const valveTime = form.querySelector('input[name="valveTime"]').value.trim();
         const valvePosition = form.querySelector('input[name="valvePosition"]').value.trim();
+        const cleanBallastQty = form.querySelector('input[name="cleanBallastQty"]').value.trim();
     
-        // Error messages
-        let errors = [];
-    
-        if (!port) errors.push("Port is required.");
-        if (!positionFlush) errors.push("Position of flush is required.");
         
+        let errors = [];
+        if (slopTankIdentities.length === 0) errors.push("At least one slop tank identity is required.");
+        if (!port) errors.push("Port is required.");
+        if (!positionPortBallast) errors.push("Position when water taken to CBT tank is required.");
+        if (!positionFlush) errors.push("Position of flush is required.");
         if (!oilyWaterQty || isNaN(oilyWaterQty) || Number(oilyWaterQty) < 0) {
             errors.push("Oily water quantity must be a valid non-negative number.");
         }
-    
+        if (!slopTankIdentities) errors.push("Tank(s) where oily water was transferred is required.");
+        if (!positionAdditionalBallast) errors.push("Position when additional ballast was taken is required.");
+        if (!valveTime) errors.push("Valve time is required.");
+        if (!valvePosition) errors.push("Valve position is required.");
         if (!cleanBallastQty || isNaN(cleanBallastQty) || Number(cleanBallastQty) < 0) {
             errors.push("Clean ballast quantity must be a valid non-negative number.");
         }
     
-        if (!valveTime) errors.push("Valve time is required.");
-        if (!valvePosition) errors.push("Valve position is required.");
-    
-        // Fetch and validate dynamic tank identities
+       
         const tanks = [];
         const tankInputs = form.querySelectorAll('#tankEntriesCBT input[name="tankIdentity[]"]');
         tankInputs.forEach(input => {
@@ -493,22 +535,25 @@
             }
         });
     
-        if (tanks.length === 0) errors.push("At least one tank identity is required.");
+        if (tanks.length === 0) errors.push("At least one CBT tank identity is required.");
     
-        // If there are validation errors, alert the user and stop form submission
+        
         if (errors.length > 0) {
             alert(errors.join("\n"));
             return;
         }
     
-        
+       
         const formData = {
             port,
+            positionPortBallast,
             positionFlush,
             oilyWaterQty: Number(oilyWaterQty),
-            cleanBallastQty: Number(cleanBallastQty),
+            slopTankIdentities,
+            positionAdditionalBallast,
             valveTime,
             valvePosition,
+            cleanBallastQty: Number(cleanBallastQty),
             tanks
         };
     
@@ -517,111 +562,136 @@
             formData
         };
     
-        console.log(data);  
+        console.log("Submitting ORB2 Section F data:", data);
         clearOrb2FFormData();
-       
+    
         try {
             const response = await api.createorb2(data);
-            console.log(response.message);
-            alert(response.message);
+            
+            showSuccessNotification(response.message);
         } catch (error) {
-            console.error("Error:", error);
+            showErrorNotification(error.message);
         }
-        
-         
+        hideRecordsLoader();
     }
+    
+    
     
     async function fetchOrb2GFormData() {
         const form = document.getElementById('orb1-g-form');
         if (!form) {
-        console.error("Form not found!");
-        return;
+            console.error("Form not found!");
+            return;
         }
-
-    let errors = [];
-
-    // Fetch dynamic tank identities
-    const tanks = [];
-    const tankInputs = form.querySelectorAll('#tankEntriesCleaning input[name="tankIdentity[]"]');
-    tankInputs.forEach(input => {
-        const tankValue = input.value.trim();
-        if (tankValue) {
-            tanks.push(tankValue);
+    
+        let errors = [];
+    
+        // Fetch dynamic tank identities
+        const tanks = [];
+        const tankInputs = form.querySelectorAll('#tankEntriesCleaning input[name="tankIdentity[]"]');
+        tankInputs.forEach(input => {
+            const tankValue = input.value.trim();
+            if (tankValue) {
+                tanks.push(tankValue);
+            }
+        });
+    
+        if (tanks.length === 0) {
+            errors.push("At least one tank identity is required.");
         }
-    });
-
-    if (tanks.length === 0) {
-        errors.push("At least one tank identity is required.");
-    }
-
-    // Helper function to validate number fields
-    function validateNumber(value, fieldName, isInteger = false) {
-        if (value === "") {
-            errors.push(`${fieldName} is required.`);
-            return null;
+    
+        // Helper function to validate number fields
+        function validateNumber(value, fieldName, isInteger = false) {
+            if (value === "") {
+                errors.push(`${fieldName} is required.`);
+                return null;
+            }
+            const numValue = isInteger ? parseInt(value, 10) : parseFloat(value);
+            if (isNaN(numValue) || numValue < 0) {
+                errors.push(`${fieldName} must be a valid ${isInteger ? 'integer' : 'number'}.`);
+                return null;
+            }
+            return numValue;
         }
-        const numValue = isInteger ? parseInt(value, 10) : parseFloat(value);
-        if (isNaN(numValue) || numValue < 0) {
-            errors.push(`${fieldName} must be a valid ${isInteger ? 'integer' : 'number'}.`);
-            return null;
+    
+        // Fetch and validate input fields
+        const portOrPosition = form.querySelector('input[name="portPosition"]').value.trim();
+        if (!portOrPosition) errors.push("Port or ship position is required.");
+    
+        const durationCleaning = form.querySelector('input[name="cleaningDuration"]').value.trim();
+        if (!durationCleaning) errors.push("Duration of cleaning is required.");
+    
+        const methodCleaning = form.querySelector('select[name="cleaningMethod"]').value.trim();
+        if (!methodCleaning) errors.push("Method of cleaning is required.");
+    
+        const TWT = form.querySelector('select[name="TWT"]').value;
+        if (!TWT) errors.push("Tanks Washing Transferred To (TWT) selection is required.");
+    
+        // Fields for Reception Facility
+        let portRF = null;
+        let quantityRF = null;
+    
+        // Fields for Slop Tank
+        let slopTankName = null;
+        let quantityTransferred = null;
+        let totalQuantity = null;
+    
+        if (TWT === "rf") {
+            portRF = form.querySelector('input[name="portOfRF"]').value.trim();
+            if (!portRF) errors.push("Port of Reception Facility is required.");
+    
+            quantityRF = validateNumber(form.querySelector('input[name="quantityRF"]').value.trim(), "Quantity (Reception Facility)");
+        } else if (TWT === "slop") {
+            slopTankName = form.querySelector('input[name="slopTankName"]').value.trim();
+            if (!slopTankName) errors.push("Slop/Cargo Tank name is required.");
+    
+            quantityTransferred = validateNumber(form.querySelector('input[name="quantityTransferred"]').value.trim(), "Quantity Transferred");
+            totalQuantity = validateNumber(form.querySelector('input[name="totalQuantity"]').value.trim(), "Total Quantity");
         }
-        return numValue;
-    }
-
-    // Fetch and validate input fields
-    const portOrPosition = form.querySelector('input[name="Port or ship position"]').value.trim();
-    if (!portOrPosition) errors.push("Port or ship position is required.");
-
-    const durationCleaning = validateNumber(form.querySelector('input[name="Duration of cleaning"]').value.trim(), "Duration of cleaning");
-
-    const methodCleaning = form.querySelector('select[name="Method of cleaning"]').value.trim();
-    if (!methodCleaning) errors.push("Method of cleaning is required.");
-
-    const TWT = form.querySelector('select[name="TWT"]').value.trim();
-    if (!TWT) errors.push("TWT selection is required.");
-
-    const quantityTransferred = validateNumber(form.querySelector('input[name="Quantity Transferred"]').value.trim(), "Quantity Transferred");
-    const totalQuantity = validateNumber(form.querySelector('input[name="total quantity"]').value.trim(), "Total quantity");
-
-    const portRF = form.querySelector('input[name="Port of RF"]').value.trim();
-    if (!portRF) errors.push("Port of RF is required.");
-
-    const totalQuantityRF = validateNumber(form.querySelector('input[name="total quantity of RF"]').value.trim(), "Total quantity of RF");
-
-    // If there are validation errors, display them and stop execution
-    if (errors.length > 0) {
-        console.error("Validation Errors:", errors);
-        alert("Please fix the following errors:\n" + errors.join("\n"));
-        return;
-    }
-
-    // Create the final data object
-    const formData = {
-        tanks,
-        portOrPosition,
-        durationCleaning,
-        methodCleaning,
-        TWT,
-        quantityTransferred,
-        totalQuantity,
-        portRF,
-        totalQuantityRF
-    };
-    let data = {
-        operationType:'G',
-        formData
-    };
-    console.log("Validated Data:", data);
-    clearOrb2GFormData();
-    try {
-        const response = await api.createorb2(data);
-        console.log(response.message);
-        alert(response.message);
-    } catch (error) {
-        console.error("Error:", error);
+    
+        // If there are validation errors, display them and stop execution
+        if (errors.length > 0) {
+            console.error("Validation Errors:", errors);
+            alert("Please fix the following errors:\n" + errors.join("\n"));
+            return;
+        }
+    
+        // Create the final data object
+        const formData = {
+            tanks,
+            portOrPosition,
+            durationCleaning,
+            methodCleaning,
+            TWT
+        };
+    
+        // Conditionally append either RF or Slop/Cargo Tank data
+        if (TWT === "rf") {
+            formData.portRF = portRF;
+            formData.quantityRF = quantityRF;
+        } else if (TWT === "slop") {
+            formData.slopTankName = slopTankName;
+            formData.quantityTransferred = quantityTransferred;
+            formData.totalQuantity = totalQuantity;
+        }
+    
+        const data = {
+            operationType: 'G',
+            formData
+        };
+    
+        console.log("Validated Data:", data);
+        clearOrb2GFormData();
+    
+        try {
+            const response = await api.createorb2(data);
+            showSuccessNotification(response.message);
+        } catch (error) {
+            showErrorNotification(error.message);
+        }
+        hideRecordsLoader();
     }
     
-}
 
 async function fetchOrb2HFormData() {
         const form = document.getElementById('orb1-h-form');
@@ -673,20 +743,25 @@ async function fetchOrb2HFormData() {
     const positionComplete = getInputValue("Position of discharge complete");
     const shipsSpeed = getInputValue("ships_speed", "number");
     const quantityDischarged = getInputValue("quantity_discharged", "number");
-    const monitoringSystem = getInputValue("monitoring_system") === 'Yes' ? true : false;
-    const regularCheckup = getInputValue("regular_checkup") === 'Yes' ? true : false;
+    
     const shorePort = getInputValue("shore_port", "text", false);
     const shoreQuantity = getInputValue("shore_quantity", "number", false);
 
-    // Check required dropdowns
-    if (!monitoringSystem) {
-        alert("Monitoring system selection is required.");
-        isValid = false;
-    }
-    if (!regularCheckup) {
-        alert("Regular checkup selection is required.");
-        isValid = false;
-    }
+    let monitoringSystemRaw = getInputValue("monitoring_system", "text", false);
+let regularCheckupRaw = getInputValue("regular_checkup", "text", false);
+
+// Validation: Check if either field is null, empty, or whitespace
+if (!monitoringSystemRaw || monitoringSystemRaw.trim() === "") {
+    alert("Monitoring system selection is required.");
+    isValid = false;
+}
+if (!regularCheckupRaw || regularCheckupRaw.trim() === "") {
+    alert("Regular checkup selection is required.");
+    isValid = false;
+}
+
+const monitoringSystem = monitoringSystemRaw === 'Yes';
+const regularCheckup = regularCheckupRaw === 'Yes';
 
     // Stop execution if validation fails
     if (!isValid) {
@@ -718,12 +793,11 @@ async function fetchOrb2HFormData() {
 
     try {
         const response = await api.createorb2(data);
-        console.log(response.message);
-        alert(response.message);
+        showSuccessNotification(response.message);
     } catch (error) {
-        console.error("Error:", error);
+        showErrorNotification(error.message);
     }
-    
+    hideRecordsLoader();  
 }
 
 async function fetchOrb2IFormData() {
@@ -777,15 +851,15 @@ async function fetchOrb2IFormData() {
         clearOrb2IFormData();
         console.log("Validated Form Data: ", data);
         const response = await api.createorb2(data);
-        console.log(response.message);
-        alert(response.message);
+        
+        showSuccessNotification(response.message);
           
         
     } catch (error) {
-        console.error("Form validation failed:", error.message);
+        showErrorNotification(error.message);
         return null;
     }
-   
+    hideRecordsLoader();
 }
 async function fetchOrb2JFormData() {
     
@@ -852,13 +926,13 @@ async function fetchOrb2JFormData() {
 
     } else if (method === 'transferred to or from (an)other tank(s) including transfer from machinery space oil residue(sludge) and oily bilge water tanks') {
         let transferredQty = document.querySelector('#methodOfTransportDisposal #transferredQuantity')?.value.trim();
-        let totalQty = document.querySelector('input[name="totalQuantity"]')?.value.trim();
-
+        let totalQty = parseFloat(document.querySelector('input[name="totalQuantitys"]')?.value.trim());
+        console.log(totalQty);
         if (!transferredQty || isNaN(transferredQty) || parseFloat(transferredQty) <= 0) {
             alert("Please enter a valid transferred quantity.");
             return;
         }
-        if (!totalQty || isNaN(totalQty) || parseFloat(totalQty) <= 0) {
+        if (!totalQty || isNaN(totalQty) ) {
             alert("Please enter a valid total quantity.");
             return;
         }
@@ -906,12 +980,13 @@ async function fetchOrb2JFormData() {
 
     try {
         const response = await api.createorb2(data);
-        console.log(response.message);
-        alert(response.message);
+        
+      
+        showSuccessNotification(response.message);
     } catch (error) {
-        console.error("Error:", error);
+        showErrorNotification(error.message);
     }
-   
+    hideRecordsLoader();
 }
 
 async function fetchOrb2KFormData() {
@@ -993,10 +1068,10 @@ async function fetchOrb2KFormData() {
     clearOrb2KFormData();
     try {
         const response = await api.createorb2(data);
-        console.log(response.message);
-        alert(response.message);
+        hideRecordsLoader();
+        showSuccessNotification(response.message);
     } catch (error) {
-        console.error("Error:", error);
+        showErrorNotification(error.message);
     }
 
    
@@ -1082,7 +1157,7 @@ async function fetchOrb2LFormData() {
     }
 
     // Port of RF
-    data.portRF = form.querySelector('#portofRF').value.trim();
+    data.portRF = form.querySelector('#portofRF').value;
     if (!data.portRF) {
         alert("Port of reception facility is required.");
         return null;
@@ -1123,10 +1198,10 @@ let datas = {
     clearOrb2LFormData();
     try {
         const response = await api.createorb2(datas);
-        console.log(response.message);
-        alert(response.message);
+        hideRecordsLoader();
+        showSuccessNotification(response.message);
     } catch (error) {
-        console.error("Error:", error);
+        showErrorNotification(error);
     }
 
     
@@ -1182,10 +1257,10 @@ let datas = {
 
     try {
         const response = await api.createorb2(data);
-        console.log(response.message);
-        alert(response.message);
+        hideRecordsLoader();
+        showSuccessNotification(response.message);
     } catch (error) {
-        console.error("Error:", error);
+        showErrorNotification(error.message);
     }
     
 }
@@ -1248,15 +1323,14 @@ async function fetchOrb2NFormData() {
 
         clearOrb2NFormData();
             const response = await api.createorb2(datas);
-            console.log(response.message);
-            alert(response.message);
+            hideRecordsLoader();
+            showSuccessNotification(response.message);
        
 
         
 
     } catch (err) {
-        alert(`Form validation error: ${err.message}`);
-        console.error("Form validation failed:", err.message);
+        showErrorNotification(err.message);
     }
 }
 
@@ -1296,13 +1370,14 @@ async function fetchOrb2OFormData() {
     try{
         clearOrb2OFormData();
     const response = await api.createorb2(datas);
-            console.log(response.message);
-            alert(response.message);
+    hideRecordsLoader();
+            
+            showSuccessNotification(response.message);
     }
     catch(err)
     {
-        console.log(err);
-        alert(err.message);
+        
+        showErrorNotification(err.message);
     }
     
 }
@@ -1360,12 +1435,13 @@ async function fetchOrb2PFormData() {
     try{
         const response = await api.createorb2(datas);
                 console.log(response.message);
-                alert(response.message);
+                hideRecordsLoader();
+                showSuccessNotification(response.message);
         }
         catch(err)
         {
-            console.log(err);
-            alert(err.message);
+            
+            showErrorNotification(err.message);
         }
     
 }
@@ -1394,13 +1470,14 @@ async function fetchOrb2QFormData() {
         try{
             clearOrb2QFormData();
         const response = await api.createorb2(datas);
-                console.log(response.message);
-                alert(response.message);
+        hideRecordsLoader();
+                
+                showSuccessNotification(response.message);
         }
         catch(err)
         {
-            console.log(err);
-            alert(err.message);
+            
+            showErrorNotification(err.message);
         }
    
 }
@@ -1449,13 +1526,14 @@ async function fetchOrb2RFormData() {
         try{
             clearOrb2RFormData();
         const response = await api.createorb2(datas);
-                console.log(response.message);
-                alert(response.message);
+        hideRecordsLoader();
+               
+                showSuccessNotification(response.message);
         }
         catch(err)
         {
-            console.log(err);
-            alert(err.message);
+           
+            showErrorNotification(err.message);
         }
     
 }

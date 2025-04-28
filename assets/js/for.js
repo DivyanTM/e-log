@@ -27,13 +27,13 @@ $(document).ready(function () {
         try{
           const response=await axiosInstance.post('/for/create', data);
           console.log(response);
-          alert(response.data.message);
+          showSuccessNotification(response.data.message);
         }catch(err){
-          alert(err.response.data.message);
+          showErrorNotification(err.response.data.message);
           console.log('error: ',err.response.data.message);
         }
       } else {
-        alert('Please enter all the required fields');
+        showErrorNotification('Please enter all the required fields');
       }
       
     });

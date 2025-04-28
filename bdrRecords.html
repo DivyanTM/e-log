@@ -175,6 +175,12 @@
                 <div class="col-md-12 stretch-card">
                     <div class="card">
                         <div class="card-header">
+                          <div class="custom-loader-overlay" id="recordsLoader">
+                            <div class="loader-wrapper">
+                              <div class="loader"></div>
+                              
+                            </div>
+                          </div>
                           <h2 class="card-title mb-0">Bunker Delivery Note Record Book</h2>
                           <p class="text-secondary mt-3">Tracking and Control Record for Bunker Delivery Note </p>
                         </div>
@@ -235,6 +241,8 @@
     <script>
     document.addEventListener("DOMContentLoaded", async function () {
         try {
+          showRecordsLoader();
+          const gridDiv = document.querySelector("#orb1Grid");
             const response = await axiosInstance.get('/bdn/all');
             let data = response.data.records;
             
@@ -245,14 +253,16 @@
                       ...element,
                       deliveryDate: element.deliveryDate ? new Date(element.deliveryDate).toLocaleDateString('en-GB') : "N/A",
                       createdAt: element.createdAt ? new Date(element.createdAt).toLocaleDateString('en-GB') : "N/A",
-                      approvalStatus: element.approvalStatus ? "Approved" : "Pending",
+                      approvalStatus: element.approvalStatus  ? "Approved" : "Pending",
+                      verificationStatus: element.verificationStatus  ? "Approved" : "Pending",
+                      verifiedAt: element.verifiedAt ? new Date(element.verifiedAt).toLocaleDateString('en-GB') : "N/A",
                       approvedby: (element.approvedby && element.approvedby > 0) ? String(element.approvedby) : "N/A"
                   };
               });
           }
           
     
-            console.log("Processed Data:", data); // Debugging output
+            
     
             const gridOptions = {
               columnDefs: [
@@ -277,6 +287,10 @@
                   { headerName: "Approval Status", field: "approvalStatus", cellRenderer: createActionsCellRenderer },
                   { headerName: "Approved By", field: "approvedby" },
                   { headerName: "Created By", field: "createdBy" },
+                  { headerName: "Verified By", field: "verifiedBy" },
+                  { headerName: "Verification Remarks", field: "verficationRemarks" },
+                  { headerName: "VerifiedAt", field: "verifiedAt" },
+                  { headerName: "Verification Status", field: "verificationStatus",cellRenderer:createActionsCellRenderer },
               ],
               rowData: [...data],
               pagination: true,
@@ -289,7 +303,9 @@
                   resizable: true,
               },
           };
-                        
+          gridDiv.classList.add("ag-theme-quartz-dark");
+            
+            agGrid.createGrid(gridDiv, gridOptions);              
             function fileDownloadRenderer(params) {
                 if (!params.data.supplierDeclarationFile || !params.data.supplierDeclarationFile.data) {
                     return '<span>No File</span>';
@@ -317,11 +333,14 @@
                 div.appendChild(btn);
                 return div;
             }
-    
-            const gridDiv = document.querySelector("#orb1Grid");
-            gridDiv.classList.add("ag-theme-quartz-dark");
-            agGrid.createGrid(gridDiv, gridOptions);
+           
+            
+            
+            hideRecordsLoader();
         } catch (error) {
+          gridDiv.style.display = 'block';
+          hideRecordsLoader();
+          gridDiv.innerHTML=`<p class="text-danger">Failed to load data</p>`;
             console.error("Error fetching data:", error);
         }
     });
@@ -344,8 +363,18 @@
               setTimeout(function () {
                   const preloader = document.getElementById('preloader');
               preloader.classList.add('hide'); 
-              },500);
+              },100);
           });
+          function showRecordsLoader() {
+            document.getElementById("recordsLoader").style.display = "flex";
+          }
+          
+          
+          function hideRecordsLoader() {
+            document.getElementById("recordsLoader").style.display = "none";
+          }
+          setTimeout(hideRecordsLoader,4000);
     </script>
+    
   </body>
 </html>

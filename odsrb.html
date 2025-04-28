@@ -6,6 +6,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>ELOG</title>
+     <!-- Toastr CSS -->
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+  
+     <!-- Bootstrap Icons (optional for icons in Toasts) -->
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link   rel="stylesheet" href="assets/css/toast.css">   
   <!-- plugins:css -->
   <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
@@ -218,7 +224,7 @@
                   <p class="card-description">Ozone-Depleting Substances Operations</p>
                   <div class="row">
                     <div class="d-flex col-md-12 justify-content-end">
-                      <button class="btn btn-info"><a href="odsrbRecords.html" class="text-white text-decoration-none">View Records</a></button>
+                      <button class="btn btn-info"><a href="odsrbRecords.html" class="text-white text-decoration-none mt-none"><i class="mdi mdi-file-table" style="font-size:inherit;"></i> View Records</a></button>
                     </div>
                   </div>
 
@@ -261,7 +267,7 @@
                         <div class="row mt-3">
                           <div class="col-md-12 d-flex justify-content-end ">
                             <button type="reset" class="btn btn-danger m-1">Reset</button>
-                          <button type="submit" class="btn btn-success m-1">Submit</button>
+                          <button type="submit" class="btn btn-primary m-1">Submit</button>
                           </div>
                         </div>
                     </form>
@@ -337,7 +343,7 @@
   
                       <div class="rcol-md-12 mt-3 d-flex justify-content-end">
                         <button type="reset" class="btn btn-danger m-1">Reset</button>
-                        <button type="submit" class="btn btn-success m-1">Submit</button>
+                        <button type="submit" class="btn btn-primary m-1">Submit</button>
                       </div>
   
                     </form>
@@ -377,6 +383,12 @@
   <script src="assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
   <script src="assets/vendors/owl-carousel-2/owl.carousel.min.js"></script>
   <!-- End plugin js for this page -->
+   <!-- jQuery (required for Toastr) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  
+  <!-- Toastr JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+ <script src="assets/js/toast.js"></script>
   <!-- inject:js -->
   <script src="assets/js/off-canvas.js"></script>
   <script src="assets/js/hoverable-collapse.js"></script>
@@ -402,27 +414,14 @@
     }
     });
    </script>
-<<<<<<< HEAD
+
    <script>
     document.querySelector('[data-toggle="minimize"]').addEventListener('click', function() {
       document.getElementById('website-name').classList.toggle('d-none');
-    });
-    
-    window.addEventListener('load', function () {
-
-      if(!sessionStorage.getItem('token')) {
-
-window.location.href = 'login.html';
-}
-
-        setTimeout(function () {
-            const preloader = document.getElementById('preloader');
-        preloader.classList.add('hide'); 
-        },500);
     });    
 </script>
 <script src="assets/js/odsrb.js"></script>
-=======
+
      <script>
       window.addEventListener('load', function () {
         let token=sessionStorage.getItem('token');
@@ -453,7 +452,7 @@ window.location.href = 'login.html';
       //   window.location='login.html';
       // });
     </script>
->>>>>>> a41fedb746a21d98049ff4ca8964ddfc69803fa8
+
 </body>
 
 </html>

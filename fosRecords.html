@@ -131,7 +131,13 @@
                 <div class="col-md-12 stretch-card">
                     <div class="card">
                         <div class="card-header">
-                          <h2 class="card-title mb-0">Fuel Oil Record</h2>
+                          <div class="custom-loader-overlay" id="recordsLoader">
+                            <div class="loader-wrapper">
+                              <div class="loader"></div>
+                              
+                            </div>
+                          </div>
+                          <h2 class="card-title mb-3 mt-1">Fuel Oil Record</h2>
                           <p class="text-secondary">Tracking and Control Record for MARPOL Fuel Oil Sample</p>
                         </div>
                         <div class="card-body">
@@ -190,75 +196,91 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", async function () {
-      let data=await api.getAllFOSRecords();
-
-      console.log(data);
-      
-   if(data){
-    data.map(element => {
-      element.letterOfProtestIssued = element.letterOfProtestIssued ? "Yes" : "No";
-      element.approvalStatus=element.approvalStatus ? "Approved" : "Pending";
-      element.date=new Date(element.date).toLocaleDateString('eng-GB');
-      element.dateSampleDestroyed=new Date(element.dateSampleDestroyed).toLocaleDateString('eng-GB');
-      element.verifiedBy=element.verifiedBy ? element.verifiedBy : "N/A";
-    });
-
-   }else{
-    data=[]
-   }
-
-  const gridOptions = {
-    columnDefs: [
-     
-      { headerName: "Record No", field: "recordID" },
-      { headerName: "Date", field: "date" },
-      { headerName: "Bunker Delivery Note Reference Number", field: "bunkerDeliveryNoteReferenceNumber" },
-      { headerName: "origin Of Sample", field: "originOfSample" },
-      { headerName: "Sample Seal Number", field: "sampleSealNumber" },
-      { headerName: "Letter Of Protest Issued?", field: "letterOfProtestIssued" },
-      { headerName: "Letter Of Protest Copy To", field: "letterOfProtestCopyTo" },
-      { headerName: "Date Sample Destroyed", field: "dateSampleDestroyed" },
-      { headerName: "Approval Status", field: "approvalStatus",cellRenderer: createActionsCellRenderer  },
-      { headerName: "Approved By", field: "verifiedBy" },
-      { headerName: "Created By", field: "fullname"},
-    ],
-
+        showRecordsLoader();
+        let data = await api.getAllFOSRecords();
     
+        console.log(data);
+    
+        if (data) {
+          data.map((element) => {
+            element.letterOfProtestIssued = element.letterOfProtestIssued ? "Yes" : "No";
+            element.approvalStatus = element.approvalStatus ? "Approved" : "Pending";
+            element.date = new Date(element.date).toLocaleDateString('en-GB');
+            element.dateSampleDestroyed = new Date(element.dateSampleDestroyed).toLocaleDateString('en-GB');
+            element.verifiedBy = element.verifiedBy ? element.verifiedBy : "N/A";
+          });
+        } else {
+          data = [];
+        }
+    
+        const gridOptions = {
+          columnDefs: [
+            { 
+              headerName: "S.No", 
+              valueGetter: "node.rowIndex + 1", 
+              sortable: false, 
+              filter: false, 
+              width: 100 
+            },
+            { headerName: "Date", field: "date" },
+            { headerName: "Bunker Delivery Note Reference Number", field: "bunkerDeliveryNoteReferenceNumber" },
+            { headerName: "Origin Of Sample", field: "originOfSample" },
+            { headerName: "Sample Seal Number", field: "sampleSealNumber" },
+            { headerName: "Letter Of Protest Issued?", field: "letterOfProtestIssued" },
+            { headerName: "Letter Of Protest Copy To", field: "letterOfProtestCopyTo" },
+            { headerName: "Date Sample Destroyed", field: "dateSampleDestroyed" },
+            { 
+              headerName: "Approval Status", 
+              field: "approvalStatus", 
+              cellRenderer: createActionsCellRenderer 
+            },
+            { headerName: "Approved By", field: "verifiedBy" },
+            { headerName: "Created By", field: "fullname" },
+          ],
+    
+          rowData: [...data],
+          pagination: true,
+          paginationPageSize: 20,
+          domLayout: "normal",
+          theme: "legacy",
+          defaultColDef: {
+            sortable: true,
+            filter: true,
+            resizable: true,
+          },
+        };
+    
+        function createActionsCellRenderer(params) {
+          const div = document.createElement('div');
+          const btn = document.createElement('button');
+          btn.innerText = params.data.approvalStatus;
+          div.classList.add('d-flex', 'justify-content-center', 'mt-1');
+          if (params.data.approvalStatus === "Approved") {
+            btn.classList.add('btn', 'btn-success', 'w-100');
+          } else {
+            btn.classList.add('btn', 'btn-warning', 'w-100');
+          }
+          div.appendChild(btn);
+          return div;
+        }
+    
+        const gridDiv = document.querySelector("#orb1Grid");
+        gridDiv.classList.add("ag-theme-quartz-dark");
+        hideRecordsLoader();
+        agGrid.createGrid(gridDiv, gridOptions);
 
-    rowData: [
-      ...data
-  ],
-    pagination: true,
-    paginationPageSize: 20,
-    domLayout: "normal",
-    theme: "legacy",
-    defaultColDef: {
-      sortable: true,
-      filter: true,
-      resizable: true,
-    },
-    // domLayout: 'autoHeight',
-  };
-
-  function createActionsCellRenderer(params) {
-    const div = document.createElement('div');
-    const btn = document.createElement('button');
-    btn.innerText = params.data.approvalStatus;
-    div.classList.add('d-flex', 'justify-content-center','mt-1');
-    if(params.data.approvalStatus === "Approved"){
-      btn.classList.add('btn', 'btn-success','w-100');
-    }else{
-      btn.classList.add('btn', 'btn-warning','w-100');
-    }
-    div.appendChild(btn);
-    return div;
-  }
-
-  const gridDiv = document.querySelector("#orb1Grid");
-  gridDiv.classList.add("ag-theme-quartz-dark");
-  agGrid.createGrid(gridDiv, gridOptions);  
-
-});
+      });
+      function showRecordsLoader() {
+        document.getElementById("recordsLoader").style.display = "flex";
+      }
+      
+      
+      function hideRecordsLoader() {
+        document.getElementById("recordsLoader").style.display = "none";
+      }
+      setTimeout(hideRecordsLoader,4000); 
     </script>
+
+       
   </body>
 </html>

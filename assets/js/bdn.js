@@ -1,5 +1,6 @@
 $(document).ready(async function () {
     $('#bunkerDeliveryForm').on('submit', async function (e) {
+      
       e.preventDefault();
   
       const port = $('#port').val().trim();
@@ -13,7 +14,6 @@ $(document).ready(async function () {
       const sulfurContentStr = $('#sulfurContent').val().trim();
       const supplierDeclaration = $('#supplierDeclaration')[0].files[0];
   
-      // Validation functions
       function isEmpty(value) {
         return value === '';
       }
@@ -23,34 +23,32 @@ $(document).ready(async function () {
         return regex.test(value);
       }
   
-      // Required field checks
       if ([port, deliveryDate, supplierName, supplierAddress, supplierTelephone, productName].some(isEmpty)) {
-        alert("Please fill in all required fields.");
+        showErrorNotification("Please fill in all required fields.");
         return;
       }
 
       if(!supplierDeclaration)
       {
-        alert("Please fill in all required fields.");
+        showErrorNotification("Upload the supplier declaration file");
         return;
       }
   
-      // Number validations
       if (!isValidNumber(quantityStr)) {
-        alert("Quantity must be a valid number with up to 10 digits and 2 decimal places.");
+        showErrorNotification("Quantity must be a valid number with up to 10 digits and 2 decimal places.");
         return;
       }
   
       if (!isValidNumber(densityStr)) {
-        alert("Density must be a valid number with up to 10 digits and 2 decimal places.");
+        showErrorNotification("Density must be a valid number with up to 10 digits and 2 decimal places.");
         return;
       }
   
       if (!isValidNumber(sulfurContentStr)) {
-        alert("Sulfur Content must be a valid number with up to 10 digits and 2 decimal places.");
+        showErrorNotification("Sulfur Content must be a valid number with up to 10 digits and 2 decimal places.");
         return;
       }
-  
+   
       const quantity = parseFloat(quantityStr);
       const density = parseFloat(densityStr);
       const sulfurContent = parseFloat(sulfurContentStr);
@@ -72,12 +70,13 @@ $(document).ready(async function () {
       clear();
       try {
         let response = await api.createbdnrecord(formData);
-        console.log(response);
-        alert(response.inserted.message);
+       
+        showSuccessNotification(response.inserted.message);
         
       } catch (error) {
-        console.error("Error:", error.response ? error.response.message : error.message);
-        alert('Fail to create record');
+     
+        showErrorNotification(error.response ? error.response.message : error.message);
+       
       }
     });
   });
@@ -85,3 +84,18 @@ $(document).ready(async function () {
   function clear(){
     document.getElementById('bunkerDeliveryForm').reset();
   }
+  function showRecordsLoader() {
+    
+    document.getElementById("recordsLoader").style.display = "flex";
+  }
+  
+  
+  function hideRecordsLoader() {
+    document.getElementById("recordsLoader").style.display = "none";
+   
+
+  }
+  setTimeout(hideRecordsLoader,4000);
+
+
+

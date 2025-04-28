@@ -175,8 +175,14 @@
                 <div class="col-md-12 stretch-card">
                     <div class="card">
                         <div class="card-header">
-                          <h2 class="card-title mb-0">Fuel Oil Record</h2>
-                          <p class="text-secondary">Tracking and Control Record for MARPOL Fuel Oil Sample</p>
+                          <div class="custom-loader-overlay" id="recordsLoader">
+                            <div class="loader-wrapper">
+                              <div class="loader"></div>
+                              
+                            </div>
+                          </div>
+                          <h2 class="card-title mb-3 mt-1">NoxTier ChangeOver Record Book</h2>
+                          <p class="text-secondary">Tracking and Control Record for MARPOL NoxTier ChangeOver Record</p>
                         </div>
                         <div class="card-body">
                           <div id="orb1Grid" class="ag-theme-quartz-dark" style="width: 100%;height: 900px;"></div>
@@ -234,9 +240,10 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", async function () {
-    const response=await axiosInstance.get('/fos/all');
-    console.log(response);
-    alert("response");
+        showRecordsLoader();
+    const response=await axiosInstance.get('/nox/all');
+    
+    
     let data=response.data.records;
       
    if(data){
@@ -302,6 +309,7 @@
   const gridDiv = document.querySelector("#orb1Grid");
   gridDiv.classList.add("ag-theme-quartz-dark");
   agGrid.createGrid(gridDiv, gridOptions);  
+  hideRecordsLoader();
 
 });
     </script>
@@ -321,6 +329,15 @@
       document.querySelector('[data-toggle="minimize"]').addEventListener('click', function() {
         document.getElementById('website-name').classList.toggle('d-none');
       });
+      function showRecordsLoader() {
+        document.getElementById("recordsLoader").style.display = "flex";
+      }
+      
+      
+      function hideRecordsLoader() {
+        document.getElementById("recordsLoader").style.display = "none";
+      }
+      setTimeout(hideRecordsLoader,4000); 
     </script>
   </body>
 </html>

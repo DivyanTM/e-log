@@ -170,29 +170,30 @@
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
-            <div class="row">
-                <div class="col-md-12 stretch-card">
+            <div class="row" style="border:none;">
+                <div class="col-md-12 stretch-card border-none" style="border:none;">
                     <div class="card">
+                      <div class="custom-loader-overlay" id="recordsLoader">
+                        <div class="loader-wrapper">
+                          <div class="loader"></div>
+                          
+                        </div>
+                      </div>
                         <div class="card-header">
-                          <h2 class="card-title mb-3">Ozone-Depleting Substance (ODSRB) </h2>
+                          <h2 class="card-title mb-3 mt-3">Ozone-Depleting Substance (ODSRB) </h2>
                           <p class="text-secondary">Tracking and Control Record for Ozone-Depleting Substance</p>
-                          <div class="row">
-                            <div class="col-md-12 mt-3">
-                              <label class="form-label" for="odsrb-table">Select Table</label>
-                              <select name="odsrb-table" id="odsrb-table" class="form-select form-control">
-                                <option value="" selected disabled>Select Table</option>
-                                <option value="Equipments containing ODS">Equipments containing ODS</option>
-                                <option value="Record of Ozone-Depleting Substances">Record of Ozone-Depleting Substances</option>
-                              </select>
-                            </div>
-                          </div>
+                          
                         
                         </div>
-                        <div class="card-body">
-                        <div id="operationGrid" class="ag-theme-quartz-dark" style="width: 100%;height: 900px;"></div>
+                        <div class="card-body " >
+                            
+                        <div id="operationGrid" class="  ag-theme-quartz-dark" style="width: 100%;height: 900px;border:none;">
+                          
+                        </div>
 
-
+                        
                       </div>
+                      
                       </div>
                     
                 </div>
@@ -243,123 +244,281 @@
     <!-- End custom js for this page -->
 
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const selectElement = document.getElementById("odsrb-table");
+      document.addEventListener("DOMContentLoaded", async function () {
+        const COMMON_COLUMNS = [
+          "approvedby",
+          "approvalStatus",
+          "createdby",
+  
+          "createdAt",
+          "verifiedBy",
+          "verifiedAt",
+          "verificationStatus",
+          "verificationRemarks",
+          "operationName"
+        ];
+      
         const gridDiv = document.getElementById("operationGrid");
         let gridApi;
-    
-        selectElement.addEventListener("change", async function () {
-            const selectedValue = selectElement.value.trim();
-            console.log("Selected Value:", JSON.stringify(selectedValue));
-    
-            const record = selectedValue === "Equipments containing ODS" ? "read-records1" : "read-records2";
-            const operation = selectElement.value;
-    
-            if (!operation) {
-                gridDiv.style.display = "none";
-                return;
+      
+        try {
+          showRecordsLoader();
+          
+          
+      
+          const response = await axiosInstance.get(`/odsrb/read-records`);
+          const data = response.data.records || [];
+          console.log("Fetched Data:", data);
+      
+          
+      
+          const formattedData = data.map((item) => ({
+            ...item,
+            letterOfProtestIssued: item.letterOfProtestIssued ? "Yes" : "No",
+            approvalStatus: item.approvalStatus ? "Approved" : "Pending",
+            monitoringSystem: Boolean(item.monitoringSystem),
+            regularCheckup: Boolean(item.regularCheckup),
+            washingPattern: Boolean(item.washingPattern),
+            valvesClosed: Boolean(item.valvesClosed),
+            startTimeWashing: formatTime(item.startTimeWashing),
+            settlingLastResidues: formatTime(item.settlingLastResidues),
+            timeStart: formatTime(item.timeStart),
+            timeCompletion: formatTime(item.timeCompletion),
+            timeOfSystemFailure: formatTime(item.timeOfSystemFailure),
+            timeSystemOperational: formatTime(item.timeSystemOperational),
+            settlingLastDischarge: formatTime(item.settlingLastDischarge),
+            valveTime: formatTime(item.valveTime),
+            valveCloseTime: formatTime(item.valveCloseTime),
+            stopTimeWashing: formatTime(item.stopTimeWashing),
+            timeOfOccurrence: formatTime(item.timeOfOccurrence),
+            durationOfCleaning: formatTime(item.durationOfCleaning),
+            dischargeStartTime: formatTime(item.dischargeStartTime),
+            dischargeCompleteTime: formatTime(item.dischargeCompleteTime),
+            date: formatDate(item.date),
+            createdAt: formatDate(item.createdAt),
+            dateSampleDestroyed: formatDate(item.dateSampleDestroyed),
+            verifiedBy: item.verifiedBy || "N/A",
+            verifiedAt: formatDate(item.verifiedAt),
+            verificationStatus: item.verificationStatus ? "Approved" : "Pending",
+            verificationRemarks:  item.verficationRemarks || item.verificationRemarks || "N/A",
+            
+            operationName: item.operationName || "N/A",
+            operationDetails: item.details || {}
+          }));
+      
+          const columnDefs = [
+            {
+              headerName: "SNO",
+              valueGetter: (params) => (params.node ? params.node.rowIndex + 1 : null),
+              width: 80,
+              sortable: false
+            },
+            ...COMMON_COLUMNS.map((col) => ({
+              headerName: formatHeaderName(col),
+              field: col,
+              sortable: true,
+              filter: true,
+              resizable: true,
+              cellRenderer: ["approvalStatus", "verificationStatus"].includes(col)
+              ? createActionsCellRenderer
+              : null            })),
+            {
+              headerName: "Operation Details",
+              field: "operationDetails",
+              autoHeight: true,
+              flex: 2,
+              minWidth:300,
+              cellRenderer: createOperationDetailsRenderer
             }
-    
-            try {
-                gridDiv.style.display = "block"; 
-                gridDiv.innerHTML = "<p>Loading data...</p>"; 
-                console.log(`/ods/${record}/${operation}`);
-    
-                const response = await axiosInstance.get(`/ods/${record}/${operation}`);
-                const data = response.data.records || [];
-                console.log("API Response:", response, data);
-    
-                if (!data.length) {
-                    gridDiv.innerHTML = "<p class='text-warning'>No records found.</p>";
-                    return;
-                }
-    
-                // **Dynamic Column Definitions**
-                const columnDefs = [
-                    {
-                        headerName: "SNO",
-                        valueGetter: (params) => params.node ? params.node.rowIndex + 1 : null, 
-                        width: 80,
-                        sortable: false,
-                    },
-                    ...Object.keys(data[0]).map((key) => ({
-                        headerName: formatHeaderName(key),
-                        field: key,
-                        sortable: true,
-                        filter: true,
-                        resizable: true,
-                        cellRenderer: key === "approvalStatus" ? createActionsCellRenderer : null 
-                    }))
-                ];
-    
-                // **Dynamic rowData processing**
-                const formattedData = data.map(item => ({
-                    ...item,
-                    letterOfProtestIssued: item.letterOfProtestIssued ? "Yes" : "No",
-                    approvalStatus: item.approvalStatus ? "Approved" : "Pending",
-                    date: item.date ? new Date(item.date).toLocaleDateString("en-GB") : "N/A",
-                    dateSampleDestroyed: item.dateSampleDestroyed ? new Date(item.dateSampleDestroyed).toLocaleDateString("en-GB") : "N/A",
-                    verifiedBy: item.verifiedBy || "N/A",
-                    operationDate:formatDate(item.operationDate),
-                    createdAt:item.createdAt ? new Date(item.createdAt).toLocaleDateString("en-GB") : "N/A",
-                }));
-    
-                const gridOptions = {
-                    columnDefs,
-                    rowData: formattedData,
-                    pagination: true,
-                    paginationPageSize: 20,
-                    domLayout: "normal",
-                    theme: "legacy",
-                    defaultColDef: {
-                        sortable: true,
-                        filter: true,
-                        resizable: true,
-                    },
-                };
-    
-                gridDiv.innerHTML = "";
-                if (gridApi) {
-                    gridApi.destroy();
-                }
-                gridApi = agGrid.createGrid(gridDiv, gridOptions);
-    
-                // **Set dynamic rowData after grid initialization**
-                gridApi.setGridOption("rowData", formattedData);
-            } catch (error) {
-                console.error("Error fetching records:", error);
-                gridDiv.innerHTML = "<p class='text-danger'>Failed to load data.</p>";
-            }
-        });
-    
+          ];
+      
+          const gridOptions = {
+            columnDefs,
+            rowData: formattedData,
+            pagination: true,
+            theme:'legacy',
+            paginationPageSize: 20,
+            defaultColDef: {
+              sortable: true,
+              filter: true,
+              resizable: true,
+              flex: 1,
+              minWidth:250,
+            },
+            onFirstDataRendered: (params) => params.api.sizeColumnsToFit()
+          };
+      
+          gridDiv.innerHTML = "";
+          if (gridApi) gridApi.destroy();
+          gridApi = agGrid.createGrid(gridDiv, gridOptions);
+          gridApi.setGridOption("rowData", formattedData);
+          
+          gridDiv.style.display = "block";
+          hideRecordsLoader();
+        } catch (error) {
+          hideRecordsLoader();
+          gridDiv.style.display = "block";
+          console.error("Error fetching records:", error);
+          gridDiv.innerHTML = "<p class='text-danger'>Failed to load data.</p>";
+        }
+      
+        // Utility Functions
         function formatHeaderName(key) {
-            return key.replace(/([A-Z])/g, " $1").replace(/^./, str => str.toUpperCase()).trim();
+          return key
+            .replace(/([A-Z])/g, " $1")
+            .replace(/^./, (str) => str.toUpperCase())
+            .trim();
         }
-        function formatDate(dateString) {
-          const date = new Date(dateString);
-          return date.toLocaleDateString('en-US', { 
-              year: 'numeric', 
-              month: 'long', 
-              day: 'numeric' 
-          });
-      }
+      
+        function formatDate(date) {
+          return date ? new Date(date).toLocaleDateString("en-GB") : "N/A";
+        }
+        function formatDateTime(sqlDateTime) {
+  if (!sqlDateTime) return "N/A";
+
+  const parsedDate = new Date(sqlDateTime);
+  if (isNaN(parsedDate)) return "Invalid date";
+
+  return parsedDate.toLocaleString("en-GB", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true,
+  }).replace(/\s(am|pm)/i, (match) => match.toUpperCase());
+}
+
+        
+        function formatTime(time) {
+          return time
+            ? new Date(time).toLocaleString("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: true
+              })
+            : "N/A";
+        }
+      
+        function createCheckboxRenderer(params) {
+          const div = document.createElement("div");
+          div.classList.add("d-flex", "justify-content-center");
+      
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.checked = params.value;
+          checkbox.disabled = true;
+          checkbox.classList.add("form-check-input");
+      
+          checkbox.style.width = "25px";
+          checkbox.style.height = "25px";
+          checkbox.style.cursor = "not-allowed";
+      
+          div.appendChild(checkbox);
+          return div;
+        }
+      
         function createActionsCellRenderer(params) {
-            const div = document.createElement("div");
-            const btn = document.createElement("button");
-            btn.innerText = params.data.approvalStatus;
-            div.classList.add("d-flex", "justify-content-center", "mt-1");
-    
-            if (params.data.approvalStatus === "Approved") {
-                btn.classList.add("btn", "btn-success", "w-100");
-            } else {
-                btn.classList.add("btn", "btn-warning", "w-100");
-            }
-    
-            div.appendChild(btn);
-            return div;
+          const div = document.createElement("div");
+          const btn = document.createElement("button");
+          btn.innerText = params.data.approvalStatus;
+          div.classList.add("d-flex", "justify-content-center", "mt-1");
+      
+          if (params.data.approvalStatus === "Approved") {
+            btn.classList.add("btn", "btn-success", "w-100","p-2");
+          } else {
+            btn.classList.add("btn", "btn-warning", "w-100","p-2");
+          }
+      
+          div.appendChild(btn);
+          return div;
         }
+      
+let currentlyExpandedRenderer = null;
+let currentlyExpandedButton = null;
+
+
+function createOperationDetailsRenderer(params) {
+  const details = params.value;
+  if (!details || typeof details !== "object") return "N/A";
+
+  const container = document.createElement("div");
+  container.classList.add("operation-details-container");
+  container.style.position = "relative";
+
+  const renderEntries = (obj, indent = 0) => {
+    return Object.entries(obj).map(([key, val]) => {
+      const formattedKey = `<strong style="margin-left: ${indent * 16}px;">${formatHeaderName(key)}:</strong>`;
+      if (typeof val === "object" && val !== null) {
+        return `<div style="margin:6px 0;">${formattedKey}<br>${renderEntries(val, indent + 1).join("")}</div>`;
+      } else {
+        return `<div style="margin:6px 0; margin-left: ${indent * 16}px;">${formattedKey} ${val}</div>`;
+      }
     });
-           </script>
+  };
+
+  const contentDiv = document.createElement("div");
+  contentDiv.innerHTML = renderEntries(details).join("");
+  contentDiv.style.display = "none"; 
+
+  const toggleBtn = document.createElement("button");
+  toggleBtn.innerText = "Show more";
+  toggleBtn.classList.add("btn", "btn-info", "w-100", "p-2");
+
+  toggleBtn.addEventListener("click", (e) => {
+    e.stopPropagation(); 
+
+    
+    if (currentlyExpandedRenderer && currentlyExpandedRenderer !== contentDiv) {
+      currentlyExpandedRenderer.style.display = "none";
+      if (currentlyExpandedButton) {
+        currentlyExpandedButton.innerText = "Show more";
+      }
+    }
+
+    const isVisible = contentDiv.style.display === "block";
+    contentDiv.style.display = isVisible ? "none" : "block";
+    toggleBtn.innerText = isVisible ? "Show more" : "Show less";
+
+    currentlyExpandedRenderer = isVisible ? null : contentDiv;
+    currentlyExpandedButton = isVisible ? null : toggleBtn;
+  });
+
+  container.appendChild(toggleBtn);
+  container.appendChild(contentDiv);
+
+  return container;
+}
+                      
+      
+      });
+      
+      gridOptions.onCellClicked = function (params) {
+        if (
+          currentlyExpandedRenderer &&
+          !params.event.target.classList.contains("btn-info")
+        ) {
+          currentlyExpandedRenderer.style.display = "none";
+          if (currentlyExpandedButton) {
+            currentlyExpandedButton.innerText = "Show more";
+          }
+          currentlyExpandedRenderer = null;
+          currentlyExpandedButton = null;
+        }
+      };
+      
+function showRecordsLoader() {
+  document.getElementById("recordsLoader").style.display = "flex";
+}
+
+
+function hideRecordsLoader() {
+  document.getElementById("recordsLoader").style.display = "none";
+}
+
+       </script>
     <script>
       document.querySelector('[data-toggle="minimize"]').addEventListener('click', function() {
         document.getElementById('website-name').classList.toggle('d-none');
@@ -375,8 +534,12 @@
           setTimeout(function () {
               const preloader = document.getElementById('preloader');
           preloader.classList.add('hide'); 
-          },500);
+          },100);
       });
+
+      
+      
+         
     </script>
    
   </body>

@@ -131,6 +131,12 @@
                 <div class="col-md-12 stretch-card">
                     <div class="card">
                         <div class="card-header">
+                          <div class="custom-loader-overlay" id="recordsLoader">
+                            <div class="loader-wrapper">
+                              <div class="loader"></div>
+                              
+                            </div>
+                          </div>
                           <h2 class="card-title mb-0">Fuel Oil Record</h2>
                           <p class="text-secondary">Tracking and Control Record for MARPOL Fuel Oil Sample</p>
                         </div>
@@ -190,7 +196,7 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", async function () {
-   
+   showRecordsLoader();
     let data=await api.getAllFORRecords();
 
     console.log(data);
@@ -255,9 +261,20 @@
 
   const gridDiv = document.querySelector("#orb1Grid");
   gridDiv.classList.add("ag-theme-quartz-dark");
+  
   agGrid.createGrid(gridDiv, gridOptions);  
+  hideRecordsLoader();
 
 });
+function showRecordsLoader() {
+  document.getElementById("recordsLoader").style.display = "flex";
+}
+
+
+function hideRecordsLoader() {
+  document.getElementById("recordsLoader").style.display = "none";
+}
+setTimeout(hideRecordsLoader,4000); 
     </script>
   </body>
 </html>

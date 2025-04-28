@@ -20,6 +20,13 @@
   <!-- endinject -->
   <!-- Layout styles -->
   <link rel="stylesheet" href="assets/css/style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+  
+  <!-- Bootstrap Icons (optional for icons in Toasts) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="assets/css/toast.css">
   <!-- End layout styles -->
   <!-- <link rel="shortcut icon" href="assets/images/favicon.png" /> -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -214,8 +221,8 @@
             <div class="col-md-12 stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h3 class="card-title">Fuel Oil Record</h3>
-                  <p class="card-description">Record of Fuel Oil Received</p>
+                  <h3 class="card-title">Fuel Oil Sample Record</h3>
+                  <p class="card-description">Record of Fuel Oil Sample</p>
                     <div class="row">
                       <div class="d-flex col-md-12 justify-content-end">
                         <button class="btn btn-info"><a href="records.html" class="text-white text-decoration-none">View Records</a></button>
@@ -332,20 +339,6 @@
      }
    });
    </script>
-<<<<<<< HEAD
-   <script>
-    document.querySelector('[data-toggle="minimize"]').addEventListener('click', function() {
-      document.getElementById('website-name').classList.toggle('d-none');
-    });
-
-    window.addEventListener('load', function () {
-
-      if(!sessionStorage.getItem('token')) {
-
-window.location.href = 'login.html';
-}
-
-=======
     <script>
       window.addEventListener('load', function () {
         let token=sessionStorage.getItem('token');
@@ -365,7 +358,6 @@ window.location.href = 'login.html';
           // document.querySelector('#username').textContent=decodedData.username;
       }
   
->>>>>>> a41fedb746a21d98049ff4ca8964ddfc69803fa8
         setTimeout(function () {
           const preloader = document.getElementById('preloader');
           preloader.classList.add('hide');
@@ -377,6 +369,13 @@ window.location.href = 'login.html';
       //   window.location='login.html';
       // });
     </script>
+    <!-- jQuery (required for Toastr) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  
+  <!-- Toastr JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+  <script src="assets/js/toast.js"></script>
 </body>
 
 </html>
