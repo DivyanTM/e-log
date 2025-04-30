@@ -21,8 +21,8 @@ document.querySelector('#ballastRecordForm').addEventListener('submit', async fu
     // Add dynamic fields based on occasion with null checks
     switch (occasion) {
         case 5:
-            operationData.waterDepth = parseFloat(document.getElementById('waterDepth').value);
-            operationData.estimatedUptakeVolume = parseFloat(document.getElementById('uptakeVolume').value);
+            operationData.waterDepth = document.getElementById('waterDepth').value;
+            operationData.estimatedUptakeVolume = document.getElementById('uptakeVolume').value;
             break;
             
         case 4:
@@ -64,10 +64,10 @@ document.querySelector('#ballastRecordForm').addEventListener('submit', async fu
     try {
         let response = await api.createbwrRecord(data);
         console.log('API Response:', response);
-        alert('Record submitted successfully!');
+        showSuccessNotification('Ballast water record submitted successfully!');
         form.reset();
     } catch (error) {
         console.error('Submission Error:', error);
-        alert(error.response?.data?.message || 'An error occurred during submission');
+        showErrorNotification(error.response?.data?.message || 'An error occurred during submission');
     }
 });
