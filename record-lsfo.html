@@ -213,22 +213,22 @@
           element.date = new Date(element.date).toLocaleDateString('eng-GB');
           element.dateSampleDestroyed = new Date(element.dateSampleDestroyed).toLocaleDateString('eng-GB');
           element.verifiedBy = element.verifiedBy ? element.verifiedBy : "N/A";
-        const datetimeFields = [
-          'begin_LSFO_datetime',
-          'complete_LSFO_datetime',
-          'regulated_entry_datetime',
-          'regulated_exit_datetime',
-          'begin_HSFO_datetime',
-          'complete_HSFO_datetime',
-          'createdAt'
-        ];
+          const datetimeFields = [
+            'begin_LSFO_datetime',
+            'complete_LSFO_datetime',
+            'regulated_entry_datetime',
+            'regulated_exit_datetime',
+            'begin_HSFO_datetime',
+            'complete_HSFO_datetime',
+            'createdAt'
+          ];
 
-        datetimeFields.forEach(field => {
-          if (element[field]) {
-            element[field] = formatDateTime(element[field]);
-          }
+          datetimeFields.forEach(field => {
+            if (element[field]) {
+              element[field] = formatDateTime(element[field]);
+            }
+          });
         });
-      });
 
       }
       const gridOptions = {
@@ -256,7 +256,23 @@
           { headerName: "Complete HSFO Datetime", field: "complete_HSFO_datetime" },
           { headerName: "Approval Status", field: "approvedStatus", cellRenderer: createActionsCellRenderer },
           { headerName: "Verified By", field: "verifiedBy" },
-          { headerName: "Full Name", field: "fullname" }
+          { headerName: "Created By", field: "createdByName" },
+          { headerName: "Verification Remarks", field: "verificationRemarks", width: 190 },
+
+          { headerName: "Verified At", field: "verifiedAt", width: 120, filter: 'agDateColumnFilter' },
+          { headerName: "Verified By", field: "verifiedBy", width: 120 },
+          {
+            headerName: "Verification Status", field: "verificationStatus",
+            width: 120,
+            cellRenderer: params => {
+              const div = document.createElement('div');
+              const btn = document.createElement('button');
+              btn.textContent = params.value;
+              btn.className = `btn btn-sm w-100 ${params.value === "Approved" ? 'btn-success' : 'btn-warning'}`;
+              div.appendChild(btn);
+              return div;
+            }
+          },
         ],
 
 
