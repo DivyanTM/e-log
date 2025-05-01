@@ -271,6 +271,16 @@
                     return `<strong>${displayKey}</strong>: ${formatDate(value)}`;
                     //return `${displayKey}: ${formatDate(value)}`;
                   }
+                  if ([
+                    'estimatedDischargedVolume',
+                    'remainingVolume',
+                    'estimatedCirculatedVolume',
+                    'estimatedUptakeVolume'
+                  ].includes(key)) {
+                    return `<strong>${displayKey}</strong>: ${value} m³`;
+                    //return `${displayKey}: ${formatDate(value)}`;
+                  }
+
                   if (key === 'recordTime') {
                     return `<strong>${displayKey}</strong>: ${formatTime(value)}`;
                     //return `${displayKey}: ${formatTime(value)}`;
@@ -299,10 +309,10 @@
             { headerName: "ID", field: "recordID", width: 80, sort: 'desc' },
             { headerName: "Created At", field: "createdAt", width: 120, filter: 'agDateColumnFilter' },
             { headerName: "Operation Type", field: "operationType", width: 150 },
-            { headerName: "Verified At", field: "verifiedAt", width: 120,filter: 'agDateColumnFilter'  },
+            { headerName: "Verified At", field: "verifiedAt", width: 120, filter: 'agDateColumnFilter' },
             { headerName: "Verified By", field: "verifiedBy", width: 120 },
             {
-              headerName: "Verification Status", field: "verificationStatus", 
+              headerName: "Verification Status", field: "verificationStatus",
               width: 120,
               cellRenderer: params => {
                 const div = document.createElement('div');
