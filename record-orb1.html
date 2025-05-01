@@ -369,9 +369,29 @@
                     //return `${displayKey}: ${formatDate(value)}`;
 
                   }
+                  if ([
+                  'lubricatingOilTotalContent', 
+                  'lubricatingOilQuantityAdded',
+                  'fuelOilQuantityAdded',
+                  'fuelOilTotalContent',
+                  'methodsTransferDisposal',
+                  'quantityResidueCollectedManually',
+                  'totalQuantityRetention',
+                  'chemicalsUsed',
+                  'quantityDischarged',
+                  'collectionTankCapacity',
+                  'collectionTotalQuantityRetained',
+
+
+
+                  ].includes(key)) {
+                    return `<strong>${displayKey}</strong>: ${value} m³`;
+                    //return `${displayKey}: ${formatDate(value)}`;
+                  }
+
 
                   return `<strong>${displayKey}</strong>: ${value}`;
-                   //return `${displayKey}: ${value}`;
+                  //return `${displayKey}: ${value}`;
 
                 });
 
