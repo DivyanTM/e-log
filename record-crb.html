@@ -329,8 +329,22 @@
                     return `<strong>${displayKey}</strong>:: ${formatTime(value)}`;
                     //return `${displayKey}: ${formatTime(value)}`;
 
-                    
+
                   }
+                  if ([
+                    'quantityDischarged',
+                    'tankTo',
+                    'tankFrom',
+                    'intoSea',
+                  
+                    'cleaningAgentQuantity',
+
+                    
+                  ].includes(key)) {
+                    return `<strong>${displayKey}</strong>: ${value} m³`;
+                    //return `${displayKey}: ${formatDate(value)}`;
+                  }
+
                   // Format date fields
                   if (key === 'recordDate') {
                     return `<strong>${displayKey}</strong>:: ${formatDate(value)}`;
@@ -376,10 +390,10 @@
                 return div;
               }
             },
-            { headerName: "Verified At", field: "verifiedAt", width: 120,filter: 'agDateColumnFilter'  },
+            { headerName: "Verified At", field: "verifiedAt", width: 120, filter: 'agDateColumnFilter' },
             { headerName: "Verified By", field: "verifiedBy", width: 120 },
             {
-              headerName: "Verification Status", field: "verificationStatus", 
+              headerName: "Verification Status", field: "verificationStatus",
               width: 120,
               cellRenderer: params => {
                 const div = document.createElement('div');
