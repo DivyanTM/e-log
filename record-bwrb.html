@@ -231,6 +231,11 @@
               createdAt: formatDateTime(record.createdAt), // Format createdAt
 
               approvedStatus: record.approvedStatus ? "Approved" : "Pending",
+              verifiedAt: formatDateTime(record.verifiedAt),
+              verifiedBy: record.verifiedBy,
+              verificationStatus: record.verificationStatus ? "Approved" : "Pending",
+              verificationRemarks: record.verificationRemarks,
+
               createdBy: record.createdByName || "N/A",
               approvedBy: record.approvedBy || "N/A"
             };
@@ -264,12 +269,15 @@
                   key;
                   if (key === 'recordDate') {
                     return `<strong>${displayKey}</strong>: ${formatDate(value)}`;
+                    //return `${displayKey}: ${formatDate(value)}`;
                   }
                   if (key === 'recordTime') {
                     return `<strong>${displayKey}</strong>: ${formatTime(value)}`;
+                    //return `${displayKey}: ${formatTime(value)}`;
                   }
 
                   return `<strong>${displayKey}</strong>: ${value}`;
+                  //return `${displayKey}: ${value}`;
                 });
 
 
@@ -289,10 +297,25 @@
           // 4. Create column definitions
           const columnDefs = [
             { headerName: "ID", field: "recordID", width: 80, sort: 'desc' },
-            { headerName: "Created At", field: "createdAt", width: 160, filter: 'agDateColumnFilter' },
+            { headerName: "Created At", field: "createdAt", width: 120, filter: 'agDateColumnFilter' },
             { headerName: "Operation Type", field: "operationType", width: 150 },
+            { headerName: "Verified At", field: "verifiedAt", width: 120,filter: 'agDateColumnFilter'  },
+            { headerName: "Verified By", field: "verifiedBy", width: 120 },
             {
-              headerName: "Status",
+              headerName: "Verification Status", field: "verificationStatus", 
+              width: 120,
+              cellRenderer: params => {
+                const div = document.createElement('div');
+                const btn = document.createElement('button');
+                btn.textContent = params.value;
+                btn.className = `btn btn-sm w-100 ${params.value === "Approved" ? 'btn-success' : 'btn-warning'}`;
+                div.appendChild(btn);
+                return div;
+              }
+            },
+            { headerName: "Verification Remarks", field: "verificationRemarks", width: 190 },
+            {
+              headerName: "Approved Status",
               field: "approvedStatus",
               width: 120,
               cellRenderer: params => {
@@ -309,7 +332,7 @@
             {
               headerName: "Operation Details",
               field: "operationDetails",
-              width: 100,
+              width: 190,
               autoHeight: true,
               cellRenderer: params => {
                 if (!params.value) return document.createTextNode('No data');
