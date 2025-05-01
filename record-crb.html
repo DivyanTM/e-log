@@ -243,7 +243,11 @@
               createdAt: formatDateTime(record.createdAt),
               approvedStatus: record.approvedStatus ? "Approved" : "Pending",
               createdBy: record.createdByName || "N/A",
-              approvedBy: record.approvedBy || "N/A"
+              approvedBy: record.approvedBy || "N/A",
+              verifiedAt: formatDateTime(record.verifiedAt),
+              verifiedBy: record.verifiedBy,
+              verificationStatus: record.verificationStatus ? "Approved" : "Pending",
+              verificationRemarks: record.verificationRemarks
             };
 
             // Determine operation type
@@ -323,17 +327,25 @@
                   // Format time fields
                   if (['startTime', 'stopTime', 'occurrenceTime', 'cleaningTime', 'recordTime'].includes(key)) {
                     return `<strong>${displayKey}</strong>:: ${formatTime(value)}`;
+                    //return `${displayKey}: ${formatTime(value)}`;
+
+                    
                   }
                   // Format date fields
                   if (key === 'recordDate') {
                     return `<strong>${displayKey}</strong>:: ${formatDate(value)}`;
+                    //return `${displayKey}: ${formatDate(value)}`;
+
                   }
                   // Format boolean fields
                   if (key === 'conformBWMPlan') {
                     return `<strong>Conforms to Plan</strong>:${value ? 'Yes' : 'No'}`;
+                    //return `Conforms to Plan:${value ? 'Yes' : 'No'}`;
                   }
                   // Default case
                   return `<strong>${displayKey}</strong>: ${value}`;
+                  //return `${displayKey}: ${value}`;
+
                 });
 
               formattedRecord.operationDetails = allFields.join('<br>');
@@ -349,10 +361,10 @@
           // 4. Create column definitions
           const columnDefs = [
             { headerName: "ID", field: "recordID", width: 80, sort: 'desc' },
-            { headerName: "Created At", field: "createdAt", width: 160, filter: 'agDateColumnFilter' },
-            { headerName: "Operation Type", field: "operationType", width: 150 },
+            { headerName: "Created At", field: "createdAt", width: 120, filter: 'agDateColumnFilter' },
+            { headerName: "Operation Type", field: "operationType", width: 120 },
             {
-              headerName: "Status",
+              headerName: "Approval Status",
               field: "approvedStatus",
               width: 120,
               cellRenderer: params => {
@@ -364,12 +376,27 @@
                 return div;
               }
             },
-            { headerName: "Created By", field: "createdBy", width: 150 },
-            { headerName: "Approved By", field: "approvedBy", width: 150, hide: true },
+            { headerName: "Verified At", field: "verifiedAt", width: 120,filter: 'agDateColumnFilter'  },
+            { headerName: "Verified By", field: "verifiedBy", width: 120 },
+            {
+              headerName: "Verification Status", field: "verificationStatus", 
+              width: 120,
+              cellRenderer: params => {
+                const div = document.createElement('div');
+                const btn = document.createElement('button');
+                btn.textContent = params.value;
+                btn.className = `btn btn-sm w-100 ${params.value === "Approved" ? 'btn-success' : 'btn-warning'}`;
+                div.appendChild(btn);
+                return div;
+              }
+            },
+            { headerName: "Verification Remarks", field: "verificationRemarks", width: 190 },
+            { headerName: "Created By", field: "createdBy", width: 120 },
+            { headerName: "Approved By", field: "approvedBy", width: 120, hide: true },
             {
               headerName: "Operation Details",
               field: "operationDetails",
-              width: 100,
+              width: 190,
               autoHeight: true,
               cellRenderer: params => {
                 if (!params.value) return document.createTextNode('No data');
