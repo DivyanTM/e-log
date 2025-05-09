@@ -49,4 +49,4 @@ function showRecordsLoader() {
   function hideRecordsLoader() {
     document.getElementById("recordsLoader").style.display = "none";
   }
-  setTimeout(hideRecordsLoader,4000);
+  

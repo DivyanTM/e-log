@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>ELOG - Bunker Delivery Records</title>
+    <title>NoxTier record book - ELOG</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
@@ -20,41 +20,41 @@
     <!-- Layout styles -->
      <style>
       #website-name {
-      transition: opacity 0.3s;
+        transition: opacity 0.3s;
+      }
+      #website-name.d-none {
+        opacity: 0;
+      }
+      #preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.1); 
+        backdrop-filter: blur(10px); 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999; 
     }
-    #website-name.d-none {
-      opacity: 0;
+
+
+    #preloader-content {
+        text-align: center;
     }
-        #preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.1); 
-            backdrop-filter: blur(10px); 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999; 
-        }
-    
-    
-        #preloader-content {
-            text-align: center;
-        }
-    
-       
-        #preloader-content img {
-            width: 150px; 
-            height: auto;
-        }
-    
-    
-        #preloader.hide {
-            display: none;
-        }
-    
+
+   
+    #preloader-content img {
+        width: 150px; 
+        height: auto;
+    }
+
+
+    #preloader.hide {
+        display: none;
+    }
+
      </style>
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- End layout styles -->
@@ -66,11 +66,11 @@
   </head>
   <body>
     <div id="preloader">
-        <div id="preloader-content">
-            <img src="assets/gifs/ship1.gif" alt="Loading...">
-            <p class="mt-3">Loading...</p>
-        </div>
-    </div>
+      <div id="preloader-content">
+          <img src="assets/gifs/ship1.gif" alt="Loading...">
+          <p class="mt-3">Loading...</p>
+      </div>
+  </div>
     <div class="container-scroller">
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
@@ -323,8 +323,8 @@
                               
                             </div>
                           </div>
-                          <h2 class="card-title mb-0">Bunker Delivery Note Record Book</h2>
-                          <p class="text-secondary mt-3">Tracking and Control Record for Bunker Delivery Note </p>
+                          <h2 class="card-title mb-3 mt-1">NoxTier ChangeOver Record Book</h2>
+                          <p class="text-secondary">Tracking and Control Record for MARPOL NoxTier ChangeOver Record</p>
                         </div>
                         <div class="card-body">
                           <div id="orb1Grid" class="ag-theme-quartz-dark" style="width: 100%;height: 900px;"></div>
@@ -353,7 +353,7 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script type="module" src="/assets/js/axiosInstance.js"></script>
+    <script type="module" src="assets/js/axiosInstance.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
     <script src="assets/vendors/chart.js/Chart.min.js"></script>
@@ -381,193 +381,131 @@
     <!-- End custom js for this page -->
 
     <script>
-    document.addEventListener("DOMContentLoaded", async function () {
-      let gridDiv = document.querySelector("#orb1Grid");
-        try {
-          showRecordsLoader();
-          
-            const response = await axiosInstance.get('/bdn/all');
-            let data = response.data.records;
-            
-            if (data) {
-              data = data.map((element, index) => {
-                return {
-                    SNO: index + 1,
-                    ...element,
-                    deliveryDate: element.deliveryDate 
-                        ? new Date(element.deliveryDate).toLocaleDateString('en-GB') 
-                        : "N/A",
-                    createdAt: element.createdAt 
-                        ? new Date(element.createdAt).toLocaleString('en-GB') 
-                        : "N/A",
-                    approvalStatus: element.approvalStatus 
-                        ? "Approved" 
-                        : "Pending",
-                    verificationStatus: element.verificationStatus 
-                        ? "Verified" 
-                        : "Not Verified",
-                    verifiedAt: element.verifiedAt 
-                        ? formatDateTime(element.verifiedAt) 
-                        : "-",
-                    approvedBy: element.approvedby || "-",
-                    verifiedBy: element.verifiedBy || "-",
-                    verificationRemarks: element.verificationRemarks || "-"
-                };
-            });
-                      }
-          
-                      const gridOptions = {
-                        columnDefs: [
-                            { 
-                                headerName: "SNO", 
-                                valueGetter: (params) => params.node ? params.node.rowIndex + 1 : null, 
-                                width: 80, 
-                                sortable: false 
-                            },
-                            { headerName: "Created By", field: "createdBy" ,cellClass:"centered-cell"},
-                            { headerName: "Created At", field: "createdAt",cellClass:"centered-cell" },
-                            { headerName: "Delivery Date", field: "deliveryDate",cellClass:"centered-cell" },
-                            { headerName: "Supplier Name", field: "supplierName",cellClass:"centered-cell" },
-                            { headerName: "Supplier Telephone", field: "supplierTelephone",cellClass:"centered-cell" },
-                            { headerName: "Supplier Address", field: "supplierAddress" ,cellClass:"centered-cell"},
-                            { headerName: "Supplier Declaration File", cellRenderer: fileDownloadRenderer,cellClass:"centered-cell" },
-                            { headerName: "Product Name", field: "productName",cellClass:"centered-cell" },
-                            { headerName: "Density At 15°C", field: "densityAt15C",cellClass:"centered-cell" },
-                            { headerName: "Quantity Delivered", field: "quantityDeliveredMT",cellClass:"centered-cell" },
-                            { headerName: "Sulphur Content Percent", field: "sulfurContentPercent" ,cellClass:"centered-cell"},
-                            { headerName: "Port Of Bunkering", field: "portOfBunkering",cellClass:"centered-cell" },
-                            { headerName: "Approval Status", field: "approvalStatus", cellRenderer: createActionsCellRenderer,cellClass:"centered-cell" },
-                            { headerName: "Approved By", field: "approvedBy",cellClass:"centered-cell" },
-                            { headerName: "Verification Remarks", field: "verificationRemarks",cellClass:"centered-cell" },
-                            { headerName: "VerifiedAt", field: "verifiedAt",cellClass:"centered-cell" },
-                            { headerName: "Verification Status", field: "verificationStatus", cellRenderer: createActionsCellRenderer ,cellClass:"centered-cell"},
-                            { headerName: "Verified By", field: "verifiedBy" ,cellClass:"centered-cell"}
-                        ],
-                        rowData: [...data],
-                        pagination: true,
-                        paginationPageSize: 20,
-                        domLayout: "normal",
-                        theme: "legacy",
-                        defaultColDef: {
-                            sortable: true,
-                            filter: true,
-                            resizable: true,
-                        },
-                    };
-                                            
-            function fileDownloadRenderer(params) {
-                
-    
-               const div = document.createElement('div');
-               const btn = document.createElement('button');
-               btn.innerText='Download';
-               btn.classList.add('btn','w-100','p-2','btn-primary');
-               btn.style.fontSize='15px';
-               btn.addEventListener('click',async() => {
-                const recordId = params.data.recordId;
-                const filename = params.data.supplierName || 'Document';
-                try{
-                  const response = await axiosInstance.get(`/bdn/download/${recordId}`,{
-                      responseType :'blob',
-                  });
-                  const blob = new Blob([response.data],{type:'application/pdf'});
-                  const url = window.URL.createObjectURL(blob);
-
-                  const link = document.createElement('a');
-                  link.href=url;
-                  link.download=`${filename}.pdf`;
-                  link.click();
-                  
-                  window.URL.revokeObjectURL(url);
-
-                }
-                catch (err){
-                  console.log("Failed:",err.message);
-
-                  alert('failed to download');
-                }
-               });
-               div.appendChild(btn);
-               return div;
-            }
-    
-            function createActionsCellRenderer(params) {
-              if (!params || !params.data || !params.colDef || !params.colDef.field) return document.createElement("div");
-            
-              const field = params.colDef.field; 
-              const value = params.data[field]; 
-            
-              const div = document.createElement("div");
-              const btn = document.createElement("button");
-            
-              btn.innerText = value || "Pending";
-              div.classList.add("d-flex", "justify-content-center", "mt-1");
-            
-              if (value === "Approved" || value === "Verified") {
-                btn.classList.add("btn", "btn-success", "w-100", "p-2");
-              } else if (value === "Pending" || value === "Not Verified") {
-                btn.classList.add("btn", "btn-warning", "w-100", "p-2");
-              } else {
-                btn.classList.add("btn", "btn-secondary", "w-100", "p-2");
-              }
-            
-              div.appendChild(btn);
-              return div;
-            }
-                       
-            
-            gridDiv.classList.add("ag-theme-quartz-dark");
-            agGrid.createGrid(gridDiv, gridOptions);
-            hideRecordsLoader();
-        } catch (error) {
-          gridDiv.style.display = 'block';
-          hideRecordsLoader();
-          gridDiv.innerHTML=`<p class="text-danger">Failed to load data</p>`;
-            console.error("Error fetching data:", error);
-        }
+      
+      document.addEventListener("DOMContentLoaded", async function () {
+        showRecordsLoader();
+    const response=await axiosInstance.get('/nox/all');
+    let data=response.data.records;
+      
+   if(data){
+    data = data.map((element, index) => {
+      return {
+        ...element,
+        sno: index + 1,
+        date: new Date(element.date).toLocaleDateString('en-GB'),
+        smtTime: element.smtTime.split('T')[1].split('.')[0],
+        deSigned: element.deSigned ? 'Verified' : 'Not Verified',
+        remarks: element.remarks || '-',
+        verificationRemarks : element.verificationRemarks || '-',
+        verifiedBy:element.verifiedBy || '-',
+        approvalStatus:element.approvalStatus ? 'Approved': 'Pending',
+        approvedBy:element.approvedBy || '-',
+        verifiedAt:element.verifiedAt || '-',
+        createdAt: new Date(element.createdAt).toLocaleString('en-GB'),
+      };
     });
-    function formatDateTime(date) {
-      const d = new Date(date);
-      const pad = n => n.toString().padStart(2, '0');
     
-      const day = pad(d.getDate());
-      const month = pad(d.getMonth() + 1); 
-      const year = d.getFullYear();
+   }else{
+    data=[]
+   }
+
+  const gridOptions = {
+    columnDefs: [
+     
+      { headerName: "SNO", field: "sno" ,width:80},
+      { headerName: "Date", field: "date",cellClass:"centered-cell", },
+      { headerName: "SMT Time", field: "smtTime" ,cellClass:"centered-cell",},
+      { headerName: "Position", field: "position",cellClass:"centered-cell", },
+      { headerName: "Event", field: "event" ,cellClass:"centered-cell",},
+      { headerName: "Engine Name", field: "engineName",cellClass:"centered-cell", },
+      { headerName: "Engine Status", field: "engineStatus" ,cellClass:"centered-cell",},
+      { headerName: "Engine Tier Status", field: "engineTierStatus",cellClass:"centered-cell", },
+      { headerName: "Remarks", field: "remarks",cellClass:"centered-cell", },
+      { headerName: "Approved By", field: "approvedBy",cellClass:"centered-cell",},
+      { headerName: "Created By", field: "createdBy",cellClass:"centered-cell",},
+      { headerName: "Created At", field: "createdAt",cellClass:"centered-cell",},
+      { headerName: "Verified At", field: "verifiedAt",cellClass:"centered-cell",},
+      { headerName: "Verified By", field: "verifiedBy",cellClass:"centered-cell",},
+      { headerName: "Approval Status", field: "approvalStatus",cellRenderer: createActionsCellRenderer  },
+      { headerName: "Verification Remarks", field: "verificationRemarks",cellClass:"centered-cell",},
+      { headerName: "Verification Status", field: "deSigned",cellRenderer: createActionsCellRenderer  },
+    ],
+
     
-      const hours = pad(d.getHours());
-      const minutes = pad(d.getMinutes());
-      const seconds = pad(d.getSeconds());
-    
-      return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
-    }          
-  </script>
-<script src="assets/js/elogtoggler.js"></script>
+
+    rowData: [
+      ...data
+  ],
+    pagination: true,
+    paginationPageSize: 20,
+    domLayout: "normal",
+    theme: "legacy",
+    defaultColDef: {
+      sortable: true,
+      filter: true,
+      resizable: true,
+    },
+    // domLayout: 'autoHeight',
+  };
+
+  function createActionsCellRenderer(params) {
+    if (!params || !params.data || !params.colDef || !params.colDef.field) return document.createElement("div");
+  
+    const field = params.colDef.field; 
+    const value = params.data[field]; 
+  
+    const div = document.createElement("div");
+    const btn = document.createElement("button");
+  
+    btn.innerText = value || "Pending";
+    div.classList.add("d-flex", "justify-content-center", "mt-1");
+  
+    if (value === "Approved" || value === "Verified") {
+      btn.classList.add("btn", "btn-success", "w-100", "p-2");
+    } else if (value === "Pending" || value === "Not Verified") {
+      btn.classList.add("btn", "btn-warning", "w-100", "p-2");
+    } else {
+      btn.classList.add("btn", "btn-secondary", "w-100", "p-2");
+    }
+  
+    div.appendChild(btn);
+    return div;
+  }
+
+  const gridDiv = document.querySelector("#orb1Grid");
+  gridDiv.classList.add("ag-theme-quartz-dark");
+  agGrid.createGrid(gridDiv, gridOptions);  
+  hideRecordsLoader();
+
+
+
+});
+    </script>
     <script>
+      window.addEventListener('load', function () {
 
-      
-      
-        window.addEventListener('load', function () {
-
-            if(!sessionStorage.getItem('token')) {
-      
-      window.location.href = 'login.html';
+        if(!sessionStorage.getItem('token')) {
+  
+  window.location.href = 'login.html';
+  }
+  
+          setTimeout(function () {
+              const preloader = document.getElementById('preloader');
+          preloader.classList.add('hide'); 
+          },500);
+      });
+      document.querySelector('[data-toggle="minimize"]').addEventListener('click', function() {
+        document.getElementById('website-name').classList.toggle('d-none');
+      });
+      function showRecordsLoader() {
+        document.getElementById("recordsLoader").style.display = "flex";
       }
       
-              setTimeout(function () {
-                  const preloader = document.getElementById('preloader');
-              preloader.classList.add('hide'); 
-              },100);
-          });
-          function showRecordsLoader() {
-            document.getElementById("recordsLoader").style.display = "flex";
-          }
-          
-          
-          function hideRecordsLoader() {
-            document.getElementById("recordsLoader").style.display = "none";
-          }
-        
+      
+      function hideRecordsLoader() {
+        document.getElementById("recordsLoader").style.display = "none";
+      }
+      
     </script>
-    
   </body>
 </html>

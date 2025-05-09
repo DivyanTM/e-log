@@ -35,7 +35,7 @@
         <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
           <a class="sidebar-brand text-decoration-none text-white d-flex align-items-center gap-2" href="CEDashboard.html">
             <span class="mdi mdi-database fs-6 text-success" style="font-size: 2rem !important;"></span>
-            <span class="fs-6">ELOG</span>
+            <span class="fs-6" id="website-name">ELOG</span>
           </a>
         </div>
         
@@ -563,6 +563,8 @@ document.getElementById("rejectBtn").addEventListener("click", function () {
 
 
   <!-- api -->
+  <script src="assets/js/elogtoggler.js"></script>
+
   <script src="assets/js/apiRequest.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="assets/js/axiosInstance.js"></script>

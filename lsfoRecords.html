@@ -22,58 +22,18 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <!-- End layout styles -->
   <!-- <link rel="shortcut icon" href="assets/images/favicon.png" /> -->
-  <style>
- 
-    #preloader {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(255, 255, 255, 0.1); 
-        backdrop-filter: blur(10px); 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999; 
-    }
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@latest/styles/ag-theme-quartz-dark.css">
+  <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@latest/dist/ag-grid-community.min.js"></script>
 
 
-    #preloader-content {
-        text-align: center;
-    }
-
-   
-    #preloader-content img {
-        width: 150px; 
-        height: auto;
-    }
-
-
-    #preloader.hide {
-        display: none;
-    }
-    #website-name {
-      transition: opacity 0.3s;
-    }
-    #website-name.d-none {
-      opacity: 0;
-    }
-</style>
 </head>
 
 <body>
-  <div id="preloader">
-    <div id="preloader-content">
-        <img src="assets/gifs/ship1.gif" alt="Loading...">
-        <p class="mt-3">Loading...</p>
-    </div>
-</div>
   <div class="container-scroller">
     <!-- partial:partials/_sidebar.html -->
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
       <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-        <a class="sidebar-brand text-decoration-none text-white d-flex align-items-center gap-2" href="index.html">
+        <a class="sidebar-brand text-decoration-none text-white d-flex align-items-cente1r gap-2" href="index.html">
           <span class="mdi mdi-database fs-6 text-success" style="font-size: 2rem !important;"></span>
           <span class="fs-6" id="website-name">ELOG</span>
         </a>
@@ -314,122 +274,23 @@
           <div class="row">
             <div class="col-md-12 stretch-card">
               <div class="card">
-                <div class="card-body">
-                  <h3 class="card-title">Fuel Oil Record Book</h3>
-                  <p class="card-description">Sewage Disposal Operations</p>
-                  <form id="fuelForm">
-
-                    <div class="mb-3">
-                      <label for="date" class="form-label">Date</label>
-                      <input type="date" id="date" class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                      <label for="time" class="form-label">Time</label>
-                      <input type="time" id="time" class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                      <label for="shipPosition" class="form-label">Ship’s Position</label>
-                      <input type="text" id="shipPosition" class="form-control" placeholder="Enter latitude/longitude"
-                        required>
-                    </div>
-
-                    <div class="mb-3">
-                      <label for="fuelConsignment" class="form-label">Fuel Oil Consignment</label>
-                      <input type="text" id="fuelConsignment" class="form-control"
-                        placeholder="Enter consignment details" required>
-                    </div>
-
-                    <div class="mb-3">
-                      <label for="numTanks" class="form-label">Number of Tanks</label>
-                      <input type="number" id="numTanks" class="form-control" min="1" required>
-                    </div>
-
-                    <div id="tankDetails"></div>
-
-                    <button type="submit" class="btn btn-primary w-100">Submit</button>
-
-                  </form>
-
-                  <script>
-                    document.getElementById('numTanks').addEventListener('input', function () {
-                      let numTanks = parseInt(this.value);
-                      let tankDetailsDiv = document.getElementById('tankDetails');
-                      tankDetailsDiv.innerHTML = '';
-
-                      for (let i = 1; i <= numTanks; i++) {
-                        let tankHTML = `
-                                          <div class="mb-3 border p-3">
-                                              <h5>Tank ${i}</h5>
-                                              <label class="form-label">Tank Name</label>
-                                              <input type="text" class="form-control" name="tankName${i}" required>
+                
+                <div class="card-header">
+                  <div class="custom-loader-overlay" id="recordsLoader">
+                    <div class="loader-wrapper">
+                      <div class="loader"></div>
                       
-                                              <label class="form-label">Tank Location</label>
-                                              <input type="text" class="form-control" name="tankLocation${i}" required>
-                      
-                                              <label class="form-label">Quantity</label>
-                                              <input type="text" class="form-control" name="tankQuantity${i}" required>
-                                      `;
-
-                        if (i === 1) {
-                          tankHTML += `
-                                              <label class="form-label">Start Time</label>
-                                              <input type="time" class="form-control" name="startTime${i}" required>
-                      
-                                              <label class="form-label">End Time</label>
-                                              <input type="time" class="form-control" name="endTime${i}" required>
-                                          `;
-                        } else {
-                          tankHTML += `
-                                              <div class="form-check">
-                                                  <input class="form-check-input copy-time" type="checkbox" id="copyTime${i}" data-tank="${i}">
-                                                  <label class="form-check-label">Same Time as Previous Tank</label>
-                                              </div>
-                      
-                                              <label class="form-label">Start Time</label>
-                                              <input type="time" class="form-control tank-start-time" name="startTime${i}" required>
-                      
-                                              <label class="form-label">End Time</label>
-                                              <input type="time" class="form-control tank-end-time" name="endTime${i}" required>
-                                          `;
-                        }
-
-                        tankHTML += '</div>';
-                        tankDetailsDiv.innerHTML += tankHTML;
-                      }
-                    });
-
-                    document.addEventListener('change', function (event) {
-                      if (event.target.classList.contains('copy-time')) {
-                        let tankIndex = event.target.dataset.tank;
-                        let prevTankIndex = tankIndex - 1;
-                        let startTimeField = document.querySelector(`[name='startTime${tankIndex}']`);
-                        let endTimeField = document.querySelector(`[name='endTime${tankIndex}']`);
-                        let prevStartTime = document.querySelector(`[name='startTime${prevTankIndex}']`).value;
-                        let prevEndTime = document.querySelector(`[name='endTime${prevTankIndex}']`).value;
-
-                        if (event.target.checked) {
-                          startTimeField.value = prevStartTime;
-                          endTimeField.value = prevEndTime;
-                          startTimeField.disabled = true;
-                          endTimeField.disabled = true;
-                        } else {
-                          startTimeField.disabled = false;
-                          endTimeField.disabled = false;
-                        }
-                      }
-                    });
-                  </script>
-
-
-                  <script>
-                    document.getElementById('issueStatusSewage').addEventListener('change', function () {
-                      var issueDetails = document.getElementById('issueDetailsSewage');
-                      issueDetails.style.display = (this.value === 'yes') ? 'block' : 'none';
-                    });
-                  </script>
+                    </div>
+                  </div>
+                  <h2 class="card-title mb-3 mt-2">LSFO Changeover Record Book</h2>
+                  <p class="text-secondary">Track and Control of MARPOL LSFCO records</p>
                 </div>
+                <div class="card-body">
+
+                  <div id="lsfoGrid" class="ag-theme-quartz-dark" style="width: 100%;height: 900px;"></div>
+
+                </div>
+                
               </div>
 
             </div>
@@ -449,6 +310,10 @@
   <!-- container-scroller -->
   <!-- plugins:js -->
   <script src="assets/vendors/js/vendor.bundle.base.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script type="module" src="/assets/js/axiosInstance.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page -->
   <script src="assets/vendors/chart.js/Chart.min.js"></script>
@@ -465,42 +330,176 @@
   <script src="assets/js/todolist.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page -->
+
+
+  <!-- api -->
+  <script src="assets/js/apiRequest.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="assets/js/axiosInstance.js"></script>
+
   <script src="assets/js/dashboard.js"></script>
   <!-- End custom js for this page -->
+
+
   <script>
-    window.addEventListener('load', function () {
-      let token=sessionStorage.getItem('token');
-     
-      if(!sessionStorage.getItem('token')){
-        window.location='login.html';
+    document.addEventListener("DOMContentLoaded", async function () {
+      showRecordsLoader();
+      const lsfo_response = await axiosInstance.get('/lsfo/all');
+      let lsfo_data = lsfo_response.data.records;
+      console.log(lsfo_data)
+      if (lsfo_data) {
+        lsfo_data.map((element,index) => {
+          
+          element.letterOfProtestIssued = element.letterOfProtestIssued ? "Yes" : "No";
+          element.approvedStatus = element.approvedStatus ? "Approved" : "Pending";
+          element.approvedBy = element.approvedBy || "-";
+          element.date = new Date(element.date).toLocaleDateString('eng-GB');
+          element.dateSampleDestroyed = new Date(element.dateSampleDestroyed).toLocaleDateString('eng-GB');
+          element.verifiedBy = element.verifiedBy ? element.verifiedBy : "-";
+          element.verifiedAt = element.verifiedAt ? new Date(element.verifiedAt).toLocaleDateString('eng-GB'):"-";
+          element.verificationRemarks = element.verificationRemarks ? element.verificationRemarks : '-';
+          element.verificationStatus = element.verificationStatus ? 'Verified' :'Not Verified';
+          const datetimeFields = [
+            'begin_LSFO_datetime',
+            'complete_LSFO_datetime',
+            'regulated_entry_datetime',
+            'regulated_exit_datetime',
+            'begin_HSFO_datetime',
+            'complete_HSFO_datetime',
+            'createdAt'
+          ];
+
+          datetimeFields.forEach(field => {
+            if (element[field]) {
+              element[field] = formatDateTime(element[field]);
+            }
+          });
+          
+        });
+
+      }
+      const gridOptions = {
+        columnDefs: [
+        {
+          headerName: "SNO",
+          valueGetter: (params) => (params.node ? params.node.rowIndex + 1 : null),
+          maxWidth: 80,
+          sortable: false,
+         
+        },
+          { headerName: "Created At",cellClass:"centered-cell", field: "createdAt",minWidth: 180 },
+          { headerName: "Begin LSFO Datetime",cellClass:"centered-cell", field: "begin_LSFO_datetime" ,minWidth: 180},
+          { headerName: "Begin LSFO Latitude", cellClass:"centered-cell",field: "begin_LSFO_latitude",minWidth: 180 },
+          { headerName: "Begin LSFO Longitude",cellClass:"centered-cell", field: "begin_LSFO_longitude",minWidth: 180 },
+          { headerName: "Complete LSFO Datetime",cellClass:"centered-cell", field: "complete_LSFO_datetime" ,minWidth: 180},
+          { headerName: "Complete LSFO Latitude",cellClass:"centered-cell", field: "complete_LSFO_latitude" ,minWidth: 180},
+          { headerName: "Complete LSFO Longitude",cellClass:"centered-cell", field: "complete_LSFO_longitude" ,minWidth: 180},
+          { headerName: "LSFO Volume Completion", cellClass:"centered-cell",field: "lsfo_volume_completion" ,minWidth: 180},
+          { headerName: "Regulated Entry Datetime",cellClass:"centered-cell", field: "regulated_entry_datetime" ,minWidth: 180},
+          { headerName: "Regulated Entry Latitude",cellClass:"centered-cell", field: "regulated_entry_latitude" ,minWidth: 180},
+          { headerName: "Regulated Exit Datetime",cellClass:"centered-cell", field: "regulated_exit_datetime" ,minWidth: 180},
+          { headerName: "Regulated Exit Latitude",cellClass:"centered-cell", field: "regulated_exit_latitude" ,minWidth: 180},
+          { headerName: "Regulated Exit Longitude",cellClass:"centered-cell", field: "regulated_exit_longitude" ,minWidth: 180},
+          { headerName: "Begin HSFO Datetime",cellClass:"centered-cell", field: "begin_HSFO_datetime" ,minWidth: 180},
+          { headerName: "Begin HSFO Latitude",cellClass:"centered-cell", field: "begin_HSFO_latitude",minWidth: 180 },
+          { headerName: "Begin HSFO Longitude",cellClass:"centered-cell", field: "begin_HSFO_longitude",minWidth: 180 },
+          { headerName: "LSFO Volume Start",cellClass:"centered-cell", field: "lsfo_volume_start" ,minWidth: 180},
+          { headerName: "Complete HSFO Longitude",cellClass:"centered-cell", field: "complete_HSFO_longitude",minWidth: 180 },
+          { headerName: "Complete HSFO Latitude",cellClass:"centered-cell", field: "complete_HSFO_latitude" ,minWidth: 180},
+          { headerName: "Complete HSFO Datetime",cellClass:"centered-cell", field: "complete_HSFO_datetime" ,minWidth: 180},
+          { headerName: "Approval Status",cellClass:"centered-cell", field: "approvedStatus", cellRenderer: createActionsCellRenderer },
+          { headerName: "Verified By",cellClass:"centered-cell", field: "verifiedBy" ,minWidth: 180},
+          { headerName: "Created By", field: "createdByName" ,minWidth: 180},
+          { headerName: "Verification Remarks",cellClass:"centered-cell", field: "verificationRemarks", minWidth: 180 },
+
+          { headerName: "Verified At",cellClass:"centered-cell", field: "verifiedAt", minWidth: 180, filter: 'agDateColumnFilter' },
+          { headerName: "Approved By",cellClass:"centered-cell", field: "approvedBy", minWidth: 180 },
+          {
+            headerName: "Verification Status",cellClass:"centered-cell", field: "verificationStatus",
+            minWidth: 230,
+            cellRenderer: params => {
+              const div = document.createElement('div');
+              const btn = document.createElement('button');
+              btn.textContent = params.value;
+              btn.className = `btn p-2 w-100 ${params.value === "Verified" ? 'btn-success' : 'btn-warning'}`;
+              div.appendChild(btn);
+              return div;
+            }
+          },
+        ],
+
+
+
+        rowData: [
+          ...lsfo_data
+        ],
+        pagination: true,
+        paginationPageSize: 20,
+        domLayout: "normal",
+        theme: "legacy",
+        defaultColDef: {
+          sortable: true,
+          filter: true,
+          resizable: true,
+        },
+        // domLayout: 'autoHeight',
+      };
+
+      function createActionsCellRenderer(params) {
+        const div = document.createElement('div');
+        const btn = document.createElement('button');
+        btn.innerText = params.data.approvedStatus;
+        div.classList.add('d-flex', 'justify-content-center', 'mt-1');
+        if (params.data.approvedStatus === "Approved") {
+          btn.classList.add('btn', 'btn-success', 'w-100');
+        } else {
+          btn.classList.add('btn', 'btn-warning', 'w-100');
+        }
+        div.appendChild(btn);
+        return div;
       }
 
-      if (token) {
-        const base64Url = token.split(".")[1]; 
-        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-        const decodedData = JSON.parse(atob(base64));
-        
-      if(decodedData.user.role_id!==1){
-        window.location='CEDashboard.html';
-      }
-        // document.querySelector('#username').textContent=decodedData.username;
+      const gridDiv = document.querySelector("#lsfoGrid");
+      gridDiv.classList.add("ag-theme-quartz-dark");
+      agGrid.createGrid(gridDiv, gridOptions);
+      hideRecordsLoader();
+    });
+
+    function formatDateTime(datetimeString) {
+      if (!datetimeString) return '';
+
+      const date = new Date(datetimeString);
+
+      // Get day, month, year
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+
+      // Get hours, minutes, seconds
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      const seconds = String(date.getSeconds()).padStart(2, '0');
+
+      return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
     }
 
-      setTimeout(function () {
-        const preloader = document.getElementById('preloader');
-        preloader.classList.add('hide');
-      }, 500);
-    });
 
-    document.querySelector('[data-toggle="minimize"]').addEventListener('click', function() {
-      document.getElementById('website-name').classList.toggle('d-none');
-    });
+    function showRecordsLoader() {
+      document.getElementById("recordsLoader").style.display = "flex";
+    }
 
-    // document.querySelector('#logout').addEventListener('click',function(){
-    //   sessionStorage.removeItem('token');
-    //   window.location='login.html';
-    // });
+
+    function hideRecordsLoader() {
+      document.getElementById("recordsLoader").style.display = "none";
+    }
+    
   </script>
+  <!-- Add this in your HTML head -->
+
+
+
+  <script src="assets/js/elogtoggler.js"></script>
+
 </body>
 
 </html>

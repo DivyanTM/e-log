@@ -1,31 +1,29 @@
 #toast-container > div {
-    border-radius: 2px;
-    box-shadow: none;
-    opacity: 1;
-    background-image: none !important; 
-  }
-  #toast-container > div:hover {
-    opacity: 1 !important;
-    box-shadow: none !important;
-    transform: none !important;
-  }
- 
+  border-radius: 3px;
+  box-shadow: none !important;
+  opacity: none !important;
+  background-image: none !important; 
+}
 
+#toast-container > div:hover {
+  box-shadow: none !important;
+  transform: none !important;
   
+}
+
   .toast-success {
-    background-color: #16a562 !important; /* Bootstrap success green */
-    color: white;
-    
+    background-color: rgb(12, 182, 85) !important; 
+    color:white;
   }
   .toast-error {
-    background-color: #dc3545 !important; /* Bootstrap danger red */
+    background-color: #d1182b !important;
     color: white;
   }
   .toast-warning {
-    background-color: #ffc107 !important; /* Bootstrap warning yellow */
+    background-color: #ffc107 !important; 
     color: black;
   }
   .toast-info {
-    background-color: #0dcaf0 !important; /* Bootstrap info blue */
+    background-color: #0dcaf0 !important; 
     color: black;
   }

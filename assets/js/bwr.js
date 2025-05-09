@@ -46,7 +46,7 @@ document.querySelector('#ballastRecordForm').addEventListener('submit', async fu
         case 1:
             operationData.estimatedDischargedVolume = parseFloat(document.getElementById('dischargeVolume').value);
             operationData.circumstancesRemarks = document.getElementById('remarks').value;
-            operationData.conformBWMPlan = Boolean(document.getElementById('bwmPlan').value);
+            operationData.conformBWMPlan = parseInt(document.getElementById('bwmPlan').value);
             break;
     }
     

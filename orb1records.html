@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>ELOG</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="assets/vendors/jvectormap/jquery-jvectormap.css">
+  <link rel="stylesheet" href="assets/vendors/flag-icon-css/css/flag-icon.min.css">
+  <link rel="stylesheet" href="assets/vendors/owl-carousel-2/owl.carousel.min.css">
+  <link rel="stylesheet" href="assets/vendors/owl-carousel-2/owl.theme.default.min.css">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <!-- endinject -->
+  <!-- Layout styles -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <!-- End layout styles -->
+  <!-- <link rel="shortcut icon" href="assets/images/favicon.png" /> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@latest/styles/ag-theme-quartz-dark.css">
+  <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@latest/dist/ag-grid-community.min.js"></script>
+
+
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_sidebar.html -->
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+      <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+        <a class="sidebar-brand text-decoration-none text-white d-flex align-items-cente1r gap-2" href="index.html">
+          <span class="mdi mdi-database fs-6 text-success" style="font-size: 2rem !important;"></span>
+          <span class="fs-6" id="website-name">ELOG</span>
+        </a>
+      </div>
+
+      <ul class="nav">
+        <li class="nav-item menu-items">
+          <a class="nav-link" href="index.html">
+            <span class="menu-icon">
+              <i class="mdi mdi-speedometer text-gray"></i>
+            </span>
+            <span class="menu-title">Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item menu-items">
+          <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+            <span class="menu-icon">
+              <i class="mdi mdi-file-document-edit-outline text-gray"></i>
+            </span>
+            <span class="menu-title">Forms</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="ui-basic">
+            <ul class="nav flex-column sub-menu">
+              <!-- ORB1 and ORB2 -->
+              <li class="nav-item">
+                  <a class="nav-link" href="orb1.html" style="font-size: 16px;">
+                      <i class="mdi mdi-oil text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                      ORB-I
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="orb2.html" style="font-size: 16px;">
+                      <i class="mdi mdi-fuel text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                      ORB-II
+                  </a>
+              </li>
+          
+              <!-- GRB -->
+              <li class="nav-item">
+                  <a class="nav-link" href="grb.html" style="font-size: 16px;">
+                      <i class="mdi mdi-trash-can text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                      Garbage RB
+                  </a>
+              </li>
+          
+              <!-- CRB -->
+              <li class="nav-item">
+                  <a class="nav-link" href="crb.html" style="font-size: 16px;">
+                      <i class="mdi mdi-clipboard-text text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                      Cargo RB
+                  </a>
+              </li>
+          
+              <!-- APR B (NOX Tier Changeover) -->
+              <li class="nav-item">
+                  <a class="nav-link" href="aprb.html" style="font-size: 16px;">
+                      <i class="mdi mdi-swap-horizontal text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                      NOX Change
+                  </a>
+              </li>
+          
+              <!-- BDR (Bunker Delivery) -->
+              <li class="nav-item">
+                  <a class="nav-link" href="bdr.html" style="font-size: 16px;">
+                      <i class="mdi mdi-gas-station text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                      Bunker Deliv
+                  </a>
+              </li>
+          
+              <!-- BWRB (Ballast Water Record Book) -->
+              <li class="nav-item">
+                  <a class="nav-link" href="bwrb.html" style="font-size: 16px;">
+                      <i class="mdi mdi-ferry text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                      Ballast WB
+                  </a>
+              </li>
+          
+              <!-- FOR (Fuel Oil Received Record Book) -->
+              <li class="nav-item">
+                  <a class="nav-link" href="for.html" style="font-size: 16px;">
+                      <i class="mdi mdi-call-received text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                      Fuel Received
+                  </a>
+              </li>
+          
+              <!-- FOS (Fuel Oil Sample Control and Tracking) -->
+              <li class="nav-item">
+                  <a class="nav-link" href="fos.html" style="font-size: 16px;">
+                      <i class="mdi mdi-flask text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                      Fuel Sample
+                  </a>
+              </li>
+          
+              <!-- LSFCO (Low Sulphur Fuel Change Over) -->
+              <li class="nav-item">
+                  <a class="nav-link" href="lsfco.html" style="font-size: 16px;">
+                      <i class="mdi mdi-leaf text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                      LSFO Change
+                  </a>
+              </li>
+          
+              <!-- ODSRB (Ozone Depleting Substance Record Book) -->
+              <li class="nav-item">
+                  <a class="nav-link" href="odsrb.html" style="font-size: 16px;">
+                      <i class="mdi mdi-earth text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                      ODS RB
+                  </a>
+              </li>
+          </ul>
+
+
+
+          </div>
+        </li>
+
+        <li class="nav-item menu-items">
+          <a class="nav-link" data-toggle="collapse" href="#ui-basic1" aria-expanded="false" aria-controls="ui-basic">
+            <span class="menu-icon">
+              <i class="mdi mdi-book-multiple text-gray"></i>
+            </span>
+            <span class="menu-title">Books</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="ui-basic1">
+            <ul class="nav flex-column sub-menu">
+              <!-- ORB1 and ORB2 -->
+              <li class="nav-item">
+                  <a class="nav-link" href="orb1Records.html" style="font-size: 16px;">
+                      <i class="mdi mdi-oil text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                      ORB-I
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="orb2Records.html" style="font-size: 16px;">
+                      <i class="mdi mdi-fuel text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                      ORB-II
+                  </a>
+              </li>
+          
+              <!-- GRB -->
+              <li class="nav-item">
+                  <a class="nav-link" href="grbRecords.html" style="font-size: 16px;">
+                      <i class="mdi mdi-trash-can text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                      Garbage RB
+                  </a>
+              </li>
+          
+              <!-- CRB -->
+              <li class="nav-item">
+                  <a class="nav-link" href="crbRecords.html" style="font-size: 16px;">
+                      <i class="mdi mdi-clipboard-text text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                      Cargo RB
+                  </a>
+              </li>
+          
+              <!-- APR B (NOX Tier Changeover) -->
+              <li class="nav-item">
+                  <a class="nav-link" href="aprbRecords.html" style="font-size: 16px;">
+                      <i class="mdi mdi-swap-horizontal text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                      NOX Change
+                  </a>
+              </li>
+          
+              <!-- BDR (Bunker Delivery) -->
+              <li class="nav-item">
+                  <a class="nav-link" href="bdrRecords.html" style="font-size: 16px;">
+                      <i class="mdi mdi-gas-station text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                      Bunker Deliv
+                  </a>
+              </li>
+          
+              <!-- BWRB (Ballast Water Record Book) -->
+              <li class="nav-item">
+                  <a class="nav-link" href="bwrbRecords.html" style="font-size: 16px;">
+                      <i class="mdi mdi-ferry text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                      Ballast WB
+                  </a>
+              </li>
+          
+              <!-- FOR (Fuel Oil Received Record Book) -->
+              <li class="nav-item">
+                  <a class="nav-link" href="forRecords.html" style="font-size: 16px;">
+                      <i class="mdi mdi-call-received text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                      Fuel Received
+                  </a>
+              </li>
+          
+              <!-- FOS (Fuel Oil Sample Control and Tracking) -->
+              <li class="nav-item">
+                  <a class="nav-link" href="fosRecords.html" style="font-size: 16px;">
+                      <i class="mdi mdi-flask text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                      Fuel Sample
+                  </a>
+              </li>
+          
+              <!-- LSFCO (Low Sulphur Fuel Change Over) -->
+              <li class="nav-item">
+                  <a class="nav-link" href="lsfoRecords.html" style="font-size: 16px;">
+                      <i class="mdi mdi-leaf text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                      LSFO Change
+                  </a>
+              </li>
+          
+              <!-- ODSRB (Ozone Depleting Substance Record Book) -->
+              <li class="nav-item">
+                  <a class="nav-link" href="odsrbRecords.html" style="font-size: 16px;">
+                      <i class="mdi mdi-earth text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                      ODS RB
+                  </a>
+              </li>
+          </ul>
+
+
+
+          </div>
+        </li>
+
+      </ul>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_navbar.html -->
+      <nav class="navbar p-0 fixed-top d-flex flex-row">
+        <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
+          <span class="mdi mdi-database fs-6 text-success" style="font-size: 2rem !important;"></span>
+        </div>
+        <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="mdi mdi-menu"></span>
+          </button>
+
+        </div>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-md-12 stretch-card">
+              <div class="card">
+
+                <div class="card-header">
+                  <div class="custom-loader-overlay" id="recordsLoader">
+                    <div class="loader-wrapper">
+                      <div class="loader"></div>
+                      
+                    </div>
+                  </div>
+                  <h2 class="card-title mb-3 mt-1">Oil Record Book Part-I</h2>
+                  <p class="text-secondary">Track and Control of Oil Record Book Part-I</p>
+                </div>
+                <div class="card-body">
+                  <div id="orb1Grid" class="ag-theme-quartz-dark" style="width: 100%;height: 900px;"></div>
+
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+          <footer class="footer">
+
+          </footer>
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="assets/vendors/js/vendor.bundle.base.js"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="/assets/js/axiosInstance.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="assets/vendors/chart.js/Chart.min.js"></script>
+    <script src="assets/vendors/progressbar.js/progressbar.min.js"></script>
+    <script src="assets/vendors/jvectormap/jquery-jvectormap.min.js"></script>
+    <script src="assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="assets/vendors/owl-carousel-2/owl.carousel.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="assets/js/off-canvas.js"></script>
+    <script src="assets/js/hoverable-collapse.js"></script>
+    <script src="assets/js/misc.js"></script>
+    <script src="assets/js/settings.js"></script>
+    <script src="assets/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+
+
+    <!-- api -->
+    <script src="assets/js/apiRequest.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="assets/js/axiosInstance.js"></script>
+
+    <script src="assets/js/dashboard.js"></script>
+    <!-- End custom js for this page -->
+
+
+
+    <!-- Add this in your HTML head -->
+
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        try {
+          showRecordsLoader();
+          // 1. Fetch data from API
+          const response = await axiosInstance.get('/orb1/all');
+          console.log("API Response:", response.data);
+
+          if (!response.data?.records) {
+            console.error("No records found in response");
+            return;
+          }
+
+          // 2. Define operation types and their display configurations
+          const operationConfigs = {
+            ballastingCleaningData: { name: "Ballasting & Cleaning" },
+            dischargeDirtyBallastData: { name: "Dirty Ballast Discharge" },
+            oilResiduesData: { name: "Oil Residues" },
+            nonAutoBilgeWaterData: { name: "Non-Auto Bilge Water" },
+            autoBilgeWaterData: { name: "Auto Bilge Water" },
+            oilFilteringData: { name: "Oil Filtering Equipment" },
+            accidentalDischargesData: { name: "Accidental Discharges" },
+            bunkeringData: { name: "Bunkering" },
+            additionalRemarksData: { name: "Additional Remarks" }
+          };
+
+          // 3. Process the data
+          const processedData = response.data.records.map((record,index) => {
+            // Format common fields
+            const formattedRecord = {
+              sno:index+1,
+              createdAt: formatDateTime(record.createdAt),
+              approvedStatus: record.approvedStatus ? "Approved" : "Pending",
+              createdBy: record.createdByName ,
+              approvedBy: record.approvedBy ? record.approvedBy : "-",
+              verifiedAt: record.verifiedAt ? formatDateTime(record.verifiedAt) : "-",
+              verifiedBy: record.verifiedBy || "-",
+              verificationStatus: record.verificationStatus ? "Verified" : "Not Verified",
+              verificationRemarks: record.verificationRemarks || "-"
+            };
+            function formatDateTime(datetimeString) {
+              if (!datetimeString) return '';
+
+              const date = new Date(datetimeString);
+
+              // Get day, month, year
+              const day = String(date.getDate()).padStart(2, '0');
+              const month = String(date.getMonth() + 1).padStart(2, '0');
+              const year = date.getFullYear();
+
+              // Get hours, minutes, seconds
+              const hours = String(date.getHours()).padStart(2, '0');
+              const minutes = String(date.getMinutes()).padStart(2, '0');
+              const seconds = String(date.getSeconds()).padStart(2, '0');
+
+              return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+            }
+            // Determine operation type
+            const operationType = Object.keys(operationConfigs)
+              .find(type => record[type] !== undefined && record[type] !== null);
+
+            if (operationType) {
+              formattedRecord.operationType = operationConfigs[operationType].name;
+              formattedRecord.operationData = record[operationType];
+
+              const opData = record[operationType];
+              const allFields = Object.entries(opData)
+                .filter(([key, value]) => value !== null && value !== undefined)
+                .map(([key, value]) => {
+                  const displayKey =
+
+
+                    key === 'tankIdentity' ? 'Tank Identity' :
+                      key === 'operationID' ? 'Operation ID' :
+                        key === 'cleanedSinceLastOil' ? 'Cleaned Since Last Oil' :
+                          key === 'cleaningProcessStartLatitude' ? 'Cleaning Process Start Latitude' :
+                            key === 'cleaningProcessStartLongitude' ? 'Cleaning Process Start Longitude' :
+                              key === 'cleaningProcessStartTime' ? 'Cleaning Process Start Time' :
+                                key === 'cleaningProcessEndLatitude' ? 'Cleaning Process End Latitude' :
+                                  key === 'cleaningProcessEndLongitude' ? 'Cleaning Process End Longitude' :
+                                    key === 'cleaningProcessEndTime' ? 'Cleaning Process End Time' :
+                                      key === 'tankNumber' ? 'Tank Number' :
+                                        key === 'tankForCleaningWaterTransfer' ? 'Tank For Cleaning Water Transfer' :
+                                          key === 'cleaningMethod' ? 'Cleaning Method' :
+                                            key === 'chemicalsUsed' ? 'Chemicals Used' :
+                                              key === 'ballastingStartLatitude' ? 'Ballasting Start Latitude' :
+                                                key === 'ballastingStartLongitude' ? 'Ballasting Start Longitude' :
+                                                  key === 'ballastingStartTime' ? 'Ballasting Start Time' :
+                                                    key === 'ballastingEndLatitude' ? 'Ballasting End Latitude' :
+                                                      key === 'ballastingEndLongitude' ? 'Ballasting End Longitude' :
+                                                        key === 'ballastingEndTime' ? 'Ballasting End Time' :
+                                                          key === 'quantityBallastIfNotCleaned' ? 'Quantity Ballast If Not Cleaned' :
+                                                            key === 'startPosition' ? 'Start Position' :
+                                                              key === 'endPosition' ? 'End Position' :
+                                                                key === 'shipSpeedDuringDischarge' ? 'Ship Speed During Discharge' :
+                                                                  key === 'dischargeMethod' ? 'Discharge Method' :
+                                                                    key === 'quantityDischarged' ? 'Quantity Discharged' :
+                                                                      key === 'collectionTankIdentity' ? 'Collection Tank Identity' :
+                                                                        key === 'collectionTankCapacity' ? 'Collection Tank Capacity' :
+                                                                          key === 'collectionTotalQuantityRetained' ? 'Collection Total Quantity Retained' :
+                                                                            key === 'collectionQuantityCollectedManually' ? 'Collection Quantity Collected Manually' :
+                                                                              key === 'transferDisposalMethod' ? 'Transfer Disposal Method' :
+                                                                                key === 'transferDisposalQuantity' ? 'Transfer Disposal Quantity' :
+                                                                                  key === 'transferDisposalTanksEmptied' ? 'Transfer Disposal Tanks Emptied' :
+                                                                                    key === 'transferDisposalQuantityRetained' ? 'Transfer Disposal Quantity Retained' :
+                                                                                      key === 'tankCapacity' ? 'Tank Capacity' :
+                                                                                        key === 'totalQuantityRetention' ? 'Total Quantity Retention' :
+                                                                                          key === 'quantityResidueCollectedManually' ? 'Quantity Residue Collected Manually' :
+                                                                                            key === 'methodsTransferDisposal' ? 'Methods Transfer Disposal' :
+                                                                                              key === 'dischargeOverboardTime' ? 'Discharge Overboard Time' :
+                                                                                                key === 'dischargeOverboardLatitude' ? 'Discharge Overboard Latitude' :
+                                                                                                  key === 'dischargeOverboardLongitude' ? 'Discharge Overboard Longitude' :
+                                                                                                    key === 'transferToHoldingTankTime' ? 'Transfer To Holding Tank Time' :
+                                                                                                      key === 'transferToHoldingTankLatitude' ? 'Transfer To Holding Tank Latitude' :
+                                                                                                        key === 'transferToHoldingTankLongitude' ? 'Transfer To Holding Tank Longitude' :
+                                                                                                          key === 'systemPutToManualModeTime' ? 'System Put To Manual Mode Time' :
+                                                                                                            key === 'systemFailureTime' ? 'System Failure Time' :
+                                                                                                              key === 'systemOperationalTime' ? 'System Operational Time' :
+                                                                                                                key === 'failureReason' ? 'Failure Reason' :
+                                                                                                                  key === 'timeOfOccurrence' ? 'Time Of Occurrence' :
+                                                                                                                    key === 'latitude' ? 'Latitude' :
+                                                                                                                      key === 'longitude' ? 'Longitude' :
+                                                                                                                        key === 'quantityOfOil' ? 'Quantity Of Oil' :
+                                                                                                                          key === 'typeOfOil' ? 'Type Of Oil' :
+                                                                                                                            key === 'circumstancesOfDischarge' ? 'Circumstances Of Discharge' :
+                                                                                                                              key === 'actionsTaken' ? 'Actions Taken' :
+                                                                                                                                key === 'remarks' ? 'Remarks' :
+                                                                                                                                  key === 'placeOfBunkering' ? 'Place Of Bunkering' :
+                                                                                                                                    key === 'timeOfBunkering' ? 'Time Of Bunkering' :
+                                                                                                                                      key === 'fuelOilType' ? 'Fuel Oil Type' :
+                                                                                                                                        key === 'fuelOilQuantityAdded' ? 'Fuel Oil Quantity Added' :
+                                                                                                                                          key === 'fuelOilTotalContent' ? 'Fuel Oil Total Content' :
+                                                                                                                                            key === 'fuelOilTankIdentity' ? 'Fuel Oil Tank Identity' :
+                                                                                                                                              key === 'lubricatingOilType' ? 'Lubricating Oil Type' :
+                                                                                                                                                key === 'lubricatingOilQuantityAdded' ? 'Lubricating Oil Quantity Added' :
+                                                                                                                                                  key === 'lubricatingOilTotalContent' ? 'Lubricating Oil Total Content' :
+                                                                                                                                                    key === 'lubricatingOilTankIdentity' ? 'Lubricating Oil Tank Identity' :
+                                                                                                                                                      key === 'date' ? 'Date' :
+                                                                                                                                                        key === 'time' ? 'Time' : ''
+
+                  key;
+                  if ([
+                    'time',
+                    'dischargeOverboardTime',
+                    'startTime',
+                    'endTime',
+                    'cleaningProcessStartTime',
+                    'cleaningProcessEndTime',
+                    'ballastingStartTime',
+                    'ballastingEndTime',
+                    'transferToHoldingTankTime',
+                    'systemPutToManualModeTime',
+                    'systemFailureTime',
+                    'systemOperationalTime',
+                    'timeOfOccurrence',
+                    'timeOfBunkering'
+                  ].includes(key)) {
+                    return `<strong>${displayKey}</strong>: ${formatTime(value)}`;
+                    //return `${displayKey}: ${formatTime(value)}`;
+
+                  }
+                  if (key === 'date') {
+                    return `<strong>${displayKey}</strong>:: ${formatDate(value)}`;
+                    //return `${displayKey}: ${formatDate(value)}`;
+
+                  }
+                  if ([
+                  'lubricatingOilTotalContent', 
+                  'lubricatingOilQuantityAdded',
+                  'fuelOilQuantityAdded',
+                  'fuelOilTotalContent',
+                  'methodsTransferDisposal',
+                  'quantityResidueCollectedManually',
+                  'totalQuantityRetention',
+                  'chemicalsUsed',
+                  'quantityDischarged',
+                  'collectionTankCapacity',
+                  'collectionTotalQuantityRetained',
+
+
+
+                  ].includes(key)) {
+                    return `<strong>${displayKey}</strong>: ${value} m³`;
+                    //return `${displayKey}: ${formatDate(value)}`;
+                  }
+
+
+                  return `<strong>${displayKey}</strong>: ${value}`;
+                  //return `${displayKey}: ${value}`;
+
+                });
+
+
+              formattedRecord.operationDetails = allFields.join('<br>');
+
+            } else {
+              formattedRecord.operationType = "Unknown";
+              formattedRecord.operationDetails = "No operation data";
+            }
+
+            return formattedRecord;
+          });
+
+          // 4. Create column definitions
+          const columnDefs = [
+          {
+            headerName: "SNO",
+            field: "sno",
+            minWidth: 80,
+            maxWidth: 100,
+            sortable: true,
+            filter: true,
+          },
+            { headerName: "Created At",cellClass:"centered-cell", field: "createdAt", minWidth: 180, filter: 'agDateColumnFilter' },
+            { headerName: "Operation Type",cellClass:"centered-cell", field: "operationType", minWidth: 180 },
+            {
+              headerName: "Approval Status",
+              cellClass:"centered-cell",
+              field: "approvedStatus",
+              minWidth: 220,
+              cellRenderer: params => {
+                const div = document.createElement('div');
+                const btn = document.createElement('button');
+                btn.textContent = params.value;
+                btn.className = `btn p-2 w-100 ${params.value === "Approved" ? 'btn-success' : 'btn-warning'}`;
+                div.appendChild(btn);
+                return div;
+              }
+            },
+            { headerName: "Verified At",cellClass:"centered-cell", field: "verifiedAt", minWidth: 180, filter: 'agDateColumnFilter' },
+            { headerName: "Verified By",cellClass:"centered-cell", field: "verifiedBy", minWidth: 180 },
+            {
+              headerName: "Verification Status", field: "verificationStatus",cellClass:"centered-cell",
+              minWidth: 200,
+              cellRenderer: params => {
+                const div = document.createElement('div');
+                const btn = document.createElement('button');
+                btn.textContent = params.value;
+                btn.className = `btn p-2 w-100 ${params.value === "Verified" ? 'btn-success' : 'btn-warning'}`;
+                div.appendChild(btn);
+                return div;
+              }
+            },
+            { headerName: "Verification Remarks",cellClass:"centered-cell", field: "verificationRemarks", minWidth: 190 },
+            { headerName: "Created By",cellClass:"centered-cell", field: "createdBy", minWidth: 180 },
+            { headerName: "Approved By", cellClass:"centered-cell",field: "approvedBy", minWidth: 180},
+            {
+              headerName: "Operation Details",
+              field: "operationDetails",
+              minWidth: 330,
+              autoHeight: true,
+              cellRenderer: params => {
+                if (!params.value) return document.createTextNode('No data');
+
+                const container = document.createElement('div');
+                container.style.whiteSpace = 'normal';
+
+                const content = document.createElement('div');
+                content.style.display = 'none'; // Hide content by default
+                content.innerHTML = params.value;
+
+                const toggleBtn = document.createElement('button');
+                toggleBtn.className = "btn p-2 w-100 btn-info";
+                toggleBtn.style.color = "white";
+                toggleBtn.textContent = "Show More";
+
+                let expanded = false;
+
+                toggleBtn.addEventListener('click', () => {
+                  expanded = !expanded;
+                  content.style.display = expanded ? 'block' : 'none';
+                  toggleBtn.textContent = expanded ? "Show Less" : "Show More";
+                });
+
+                container.appendChild(toggleBtn);
+                container.appendChild(content);
+
+                return container;
+              }
+            }
+          ];
+
+          // 5. Configure grid options
+          const gridOptions = {
+            columnDefs: columnDefs,
+            rowData: processedData,
+            pagination: true,
+            paginationPageSize: 20,
+            paginationPageSizeSelector: [20, 50, 100],
+            defaultColDef: {
+              sortable: true,
+              filter: true,
+              resizable: true,
+              flex: 1,
+              valueFormatter: params => {
+                if (params.value === null || params.value === undefined) return 'N/A';
+                if (typeof params.value === 'object') return JSON.stringify(params.value);
+                return params.value;
+              }
+            },
+            suppressFieldDotNotation: false,
+            onFirstDataRendered: params => {
+              params.api.sizeColumnsToFit();
+            },
+
+            domLayout: "normal",
+            theme: "legacy",
+
+          };
+          function formatDate(dateString) {
+            if (!dateString) return '';
+            const date = new Date(dateString);
+            return `${padZero(date.getDate())}/${padZero(date.getMonth() + 1)}/${date.getFullYear()}`;
+          }
+
+          function formatTime(timeString) {
+            if (!timeString) return '';
+            const date = new Date(timeString);
+            return `${padZero(date.getHours())}:${padZero(date.getMinutes())}:${padZero(date.getSeconds())}`;
+          }
+          function padZero(num) {
+            return num.toString().padStart(2, '0');
+          }
+          function formatDateTime(datetimeString) {
+            if (!datetimeString) return '';
+
+            const date = new Date(datetimeString);
+
+            // Get day, month, year
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+
+            // Get hours, minutes, seconds
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            const seconds = String(date.getSeconds()).padStart(2, '0');
+
+            return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+          }
+
+
+          // 6. Initialize the grid
+          const gridDiv = document.querySelector("#orb1Grid");
+          if (!gridDiv) {
+            console.error("Grid container not found");
+            return;
+          }
+
+          gridDiv.classList.add("ag-theme-quartz");
+          agGrid.createGrid(gridDiv, gridOptions);
+          hideRecordsLoader();
+        } catch (error) {
+          console.error("Error initializing grid:", error);
+          hideRecordsLoader();
+          const gridDiv = document.querySelector("#orb1Grid");
+          if (gridDiv) {
+            gridDiv.innerHTML = `<p class="text-danger text">Failed  to load data</p>`;
+          }
+        }
+      });
+
+
+      function showRecordsLoader() {
+        document.getElementById("recordsLoader").style.display = "flex";
+      }
+
+
+      function hideRecordsLoader() {
+        document.getElementById("recordsLoader").style.display = "none";
+      }
+      
+    </script>
+
+    <script src="assets/js/elogtoggler.js"></script>
+
+</body>
+
+</html>

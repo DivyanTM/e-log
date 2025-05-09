@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>FOS - Records</title>
+    <title>Fuel Oil sample Records - ELOG</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
@@ -33,7 +33,7 @@
         <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
           <a class="sidebar-brand text-decoration-none text-white d-flex align-items-center gap-2" href="index.html">
             <span class="mdi mdi-database fs-6 text-success" style="font-size: 2rem !important;"></span>
-            <span class="fs-6">ELOG</span>
+            <span class="fs-6" id="website-name">ELOG</span>
           </a>
         </div>
         
@@ -47,64 +47,206 @@
             </a>
           </li>
           <li class="nav-item menu-items">
-            <a class="nav-link active-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
               <span class="menu-icon">
-                <i class="mdi mdi-book-multiple text-gray"></i>
+                <i class="mdi mdi-file-document-edit-outline text-gray"></i>
               </span>
-              <span class="menu-title ">Record Books</span>
+              <span class="menu-title">Forms</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> 
+                <!-- ORB1 and ORB2 -->
+                <li class="nav-item">
                     <a class="nav-link" href="orb1.html" style="font-size: 16px;">
-                        <i class="mdi mdi-oil text-gray" style="font-size: 20px; margin-right: 8px;"></i> ORB-I
+                        <i class="mdi mdi-oil text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                        ORB-I
                     </a>
                 </li>
-                <li class="nav-item"> 
+                <li class="nav-item">
                     <a class="nav-link" href="orb2.html" style="font-size: 16px;">
-                        <i class="mdi mdi-fuel text-gray" style="font-size: 20px; margin-right: 8px;"></i> ORB-II
+                        <i class="mdi mdi-fuel text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                        ORB-II
                     </a>
                 </li>
-                <li class="nav-item"> 
+            
+                <!-- GRB -->
+                <li class="nav-item">
                     <a class="nav-link" href="grb.html" style="font-size: 16px;">
-                        <i class="mdi mdi-trash-can text-gray" style="font-size: 20px; margin-right: 8px;"></i> GRB
+                        <i class="mdi mdi-trash-can text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                        Garbage RB
                     </a>
                 </li>
-                <li class="nav-item"> 
+            
+                <!-- CRB -->
+                <li class="nav-item">
                     <a class="nav-link" href="crb.html" style="font-size: 16px;">
-                        <i class="mdi mdi-clipboard-text text-gray" style="font-size: 20px; margin-right: 8px;"></i> CRB
+                        <i class="mdi mdi-clipboard-text text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                        Cargo RB
                     </a>
                 </li>
-                <li class="nav-item"> 
-                    <a class="nav-link" href="odsrb.html" style="font-size: 16px;">
-                        <i class="mdi mdi-earth text-gray" style="font-size: 20px; margin-right: 8px;"></i> ODS RB
-                    </a>
-                </li>
-                <li class="nav-item"> 
-                    <a class="nav-link" href="bwrb.html" style="font-size: 16px;">
-                        <i class="mdi mdi-ferry text-gray" style="font-size: 20px; margin-right: 8px;"></i> BWRB
-                    </a>
-                </li>
-                <li class="nav-item"> 
-                    <a class="nav-link" href="srb.html" style="font-size: 16px;">
-                        <i class="mdi mdi-water text-gray" style="font-size: 20px; margin-right: 8px;"></i> SRB
-                    </a>
-                </li>
-                <li class="nav-item"> 
+            
+                <!-- APR B (NOX Tier Changeover) -->
+                <li class="nav-item">
                     <a class="nav-link" href="aprb.html" style="font-size: 16px;">
-                        <i class="mdi mdi-weather-windy text-gray" style="font-size: 20px; margin-right: 8px;"></i> APRB
+                        <i class="mdi mdi-swap-horizontal text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                        NOX Change
                     </a>
                 </li>
-                <li class="nav-item"> 
-                    <a class="nav-link" href="eerb.html" style="font-size: 16px;">
-                        <i class="mdi mdi-chart-line text-gray" style="font-size: 20px; margin-right: 8px;"></i> EERB
+            
+                <!-- BDR (Bunker Delivery) -->
+                <li class="nav-item">
+                    <a class="nav-link" href="bdr.html" style="font-size: 16px;">
+                        <i class="mdi mdi-gas-station text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                        Bunker Deliv
+                    </a>
+                </li>
+            
+                <!-- BWRB (Ballast Water Record Book) -->
+                <li class="nav-item">
+                    <a class="nav-link" href="bwrb.html" style="font-size: 16px;">
+                        <i class="mdi mdi-ferry text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                        Ballast WB
+                    </a>
+                </li>
+            
+                <!-- FOR (Fuel Oil Received Record Book) -->
+                <li class="nav-item">
+                    <a class="nav-link" href="for.html" style="font-size: 16px;">
+                        <i class="mdi mdi-call-received text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                        Fuel Received
+                    </a>
+                </li>
+            
+                <!-- FOS (Fuel Oil Sample Control and Tracking) -->
+                <li class="nav-item">
+                    <a class="nav-link" href="fos.html" style="font-size: 16px;">
+                        <i class="mdi mdi-flask text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                        Fuel Sample
+                    </a>
+                </li>
+            
+                <!-- LSFCO (Low Sulphur Fuel Change Over) -->
+                <li class="nav-item">
+                    <a class="nav-link" href="lsfco.html" style="font-size: 16px;">
+                        <i class="mdi mdi-leaf text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                        LSFO Change
+                    </a>
+                </li>
+            
+                <!-- ODSRB (Ozone Depleting Substance Record Book) -->
+                <li class="nav-item">
+                    <a class="nav-link" href="odsrb.html" style="font-size: 16px;">
+                        <i class="mdi mdi-earth text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                        ODS RB
                     </a>
                 </li>
             </ul>
+  
+  
+  
+            </div>
+          </li>
+  
+          <li class="nav-item menu-items">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic1" aria-expanded="false" aria-controls="ui-basic">
+              <span class="menu-icon">
+                <i class="mdi mdi-book-multiple text-gray"></i>
+              </span>
+              <span class="menu-title">Books</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic1">
+              <ul class="nav flex-column sub-menu">
+                <!-- ORB1 and ORB2 -->
+                <li class="nav-item">
+                    <a class="nav-link" href="orb1Records.html" style="font-size: 16px;">
+                        <i class="mdi mdi-oil text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                        ORB-I
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="orb2Records.html" style="font-size: 16px;">
+                        <i class="mdi mdi-fuel text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                        ORB-II
+                    </a>
+                </li>
             
+                <!-- GRB -->
+                <li class="nav-item">
+                    <a class="nav-link" href="grbRecords.html" style="font-size: 16px;">
+                        <i class="mdi mdi-trash-can text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                        Garbage RB
+                    </a>
+                </li>
             
+                <!-- CRB -->
+                <li class="nav-item">
+                    <a class="nav-link" href="crbRecords.html" style="font-size: 16px;">
+                        <i class="mdi mdi-clipboard-text text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                        Cargo RB
+                    </a>
+                </li>
             
+                <!-- APR B (NOX Tier Changeover) -->
+                <li class="nav-item">
+                    <a class="nav-link" href="aprbRecords.html" style="font-size: 16px;">
+                        <i class="mdi mdi-swap-horizontal text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                        NOX Change
+                    </a>
+                </li>
+            
+                <!-- BDR (Bunker Delivery) -->
+                <li class="nav-item">
+                    <a class="nav-link" href="bdrRecords.html" style="font-size: 16px;">
+                        <i class="mdi mdi-gas-station text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                        Bunker Deliv
+                    </a>
+                </li>
+            
+                <!-- BWRB (Ballast Water Record Book) -->
+                <li class="nav-item">
+                    <a class="nav-link" href="bwrbRecords.html" style="font-size: 16px;">
+                        <i class="mdi mdi-ferry text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                        Ballast WB
+                    </a>
+                </li>
+            
+                <!-- FOR (Fuel Oil Received Record Book) -->
+                <li class="nav-item">
+                    <a class="nav-link" href="forRecords.html" style="font-size: 16px;">
+                        <i class="mdi mdi-call-received text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                        Fuel Received
+                    </a>
+                </li>
+            
+                <!-- FOS (Fuel Oil Sample Control and Tracking) -->
+                <li class="nav-item">
+                    <a class="nav-link" href="fosRecords.html" style="font-size: 16px;">
+                        <i class="mdi mdi-flask text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                        Fuel Sample
+                    </a>
+                </li>
+            
+                <!-- LSFCO (Low Sulphur Fuel Change Over) -->
+                <li class="nav-item">
+                    <a class="nav-link" href="lsfoRecords.html" style="font-size: 16px;">
+                        <i class="mdi mdi-leaf text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                        LSFO Change
+                    </a>
+                </li>
+            
+                <!-- ODSRB (Ozone Depleting Substance Record Book) -->
+                <li class="nav-item">
+                    <a class="nav-link" href="odsrbRecords.html" style="font-size: 16px;">
+                        <i class="mdi mdi-earth text-gray" style="font-size: 20px; margin-right: 8px;"></i>
+                        ODS RB
+                    </a>
+                </li>
+            </ul>
+  
+  
+  
             </div>
           </li>
           
@@ -137,7 +279,7 @@
                               
                             </div>
                           </div>
-                          <h2 class="card-title mb-3 mt-1">Fuel Oil Record</h2>
+                          <h2 class="card-title mb-3 mt-1">Fuel Oil Sample Record</h2>
                           <p class="text-secondary">Tracking and Control Record for MARPOL Fuel Oil Sample</p>
                         </div>
                         <div class="card-body">
@@ -207,7 +349,12 @@
             element.approvalStatus = element.approvalStatus ? "Approved" : "Pending";
             element.date = new Date(element.date).toLocaleDateString('en-GB');
             element.dateSampleDestroyed = new Date(element.dateSampleDestroyed).toLocaleDateString('en-GB');
-            element.verifiedBy = element.verifiedBy ? element.verifiedBy : "N/A";
+            element.verifiedBy = element.verifiedBy || "-";
+            element.verifiedAt =   element.verifiedAt || "-";
+            element.approvedBy  = element.approvedBy || "-";
+            element.verificationRemarks = element.verificationRemarks || "-";
+            element.verificationStatus = element.verificationStatus ? "Verified" : "Not Verified";
+
           });
         } else {
           data = [];
@@ -216,26 +363,34 @@
         const gridOptions = {
           columnDefs: [
             { 
-              headerName: "S.No", 
+              headerName: "SNO", 
               valueGetter: "node.rowIndex + 1", 
               sortable: false, 
               filter: false, 
-              width: 100 
+              width: 80 
             },
-            { headerName: "Date", field: "date" },
-            { headerName: "Bunker Delivery Note Reference Number", field: "bunkerDeliveryNoteReferenceNumber" },
-            { headerName: "Origin Of Sample", field: "originOfSample" },
-            { headerName: "Sample Seal Number", field: "sampleSealNumber" },
-            { headerName: "Letter Of Protest Issued?", field: "letterOfProtestIssued" },
-            { headerName: "Letter Of Protest Copy To", field: "letterOfProtestCopyTo" },
-            { headerName: "Date Sample Destroyed", field: "dateSampleDestroyed" },
+            { headerName: "Date", field: "date",cellClass:"centered-cell" },
+            { headerName: "Bunker Delivery Note Reference Number",cellClass:"centered-cell" ,field: "bunkerDeliveryNoteReferenceNumber" },
+            { headerName: "Origin Of Sample", field: "originOfSample",cellClass:"centered-cell" },
+            { headerName: "Sample Seal Number", field: "sampleSealNumber",cellClass:"centered-cell" },
+            { headerName: "Letter Of Protest Issued?", field: "letterOfProtestIssued",cellClass:"centered-cell" },
+            { headerName: "Letter Of Protest Copy To", field: "letterOfProtestCopyTo",cellClass:"centered-cell" },
+            { headerName: "Date Sample Destroyed", field: "dateSampleDestroyed",cellClass:"centered-cell" },
             { 
-              headerName: "Approval Status", 
+              headerName: "Approval Status", cellClass:"centered-cell",
               field: "approvalStatus", 
               cellRenderer: createActionsCellRenderer 
             },
-            { headerName: "Approved By", field: "verifiedBy" },
-            { headerName: "Created By", field: "fullname" },
+            { headerName: "Approved By", field: "approvedBy",cellClass:"centered-cell" },
+            { 
+              headerName: "Verification Status",cellClass:"centered-cell", 
+              field: "verificationStatus", 
+              cellRenderer: createActionsCellRenderer 
+            },
+            { headerName: "Verified By", field: "verifiedBy" ,cellClass:"centered-cell"},
+            { headerName: "Verified At", field: "verifiedAt" ,cellClass:"centered-cell"},
+            { headerName: "Verification Remarks", cellClass:"centered-cell",field: "verificationRemarks" },
+            { headerName: "Created By",cellClass:"centered-cell", field: "fullname" },
           ],
     
           rowData: [...data],
@@ -251,23 +406,34 @@
         };
     
         function createActionsCellRenderer(params) {
-          const div = document.createElement('div');
-          const btn = document.createElement('button');
-          btn.innerText = params.data.approvalStatus;
-          div.classList.add('d-flex', 'justify-content-center', 'mt-1');
-          if (params.data.approvalStatus === "Approved") {
-            btn.classList.add('btn', 'btn-success', 'w-100');
+          if (!params || !params.data || !params.colDef || !params.colDef.field) return document.createElement("div");
+        
+          const field = params.colDef.field; 
+          const value = params.data[field]; 
+        
+          const div = document.createElement("div");
+          const btn = document.createElement("button");
+        
+          btn.innerText = value || "Pending";
+          div.classList.add("d-flex", "justify-content-center", "mt-1");
+        
+          if (value === "Approved" || value === "Verified") {
+            btn.classList.add("btn", "btn-success", "w-100", "p-2");
+          } else if (value === "Pending" || value === "Not Verified") {
+            btn.classList.add("btn", "btn-warning", "w-100", "p-2");
           } else {
-            btn.classList.add('btn', 'btn-warning', 'w-100');
+            btn.classList.add("btn", "btn-secondary", "w-100", "p-2");
           }
+        
           div.appendChild(btn);
           return div;
         }
-    
+          
         const gridDiv = document.querySelector("#orb1Grid");
         gridDiv.classList.add("ag-theme-quartz-dark");
-        hideRecordsLoader();
+        
         agGrid.createGrid(gridDiv, gridOptions);
+        hideRecordsLoader();
 
       });
       function showRecordsLoader() {
@@ -278,9 +444,10 @@
       function hideRecordsLoader() {
         document.getElementById("recordsLoader").style.display = "none";
       }
-      setTimeout(hideRecordsLoader,4000); 
+      
     </script>
 
-       
+    <script src="assets/js/elogtoggler.js"></script>
+  
   </body>
 </html>

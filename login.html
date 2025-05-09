@@ -91,9 +91,16 @@
                                 <input type="text" class="form-control" id="username" placeholder="Enter username">
                             </div>
                             <div class="input-group mx-auto mb-3">
-                                <span class="input-group-text"><i class="mdi mdi-lock" style="font-size: 18px !important;"></i></span>
+                                <span class="input-group-text">
+                                    <i class="mdi mdi-lock" style="font-size: 18px !important;"></i>
+                                </span>
                                 <input type="password" class="form-control" id="password" placeholder="Enter password">
+                                <span class="input-group-text" onclick="togglePassword()" style="cursor:pointer;">
+                                    <i class="mdi mdi-eye-off" id="toggleIcon" style="font-size: 18px !important;"></i>
+                                </span>
                             </div>
+                            
+                                
                         </form>
                         <div class="row">
                             <button class="btn mx-auto px-5 py-2" id="login" style="background-color: #1A5ACC;">Login</button>
@@ -135,6 +142,22 @@
     <script type="module" src="/assets/js/axiosInstance.js"></script>
     <script src="assets/js/apiRequest.js"></script>
     <script src="assets/js/login.js"></script>
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById("password");
+            const toggleIcon = document.getElementById("toggleIcon");
+            
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleIcon.classList.remove("mdi-eye-off");
+                toggleIcon.classList.add("mdi-eye");
+            } else {
+                passwordInput.type = "password";
+                toggleIcon.classList.remove("mdi-eye");
+                toggleIcon.classList.add("mdi-eye-off");
+            }
+        }
+        </script>
   </body>
 </html>
 
